@@ -27,10 +27,6 @@ class FoodSpotControllerTest {
 
     @Test
     void expectAllFoodSpots_whenGetRequestForAllFoodSpots() throws Exception {
-        FoodSpot firstTestFS = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI");
-        FoodSpot secondTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DÖNER");
-        foodSpotRepo.insert(firstTestFS);
-        foodSpotRepo.insert(secondTestFS);
         String expectedList = """
                 [
                     {

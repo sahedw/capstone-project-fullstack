@@ -2,6 +2,7 @@ package com.github.sahedw.backend.models;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +25,6 @@ class FoodSpotServiceTest {
         //THEN
         verify(foodSpotRepo).findAll();
         assertEquals(expectedList, actualList);
-
     }
 
 }
