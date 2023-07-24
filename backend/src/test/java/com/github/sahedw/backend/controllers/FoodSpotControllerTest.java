@@ -1,5 +1,7 @@
 package com.github.sahedw.backend.controllers;
 
+import com.github.sahedw.backend.models.FoodSpot;
+import com.github.sahedw.backend.models.FoodSpotRepo;
 import com.github.sahedw.backend.models.FoodSpotService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,15 @@ class FoodSpotControllerTest {
     @Autowired
     FoodSpotService foodSpotService;
 
+    @Autowired
+    FoodSpotRepo foodSpotRepo;
+
     @Test
     void expectAllFoodSpots_whenGetRequestForAllFoodSpots() throws Exception {
+        FoodSpot firstTestFS = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI");
+        FoodSpot secondTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DÖNER");
+        foodSpotRepo.insert(firstTestFS);
+        foodSpotRepo.insert(secondTestFS);
         String expectedList = """
                 [
                     {
