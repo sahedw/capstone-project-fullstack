@@ -3,6 +3,7 @@ package com.github.sahedw.backend.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -11,9 +12,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Document("foodSpots")
 public class FoodSpot {
-    String id;
-    String name;
-    String address;
-    String category;
+    private String id;
+    private String name;
+    private String address;
+    private String category;
+
 }
 
