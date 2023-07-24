@@ -6,3 +6,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FoodSpotRepo extends MongoRepository<FoodSpot, String> {
 }
+

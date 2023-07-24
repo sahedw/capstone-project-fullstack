@@ -16,3 +16,4 @@ public class FoodSpot {
     String address;
     String category;
 }
+
