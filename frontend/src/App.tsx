@@ -30,13 +30,16 @@ function App() {
 
   return (
     <>
-        <section className={"category-grid-container"}>
-            {allCategories.map((category: string, index: number) => {
-                return (
-                    <Category key={index} category={category}/>
-                )
-            })}
-        </section>
+            <section className={"category-grid-container"}>
+                {allCategories.map((category: string, index: number) => {
+                    return (
+                        <Category key={index} category={category}/>
+                    )
+                })}
+            </section>
+            <button className={"button-add"}>
+                <img className={"button-image-add"} src="/add-button.png" alt="plus icon"/>
+            </button>
     </>
   )
 }
