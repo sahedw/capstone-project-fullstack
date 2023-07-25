@@ -1,42 +1,26 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.foodspot-card-container {
+  height: 170px;
+  width: 120px;
+  border: 3px solid black;
+  background-color: #12f49a;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  -webkit-box-shadow: 8px 8px 0px -2px #000000;
+  box-shadow: 8px 8px 0px -2px #000000;
+  margin: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.card-image {
+  float: left;
+  width:  90px;
+  height: 60px;
+  object-fit: cover;
 }
