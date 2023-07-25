@@ -4,6 +4,10 @@
   margin: 0;
 }
 
+.link {
+  color: black;
+}
+
 .foodspot-card-container {
   height: 170px;
   width: 120px;
@@ -82,4 +86,19 @@
 
 .button-image-add {
   width: 60px;
+}
+
+.form-add-container {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 20px;
+  height: 300px;
+  width: 300px;
 }

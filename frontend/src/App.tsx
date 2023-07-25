@@ -2,46 +2,44 @@ import './App.css'
 import {useEffect, useState} from "react";
 import {FoodSpot} from "./types/FoodSpot.ts";
 import axios from "axios";
+import {allCategories} from "./utils/allCategories.ts";
+import {Route, Routes} from "react-router-dom";
+import HomePage from "./components/HomePage.tsx";
 import FoodSpotCard from "./components/FoodSpotCard.tsx";
 import AddForm from "./components/AddForm.tsx";
-import {allCategories} from "./utils/allCategories.ts";
-import Category from "./components/Category.tsx";
 
 function App() {
-  const [foodSpots, setFoodSpots] = useState<FoodSpot[]>([]);
+    const [foodSpots, setFoodSpots] = useState<FoodSpot[]>([]);
 
-  useEffect(() => {
-    axios.get('/api/foodSpot')
-        .then(response => {
-          setFoodSpots(response.data);
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-  }, [])
+    useEffect(() => {
+        axios.get('/api/foodSpot')
+            .then(response => {
+                setFoodSpots(response.data);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }, [])
 
-    /*
-    *         {foodSpots.map((foodSpot: FoodSpot) => {
-            return (
-                <FoodSpotCard key={foodSpot.id} foodSpot={foodSpot}/>
-            )
-        })}
-    * */
-
-  return (
-    <>
-            <section className={"category-grid-container"}>
-                {allCategories.map((category: string, index: number) => {
-                    return (
-                        <Category key={index} category={category}/>
-                    )
-                })}
-            </section>
-            <button className={"button-add"}>
-                <img className={"button-image-add"} src="/add-button.png" alt="plus icon"/>
-            </button>
-    </>
-  )
+    return (
+        <>
+            <Routes>
+                <Route path={"/"}
+                       element={<HomePage/>}>
+                </Route>
+                <Route path={"/addFoodSpot"}
+                       element={<AddForm/>}>
+                </Route>
+            {allCategories.map((category: string, index: number) => {
+                return (
+                        <Route path={`/${category}`} key={index}
+                               element={<FoodSpotCard foodSpots={foodSpots} />}>
+                        </Route>
+                )
+            })}
+            </Routes>
+        </>
+    )
 }
 
 export default App
