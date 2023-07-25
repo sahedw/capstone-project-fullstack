@@ -2,12 +2,13 @@ import './App.css'
 import {useEffect, useState} from "react";
 import {FoodSpot} from "./types/FoodSpot.ts";
 import axios from "axios";
+import FoodSpotCard from "./components/FoodSpotCard.tsx";
 
 function App() {
   const [foodSpots, setFoodSpots] = useState<FoodSpot[]>([]);
 
   useEffect(() => {
-    axios.get('/api/quiz')
+    axios.get('/api/foodSpot')
         .then(response => {
           setFoodSpots(response.data);
         })
@@ -18,7 +19,11 @@ function App() {
 
   return (
     <>
-      <FoodSpotCard/>
+        {foodSpots.map((foodSpot) => {
+            return (
+                <FoodSpotCard key={foodSpot.id} foodSpot={foodSpot}/>
+            )
+        })}
     </>
   )
 }

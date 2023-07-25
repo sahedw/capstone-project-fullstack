@@ -1,8 +1,6 @@
 package com.github.sahedw.backend.models;
 
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +15,7 @@ class FoodSpotServiceTest {
     void expectAllFoodSpots_whenAllFoodSpotsIsCalled() {
         //GIVEN
         FoodSpot firstTestFS = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI");
-        FoodSpot secondTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DÖNER");
+        FoodSpot secondTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER");
         List<FoodSpot> expectedList = List.of(firstTestFS,secondTestFS);
         //WHEN
         when(foodSpotRepo.findAll()).thenReturn(expectedList);

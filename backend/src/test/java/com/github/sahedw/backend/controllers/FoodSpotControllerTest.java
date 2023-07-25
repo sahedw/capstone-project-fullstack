@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureMockMvc
 class FoodSpotControllerTest {
@@ -28,7 +27,7 @@ class FoodSpotControllerTest {
     @Test
     void expectAllFoodSpots_whenGetRequestForAllFoodSpots() throws Exception {
         FoodSpot firstTestFS = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI");
-        FoodSpot secondTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DÖNER");
+        FoodSpot secondTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER");
         foodSpotRepo.insert(firstTestFS);
         foodSpotRepo.insert(secondTestFS);
         String expectedList = """
@@ -43,7 +42,7 @@ class FoodSpotControllerTest {
                         "id": "456",
                         "name": "Batman Restaurant",
                         "address": "Steindamm 58",
-                        "category": "DÖNER"
+                        "category": "DOENER"
                     }
                 ]
                 """;
