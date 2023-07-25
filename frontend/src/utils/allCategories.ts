@@ -1,1 +1,1 @@
-export const allCategories: string[] = ["SUSHI", "DOENER", "ITALIAN"];
+export const allCategories: string[] = ["SUSHI", "DOENER", "PIZZA"];
