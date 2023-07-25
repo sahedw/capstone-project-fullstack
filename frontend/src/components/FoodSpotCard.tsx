@@ -4,14 +4,14 @@ type Props = {
 }
 
 
-function FoodSpotCard(props: Props) {
+function FoodSpotCard({foodSpot}: Props) {
 
 
     return (
         <div className={"foodspot-card-container"}>
-            <h3>{props.foodSpot.name}</h3>
-            <img className={`card-image`} src={`${props.foodSpot.category}.png`} alt="food image"/>
-            <p>{props.foodSpot.address}</p>
+            <h3>{foodSpot.name}</h3>
+            <img className={`card-image`} src={`${foodSpot.category}.png`} alt="food image"/>
+            <p>{foodSpot.address}</p>
         </div>
     );
 }

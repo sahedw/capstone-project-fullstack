@@ -3,6 +3,9 @@ import {useEffect, useState} from "react";
 import {FoodSpot} from "./types/FoodSpot.ts";
 import axios from "axios";
 import FoodSpotCard from "./components/FoodSpotCard.tsx";
+import AddForm from "./components/AddForm.tsx";
+import {allCategories} from "./utils/allCategories.ts";
+import Category from "./components/Category.tsx";
 
 function App() {
   const [foodSpots, setFoodSpots] = useState<FoodSpot[]>([]);
@@ -17,13 +20,23 @@ function App() {
         });
   }, [])
 
-  return (
-    <>
-        {foodSpots.map((foodSpot) => {
+    /*
+    *         {foodSpots.map((foodSpot: FoodSpot) => {
             return (
                 <FoodSpotCard key={foodSpot.id} foodSpot={foodSpot}/>
             )
         })}
+    * */
+
+  return (
+    <>
+        <section className={"category-grid-container"}>
+            {allCategories.map((category: string, index: number) => {
+                return (
+                    <Category key={index} category={category}/>
+                )
+            })}
+        </section>
     </>
   )
 }

@@ -24,3 +24,33 @@
   height: 60px;
   object-fit: cover;
 }
+
+.category-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  grid-row-gap: 15px;
+}
+
+.category-container {
+  position: relative;
+  height: 90px;
+  width: 150px;
+  background-color: #12f49a;
+  border: 3px solid black;
+  overflow: hidden;
+}
+
+.category-header {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+}
+
+.category-container-image {
+  position: absolute;
+  right: -70px;
+  top: 10px;
+  width: 150px;
+
+}
