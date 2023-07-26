@@ -25,4 +25,15 @@ class FoodSpotServiceTest {
         assertEquals(expectedList, actualList);
     }
 
+    @Test
+    void expectNewFoodSpot_whenAddFoodSpotIsCalled() {
+        //GIVEN
+        FoodSpot toAddFS = new FoodSpot("789", "Luigi's", "Ditmar-Koel-Straße 21", "PIZZA");
+        //WHEN
+        when(foodSpotRepo.insert(toAddFS)).thenReturn(toAddFS);
+        FoodSpot actual = foodSpotService.addFoodSpot(toAddFS);
+        //THEN
+        verify(foodSpotRepo).insert(toAddFS);
+        assertEquals(toAddFS, actual);
+    }
 }

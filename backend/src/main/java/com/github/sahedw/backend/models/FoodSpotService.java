@@ -15,5 +15,9 @@ public class FoodSpotService {
        return foodSpotRepo.findAll();
     }
 
+    public FoodSpot addFoodSpot(FoodSpot newFoodSpot) {
+        foodSpotRepo.insert(newFoodSpot);
+        return newFoodSpot;
+    }
 }
 
