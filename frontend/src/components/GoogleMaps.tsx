@@ -1,4 +1,4 @@
-import {GoogleMap, useLoadScript, Marker, MarkerF} from "@react-google-maps/api";
+import {GoogleMap, useLoadScript, MarkerF} from "@react-google-maps/api";
 import {Position} from "../types/Position.ts";
 import axios from "axios";
 import {useEffect, useState} from "react";
@@ -22,21 +22,24 @@ function GoogleMaps({apiKey, address}: Props) {
             });
     },[])
 
-
+    const center = {lat: Number(position?.latitude), lng: Number(position?.longitude)};
 
     const {isLoaded} = useLoadScript({googleMapsApiKey: apiKey})
 
     if (!isLoaded) return <h1>Loading...</h1>
 
+    if (!position || isNaN(Number(position.latitude)) || isNaN(Number(position.longitude))) {
+        return <h1>Invalid position data. Please check the address.</h1>;
+    }
 
     return (
         <>
             <GoogleMap
                 zoom={12}
-                center={{lat: Number(position?.latitude), lng: Number(position?.longitude)}}
+                center={center}
                 mapContainerClassName={"google-map"}
             >
-                <MarkerF position={{lat: Number(position?.latitude), lng: Number(position?.longitude)}}/>
+                <MarkerF position={center}/>
             </GoogleMap>
         </>
     )
