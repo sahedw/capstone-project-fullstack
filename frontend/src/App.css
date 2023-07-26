@@ -6,6 +6,7 @@
 
 .link {
     color: black;
+    text-decoration: none;
 }
 
 .foodspot-card-container {
@@ -169,4 +170,9 @@
     -webkit-box-shadow: 0px 0px 0px 0px #000000;
     box-shadow: 0px 0px 0px 0px #000000;
     transform: translate(5px, 7px);
+}
+
+.google-map {
+    height: 400px;
+    width: 350px;
 }

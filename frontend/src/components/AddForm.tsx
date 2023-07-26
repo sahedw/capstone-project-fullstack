@@ -1,9 +1,9 @@
 import {allCategories} from "../utils/allCategories.ts";
 import {FormEvent, useState} from "react";
-import {DtoFoodSpot} from "../types/DtoFoodSpot.ts";
+import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
 
 type Props = {
-    onAdd: (newFoodSpot: DtoFoodSpot) => void;
+    onAdd: (newFoodSpot: FoodSpotWithoutId) => void;
 }
 
 function AddForm({onAdd}: Props) {
@@ -14,7 +14,7 @@ function AddForm({onAdd}: Props) {
 
     function handleAddFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        const newDtoFoodSpot: DtoFoodSpot = {
+        const newDtoFoodSpot: FoodSpotWithoutId = {
             name: name,
             category: category,
             address: address
