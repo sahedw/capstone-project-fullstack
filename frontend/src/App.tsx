@@ -12,7 +12,7 @@ import {DtoFoodSpot} from "./types/DtoFoodSpot.ts";
 function App() {
     const [foodSpots, setFoodSpots] = useState<FoodSpot[]>([]);
 
-    useEffect(() => {
+    useEffect((): void => {
         axios.get('/api/foodSpot')
             .then(response => {
                 setFoodSpots(response.data);
@@ -22,9 +22,19 @@ function App() {
             });
     }, [])
 
-    function handleAddFoodSpot(newFoodSpot: DtoFoodSpot) {
+    function getAllFoodSpots(): void {
+        axios.get('/api/foodSpot')
+            .then(response => {
+                setFoodSpots(response.data);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+    function handleAddFoodSpot(newFoodSpot: DtoFoodSpot): void {
         axios.post("/api/foodSpot", newFoodSpot)
-            .then(() => null)
+            .then(() => getAllFoodSpots())
             .catch(function (error) {
                 console.error(error);
             });
