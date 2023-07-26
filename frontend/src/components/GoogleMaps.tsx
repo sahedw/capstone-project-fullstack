@@ -1,4 +1,4 @@
-import {GoogleMap, useLoadScript, Marker} from "@react-google-maps/api";
+import {GoogleMap, useLoadScript, Marker, MarkerF} from "@react-google-maps/api";
 import {Position} from "../types/Position.ts";
 import axios from "axios";
 import {useEffect, useState} from "react";
@@ -16,7 +16,6 @@ function GoogleMaps({apiKey, address}: Props) {
         axios.post("/api/google/convert-address", `${convertGermanSpecialCharacters(address)}`)
             .then((response) => {
                 setPosition(response.data)
-                console.log(response.data)
             })
             .catch(function (error) {
                 console.error(error);
@@ -30,14 +29,17 @@ function GoogleMaps({apiKey, address}: Props) {
     if (!isLoaded) return <h1>Loading...</h1>
 
 
-    return <GoogleMap
-        zoom={10}
-        center={{lat: 53.55, lng: 9.99}}
-        mapContainerClassName={"google-map"}
-    >
-       <Marker position={{lat: Number(position?.latitude), lng: Number(position?.longitude)}}/>
-
-    </GoogleMap>
+    return (
+        <>
+            <GoogleMap
+                zoom={12}
+                center={{lat: Number(position?.latitude), lng: Number(position?.longitude)}}
+                mapContainerClassName={"google-map"}
+            >
+                <MarkerF position={{lat: Number(position?.latitude), lng: Number(position?.longitude)}}/>
+            </GoogleMap>
+        </>
+    )
 
 }
 
