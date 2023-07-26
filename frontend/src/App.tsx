@@ -51,9 +51,9 @@ function App() {
                 <Route path={"/addFoodSpot"}
                        element={<AddForm onAdd={handleAddFoodSpot}/>}>
                 </Route>
-            {allCategories.map((category: string, index: number) => {
+            {allCategories.map((category: string) => {
                 return (
-                        <Route path={`/${category}`} key={index}
+                        <Route path={`/${category}`} key={category}
                                element={<FoodSpotCard foodSpots={foodSpots} />}>
                         </Route>
                 )

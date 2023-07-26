@@ -14,9 +14,9 @@ function FoodSpotCard({foodSpots}: Props) {
 
     if (filteredFoodSpots.length == 0) return <h1>No saved FoodSpots</h1>
     return (<>
-            {filteredFoodSpots.map((foodSpot: FoodSpot, index: number) => {
+            {filteredFoodSpots.map((foodSpot: FoodSpot) => {
                 return (
-                    <div className={"foodspot-card-container"} key={index}>
+                    <div className={"foodspot-card-container"} key={foodSpot.id}>
                         <h3>{foodSpot.name}</h3>
                         <img className={`card-image`} src={`${foodSpot.category}.png`} alt="food image"/>
                         <p>{foodSpot.address}</p>

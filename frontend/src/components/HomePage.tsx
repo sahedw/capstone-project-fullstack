@@ -7,10 +7,10 @@ function HomePage() {
     return (
         <>
             <section className={"category-grid-container"}>
-                {allCategories.map((category: string, index: number) => {
+                {allCategories.map((category: string) => {
                     return (
-                        <Link className={"link"} to={`${category}`} key={index}>
-                            <Category key={index} category={category}/>
+                        <Link className={"link"} to={`${category}`} key={category}>
+                            <Category category={category}/>
                         </Link>
                     )
                 })}
