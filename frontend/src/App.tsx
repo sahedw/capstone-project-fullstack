@@ -7,6 +7,7 @@ import {Route, Routes} from "react-router-dom";
 import HomePage from "./components/HomePage.tsx";
 import FoodSpotCard from "./components/FoodSpotCard.tsx";
 import AddForm from "./components/AddForm.tsx";
+import {DtoFoodSpot} from "./types/DtoFoodSpot.ts";
 
 function App() {
     const [foodSpots, setFoodSpots] = useState<FoodSpot[]>([]);
@@ -21,6 +22,16 @@ function App() {
             });
     }, [])
 
+    function handleAddFoodSpot(newFoodSpot: DtoFoodSpot) {
+        axios.post("/api/foodSpot", newFoodSpot)
+            .then(() => null)
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+
+
     return (
         <>
             <Routes>
@@ -28,7 +39,7 @@ function App() {
                        element={<HomePage/>}>
                 </Route>
                 <Route path={"/addFoodSpot"}
-                       element={<AddForm/>}>
+                       element={<AddForm onAdd={handleAddFoodSpot}/>}>
                 </Route>
             {allCategories.map((category: string, index: number) => {
                 return (
