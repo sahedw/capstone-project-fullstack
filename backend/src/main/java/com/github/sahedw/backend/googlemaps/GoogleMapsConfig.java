@@ -1,4 +1,4 @@
-package com.github.sahedw.backend.models;
+package com.github.sahedw.backend.googlemaps;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

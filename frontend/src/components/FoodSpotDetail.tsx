@@ -8,7 +8,7 @@ type Props = {
 function FoodSpotDetail({foodSpot, apiKey}: Props) {
     return (<>
             <div>{foodSpot.name}</div>
-            <GoogleMaps apiKey={apiKey}/>
+            <GoogleMaps address={foodSpot.address} apiKey={apiKey}/>
     </>
     );
 }
