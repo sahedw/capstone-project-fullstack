@@ -2,7 +2,6 @@ import {allCategories} from "../utils/allCategories.ts";
 import Category from "./Category.tsx";
 import {Link} from "react-router-dom";
 
-
 function HomePage() {
     return (
         <>
