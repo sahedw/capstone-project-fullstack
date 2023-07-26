@@ -11,6 +11,8 @@ function FoodSpotCard({foodSpots}: Props) {
     const filteredFoodSpots: FoodSpot[] = foodSpots
         .filter((foodSpot) =>
             foodSpot.category === location.pathname.slice(1))
+
+    if (filteredFoodSpots.length == 0) return <h1>No saved FoodSpots</h1>
     return (<>
             {filteredFoodSpots.map((foodSpot: FoodSpot, index: number) => {
                 return (

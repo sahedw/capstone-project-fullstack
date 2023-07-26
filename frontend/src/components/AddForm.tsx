@@ -24,47 +24,55 @@ function AddForm({onAdd}: Props) {
 
     return (
         <section>
-            <section>
-                <h3>You wanna add a FoodSpot?</h3>
-                <p>Nice, gatekeeping is for losers!</p>
-            </section>
             <section className={"form-add-container"}>
                 <form onSubmit={handleAddFormSubmit} className={"form"}>
-                    <section>
-                        <label htmlFor="name">Name of FoodSpot:</label>
-                        <input type="text"
-                               name={"name"}
-                               onChange={(e) => {
-                                   setName(e.currentTarget.value)
-                               }}
-                        />
+                    <section className={"form-header-container"}>
+                        <h2>You wanna add a FoodSpot?</h2>
+                        <p>Nice, gatekeeping is for losers!</p>
                     </section>
-                    <section>
-                        <label htmlFor="category">Category:</label>
-                        <select
-                            onChange={(e) => {
-                                setCategory(e.currentTarget.value)
-                            }} name="category"
-                            id="category">
-                            <option value="default" disabled={true}>Choose the category</option>
-                            {allCategories.map((category: string) => {
-                                return (
-                                    <option value={`${category}`} key={category}>{category}</option>
-                                )
-                            })}
-                        </select>
+                    <section className={"form-main-container"}>
+                        <section className={"form-section-container"}>
+                            <input className={"add-form-input"}
+                                   placeholder={"Name of the FoodSpot"}
+                                   type="text"
+                                   name={"name"}
+                                   onChange={(e) => {
+                                       setName(e.currentTarget.value)
+                                   }}
+                                   required
+                            />
+                        </section>
+                        <section className={"form-section-container"}>
+                            <input className={"add-form-input"}
+                                   placeholder={"Address"}
+                                   type="text"
+                                   name={"address"}
+                                   onChange={(e) => {
+                                       setAddress(e.currentTarget.value)
+                                   }}
+                                   required
+                            />
+                        </section>
+                        <section className={"form-section-container"}>
+                            <select
+                                onChange={(e) => {
+                                    setCategory(e.currentTarget.value)
+                                }}
+                                name="category"
+                                id="category"
+                                defaultValue={"default"}
+                                required>
+                                <option value="default" disabled={true} hidden>Choose the category</option>
+                                {allCategories.map((category: string) => {
+                                    return (
+                                        <option value={`${category}`} key={category}>{category}</option>
+                                    )
+                                })}
+                            </select>
+                        </section>
                     </section>
-
-                    <section>
-                        <label htmlFor="address">Address:</label>
-                        <input type="text"
-                               name={"address"}
-                               onChange={(e) => {
-                                   setAddress(e.currentTarget.value)
-                               }}/>
-                    </section>
-                    <section>
-                        <button>Add FoodSpot to Collection!</button>
+                    <section className={"add-button-container"}>
+                        <button className={"add-button"}>Add FoodSpot to Collection!</button>
                     </section>
                 </form>
             </section>
