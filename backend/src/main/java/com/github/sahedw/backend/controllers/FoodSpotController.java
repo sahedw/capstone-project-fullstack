@@ -1,6 +1,6 @@
 package com.github.sahedw.backend.controllers;
 
-import com.github.sahedw.backend.models.DtoFoodSpot;
+import com.github.sahedw.backend.models.FoodSpotWithoutId;
 import com.github.sahedw.backend.models.FoodSpot;
 import com.github.sahedw.backend.models.FoodSpotService;
 import com.github.sahedw.backend.models.IdService;
@@ -24,12 +24,12 @@ public class FoodSpotController {
     }
 
     @PostMapping
-    public FoodSpot add(@RequestBody DtoFoodSpot dtoFoodSpot) {
+    public FoodSpot add(@RequestBody FoodSpotWithoutId foodSpotWithoutId) {
       FoodSpot newFoodSpot = new FoodSpot(
               IdService.randomId(),
-              dtoFoodSpot.getName(),
-              dtoFoodSpot.getAddress(),
-              dtoFoodSpot.getCategory());
+              foodSpotWithoutId.getName(),
+              foodSpotWithoutId.getAddress(),
+              foodSpotWithoutId.getCategory());
 
       return foodSpotService.addFoodSpot(newFoodSpot);
     }
