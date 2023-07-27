@@ -1,6 +1,7 @@
 import {allCategories} from "../utils/allCategories.ts";
 import {FormEvent, useState} from "react";
 import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
+import BackButton from "./BackButton.tsx";
 
 type Props = {
     onAdd: (newFoodSpot: FoodSpotWithoutId) => void;
@@ -26,11 +27,12 @@ function AddForm({onAdd}: Props) {
         <section>
             <section className={"form-add-container"}>
                 <form onSubmit={handleAddFormSubmit} className={"form"}>
+                    <BackButton/>
                     <section className={"banner"}>
                         <img width={80} src="/banner.png" alt="free banner"/>
                     </section>
                     <section className={"banner-text"}>
-                        <p>FREE</p>
+                        <strong>FREE</strong>
                     </section>
                     <section className={"form-header-container"}>
                         <h2>You wanna add a FoodSpot?</h2>
