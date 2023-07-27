@@ -16,7 +16,7 @@ function HomePage() {
             </section>
             <Link to={"/addFoodSpot"}>
                 <button className={"button-add"}>
-                    <img className={"button-image-add"} src="/add-button.png" alt="plus icon"/>
+                    <img width={40} src="/plus.png" alt="plus icon"/>
                 </button>
             </Link>
 

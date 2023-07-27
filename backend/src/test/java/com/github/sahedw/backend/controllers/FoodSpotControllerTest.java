@@ -1,5 +1,6 @@
 package com.github.sahedw.backend.controllers;
 
+import com.github.sahedw.backend.googlemaps.GoogleMapsConfig;
 import com.github.sahedw.backend.models.FoodSpot;
 import com.github.sahedw.backend.models.FoodSpotRepo;
 import com.github.sahedw.backend.models.FoodSpotService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -26,6 +28,7 @@ class FoodSpotControllerTest {
     FoodSpotRepo foodSpotRepo;
 
     @Test
+    @DirtiesContext
     void expectAllFoodSpots_whenGetRequestForAllFoodSpots() throws Exception {
         FoodSpot firstTestFS = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI");
         FoodSpot secondTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER");
@@ -72,6 +75,24 @@ class FoodSpotControllerTest {
                         "category": "DOENER"
                     }
                 """))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(expectedFoodSpot));
+    }
+
+    @Test
+    void expectSearchedFoodSpot_whenGetRequestWithIdFoodSpot() throws Exception {
+        FoodSpot searchedTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER");
+        foodSpotRepo.insert(searchedTestFS);
+        String expectedFoodSpot = """
+                    {
+                        "id": "456",
+                        "name": "Batman Restaurant",
+                        "address": "Steindamm 58",
+                        "category": "DOENER"
+                    }
+                """;
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/foodSpot/456"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedFoodSpot));
     }

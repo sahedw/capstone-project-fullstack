@@ -33,4 +33,9 @@ public class FoodSpotController {
 
       return foodSpotService.addFoodSpot(newFoodSpot);
     }
+
+    @GetMapping("/{id}")
+    public FoodSpot get(@PathVariable String id) {
+       return foodSpotService.getById(id);
+    }
 }

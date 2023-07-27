@@ -7,10 +7,23 @@ import {Route, Routes} from "react-router-dom";
 import HomePage from "./components/HomePage.tsx";
 import FoodSpotCard from "./components/FoodSpotCard.tsx";
 import AddForm from "./components/AddForm.tsx";
-import {DtoFoodSpot} from "./types/DtoFoodSpot.ts";
+import {FoodSpotWithoutId} from "./types/FoodSpotWithoutId.ts";
+import FoodSpotDetail from "./components/FoodSpotDetail.tsx";
+
 
 function App() {
     const [foodSpots, setFoodSpots] = useState<FoodSpot[]>([]);
+    const [apiKey, setApiKey] = useState<string>("");
+
+    useEffect(() => {
+        axios.get('/api/google/key')
+            .then(response => {
+                setApiKey(response.data);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }, [])
 
     useEffect((): void => {
         axios.get('/api/foodSpot')
@@ -32,7 +45,7 @@ function App() {
             });
     }
 
-    function handleAddFoodSpot(newFoodSpot: DtoFoodSpot): void {
+    function handleAddFoodSpot(newFoodSpot: FoodSpotWithoutId): void {
         axios.post("/api/foodSpot", newFoodSpot)
             .then(() => getAllFoodSpots())
             .catch(function (error) {
@@ -42,23 +55,33 @@ function App() {
 
 
 
+
     return (
         <>
-            <Routes>
-                <Route path={"/"}
-                       element={<HomePage/>}>
-                </Route>
-                <Route path={"/addFoodSpot"}
-                       element={<AddForm onAdd={handleAddFoodSpot}/>}>
-                </Route>
-            {allCategories.map((category: string) => {
-                return (
-                        <Route path={`/${category}`} key={category}
-                               element={<FoodSpotCard foodSpots={foodSpots} />}>
-                        </Route>
-                )
-            })}
-            </Routes>
+                <Routes>
+                    <Route path={"/"}
+                           element={<HomePage/>}>
+                    </Route>
+                    <Route path={"/addFoodSpot"}
+                           element={<AddForm onAdd={handleAddFoodSpot}/>}>
+                    </Route>
+                    {allCategories.map((category: string) => {
+                        const filteredByCurrentCategory: FoodSpot[] = foodSpots.filter((spot: FoodSpot) => spot.category == category)
+                        return (<>
+                                <Route path={`/${category}`} key={category}
+                                       element={<FoodSpotCard foodSpots={foodSpots}/>}>
+                                </Route>
+                                {filteredByCurrentCategory.map((foodSpot: FoodSpot) => {
+                                    return (
+                                        <Route path={`/${category}/${foodSpot.id}`} key={category+foodSpot.id}
+                                               element={<FoodSpotDetail apiKey={apiKey} foodSpot={foodSpot}/>}>
+                                        </Route>
+                                    )
+                                })}
+                            </>
+                        )
+                    })}
+                </Routes>
         </>
     )
 }

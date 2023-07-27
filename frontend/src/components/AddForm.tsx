@@ -1,9 +1,10 @@
 import {allCategories} from "../utils/allCategories.ts";
 import {FormEvent, useState} from "react";
-import {DtoFoodSpot} from "../types/DtoFoodSpot.ts";
+import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
+import BackButton from "./BackButton.tsx";
 
 type Props = {
-    onAdd: (newFoodSpot: DtoFoodSpot) => void;
+    onAdd: (newFoodSpot: FoodSpotWithoutId) => void;
 }
 
 function AddForm({onAdd}: Props) {
@@ -14,7 +15,7 @@ function AddForm({onAdd}: Props) {
 
     function handleAddFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        const newDtoFoodSpot: DtoFoodSpot = {
+        const newDtoFoodSpot: FoodSpotWithoutId = {
             name: name,
             category: category,
             address: address
@@ -25,7 +26,14 @@ function AddForm({onAdd}: Props) {
     return (
         <section>
             <section className={"form-add-container"}>
+                <BackButton setClass={"normal"}/>
                 <form onSubmit={handleAddFormSubmit} className={"form"}>
+                    <section className={"banner"}>
+                        <img width={80} src="/banner.png" alt="free banner"/>
+                    </section>
+                    <section className={"banner-text"}>
+                        <strong>FREE</strong>
+                    </section>
                     <section className={"form-header-container"}>
                         <h2>You wanna add a FoodSpot?</h2>
                         <p>Nice, gatekeeping is for losers!</p>

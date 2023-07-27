@@ -6,6 +6,7 @@
 
 .link {
     color: black;
+    text-decoration: none;
 }
 
 .foodspot-card-container {
@@ -27,6 +28,18 @@
     width: 90px;
     height: 60px;
     object-fit: cover;
+}
+
+.burger {
+    width: 120px;
+}
+
+.sushi {
+    width: 150px;
+}
+
+.doener {
+    width: 120px;
 }
 
 .category-grid-container {
@@ -82,12 +95,15 @@
 }
 
 .button-add {
-    background-color: transparent;
-    border: none;
+    background-color: white;
+    border: 2px solid black;
     position: fixed;
     bottom: 30px;
     right: 30px;
-    height: 65px;
+    width: 60px;
+    height: 55px;
+    -webkit-box-shadow: 7px 7px 0px -2px #000000;
+    box-shadow: 7px 7px 0px -2px #000000;
 }
 
 .button-image-add {
@@ -101,6 +117,7 @@
     align-items: center;
     background-color: #12f49a;
     height: 100vh;
+    position: relative;
 }
 
 .form {
@@ -110,12 +127,13 @@
     align-items: center;
     gap: 15px;
     margin: 20px;
-    height: 600px;
+    height: 500px;
     width: 350px;
     border: 1px solid black;
     -webkit-box-shadow: 9px 9px 0px -2px #000000;
     box-shadow: 9px 9px 0px -2px #000000;
     background-color: #f3d935;
+    position: relative;
 }
 
 .form-section-container {
@@ -169,4 +187,89 @@
     -webkit-box-shadow: 0px 0px 0px 0px #000000;
     box-shadow: 0px 0px 0px 0px #000000;
     transform: translate(5px, 7px);
+}
+
+.back-button {
+    position: absolute;
+    width: 50px;
+    background-color: white;
+    border: 2px solid black;
+    -webkit-box-shadow: 7px 7px 0px -2px #000000;
+    box-shadow: 7px 7px 0px -2px #000000;
+}
+
+.from-form{
+    top: -70px;
+    left: 0px;
+}
+
+.back-button:active {
+    -webkit-box-shadow: 0px 0px 0px 0px #000000;
+    box-shadow: 0px 0px 0px 0px #000000;
+    transform: translate(5px, 7px);
+}
+
+.banner {
+    position: absolute;
+    right: -15px;
+    top: -30px;
+}
+
+.banner-text {
+    position: absolute;
+    color: white;
+    right: 5px;
+    top: 0px;
+    transform:rotate(30deg);
+}
+
+.google-map {
+    height: 300px;
+    width: 350px;
+    -webkit-box-shadow: 7px 7px 0px -2px #000000;
+    box-shadow: 7px 7px 0px -2px #000000;
+    border: 2px solid black;
+}
+
+.foodspot-detail-container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(244, 232, 222);
+    height: 100vh;
+    gap: 40px;
+    position: relative;
+}
+
+.foodspot-detail-category {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+}
+
+.normal {
+    left: 15px;
+    top: 15px;
+}
+
+.category-foodspots-container {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(215, 31, 244, 0.53);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.category-card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+}
+
+.category-foodspots-header {
+    margin: 20px;
+    margin-top: 80px;
 }
