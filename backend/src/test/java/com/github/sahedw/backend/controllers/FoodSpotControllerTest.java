@@ -1,5 +1,6 @@
 package com.github.sahedw.backend.controllers;
 
+import com.github.sahedw.backend.googlemaps.GoogleMapsConfig;
 import com.github.sahedw.backend.models.FoodSpot;
 import com.github.sahedw.backend.models.FoodSpotRepo;
 import com.github.sahedw.backend.models.FoodSpotService;
