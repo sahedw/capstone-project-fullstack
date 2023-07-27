@@ -5,9 +5,11 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.GeocodingApiRequest;
 import com.google.maps.PendingResult;
 import com.google.maps.errors.ApiException;
+import com.google.maps.errors.NotFoundException;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.Geometry;
 import com.google.maps.model.LatLng;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
 import org.mockito.invocation.InvocationOnMock;
@@ -54,6 +56,11 @@ class GoogleMapsServiceTest {
         Position actual = googleMapsService.getGeocode(address);
         //THEN
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void expectNotFoundException_whenGeocodeWithBadAddress() throws IOException, InterruptedException, ApiException {
+        Assertions.assertThrows(NotFoundException.class, () -> googleMapsService.getGeocode("Testtest"));
     }
 }
 

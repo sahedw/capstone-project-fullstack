@@ -27,10 +27,11 @@ public class GoogleMapsService {
 
     public Position getGeocode(String address) throws IOException, InterruptedException, ApiException {
         GeocodingResult[] results = geocodeApiService.geocode(address);
-        if (results.length != 0) {
+        if (results != null && results.length != 0) {
             LatLng location = results[0].geometry.location;
             return new Position(String.valueOf(location.lat),String.valueOf(location.lng));
+        } else {
+            throw new NotFoundException("No Position found");
         }
-        throw new NotFoundException("No Position found");
     }
 }
