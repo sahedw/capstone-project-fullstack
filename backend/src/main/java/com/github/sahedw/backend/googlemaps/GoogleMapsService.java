@@ -18,7 +18,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class GoogleMapsService {
 
-    @Autowired
     private final GoogleMapsConfig googleMapsConfig;
 
     public String getKey() {
