@@ -1,7 +1,7 @@
 import {GoogleMap, useLoadScript, MarkerF} from "@react-google-maps/api";
 import {Position} from "../types/Position.ts";
 import axios from "axios";
-import {useEffect, useLayoutEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
 
 type Props = {

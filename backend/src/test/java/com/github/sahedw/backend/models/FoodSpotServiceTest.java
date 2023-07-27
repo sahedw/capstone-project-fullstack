@@ -3,6 +3,7 @@ package com.github.sahedw.backend.models;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,5 +51,25 @@ class FoodSpotServiceTest {
         FoodSpot actual = foodSpotService.getById(idToFind);
         // Assert
         assertEquals(expected.get(), actual);
+    }
+
+    @Test
+    void expectNoSuchElementException_whenGetByIdNotFound() {
+        // GIVEN
+        String idToFind = "nonexistent-id";
+        // WHEN
+        when(foodSpotRepo.findById(idToFind)).thenReturn(Optional.empty());
+        // Assert
+        assertThrows(NoSuchElementException.class, () -> foodSpotService.getById(idToFind));
+    }
+
+    @Test
+    void expectNoSuchElementException_whenGetByIdWithNullId() {
+        // GIVEN
+        String nullId = null;
+        // WHEN
+        // No need to mock the repository since we expect the method to throw an exception directly
+        // Assert
+        assertThrows(NoSuchElementException.class, () -> foodSpotService.getById(nullId));
     }
 }
