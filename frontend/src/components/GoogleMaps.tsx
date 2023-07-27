@@ -29,7 +29,7 @@ function GoogleMaps({apiKey, address}: Props) {
     if (!isLoaded) return <h1>Loading...</h1>
 
     if (!position || isNaN(Number(position.latitude)) || isNaN(Number(position.longitude))) {
-        return <h1>Invalid position data. Please check the address.</h1>;
+        return <h1>Invalid address. Please check the address and update it.</h1>;
     }
 
 
