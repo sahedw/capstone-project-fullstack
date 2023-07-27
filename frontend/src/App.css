@@ -111,12 +111,13 @@
     align-items: center;
     gap: 15px;
     margin: 20px;
-    height: 600px;
+    height: 500px;
     width: 350px;
     border: 1px solid black;
     -webkit-box-shadow: 9px 9px 0px -2px #000000;
     box-shadow: 9px 9px 0px -2px #000000;
     background-color: #f3d935;
+    position: relative;
 }
 
 .form-section-container {
@@ -172,7 +173,38 @@
     transform: translate(5px, 7px);
 }
 
+.banner {
+    position: absolute;
+    right: -15px;
+    top: -30px;
+}
+
+.banner-text {
+    position: absolute;
+    right: 5px;
+    top: 0px;
+    transform:rotate(30deg);
+}
+
 .google-map {
-    height: 400px;
+    height: 300px;
     width: 350px;
+}
+
+.foodspot-detail-container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(244, 232, 222);
+    height: 100vh;
+    gap: 40px;
+    position: relative;
+}
+
+.foodspot-detail-category {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
 }

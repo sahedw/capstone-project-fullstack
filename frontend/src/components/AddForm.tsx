@@ -26,6 +26,12 @@ function AddForm({onAdd}: Props) {
         <section>
             <section className={"form-add-container"}>
                 <form onSubmit={handleAddFormSubmit} className={"form"}>
+                    <section className={"banner"}>
+                        <img width={80} src="/banner.png" alt="free banner"/>
+                    </section>
+                    <section className={"banner-text"}>
+                        <p>FREE</p>
+                    </section>
                     <section className={"form-header-container"}>
                         <h2>You wanna add a FoodSpot?</h2>
                         <p>Nice, gatekeeping is for losers!</p>

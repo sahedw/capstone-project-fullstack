@@ -66,14 +66,14 @@ function App() {
                            element={<AddForm onAdd={handleAddFoodSpot}/>}>
                     </Route>
                     {allCategories.map((category: string) => {
-                        const filteredByCurrentCategory = foodSpots.filter((spot: FoodSpot) => spot.category == category)
+                        const filteredByCurrentCategory: FoodSpot[] = foodSpots.filter((spot: FoodSpot) => spot.category == category)
                         return (<>
                                 <Route path={`/${category}`} key={category}
                                        element={<FoodSpotCard foodSpots={foodSpots}/>}>
                                 </Route>
                                 {filteredByCurrentCategory.map((foodSpot: FoodSpot) => {
                                     return (
-                                        <Route path={`/${category}/${foodSpot.id}`} key={foodSpot.id}
+                                        <Route path={`/${category}/${foodSpot.id}`} key={category+foodSpot.id}
                                                element={<FoodSpotDetail apiKey={apiKey} foodSpot={foodSpot}/>}>
                                         </Route>
                                     )

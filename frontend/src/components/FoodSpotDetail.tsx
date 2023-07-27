@@ -7,8 +7,17 @@ type Props = {
 }
 function FoodSpotDetail({foodSpot, apiKey}: Props) {
     return (<>
-            <div>{foodSpot.name}</div>
-            <GoogleMaps address={foodSpot.address} apiKey={apiKey}/>
+            <section className={"foodspot-detail-container"}>
+                <section>
+                    <h1>{foodSpot.name}</h1>
+                    <p>{foodSpot.address}</p>
+                </section>
+                <GoogleMaps address={foodSpot.address} apiKey={apiKey}/>
+                <section className={"foodspot-detail-category"}>
+                    <h3>{foodSpot.category === "DOENER" ? "DÖNER" : foodSpot.category}</h3>
+                </section>
+            </section>
+
     </>
     );
 }

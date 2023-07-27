@@ -1,7 +1,7 @@
 import {GoogleMap, useLoadScript, MarkerF} from "@react-google-maps/api";
 import {Position} from "../types/Position.ts";
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useEffect, useLayoutEffect, useState} from "react";
 import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
 
 type Props = {
@@ -20,7 +20,7 @@ function GoogleMaps({apiKey, address}: Props) {
             .catch(function (error) {
                 console.error(error);
             });
-    },[])
+    }, [address])
 
     const center = {lat: Number(position?.latitude), lng: Number(position?.longitude)};
 
@@ -31,6 +31,7 @@ function GoogleMaps({apiKey, address}: Props) {
     if (!position || isNaN(Number(position.latitude)) || isNaN(Number(position.longitude))) {
         return <h1>Invalid position data. Please check the address.</h1>;
     }
+
 
     return (
         <>
