@@ -30,6 +30,18 @@
     object-fit: cover;
 }
 
+.burger {
+    width: 120px;
+}
+
+.sushi {
+    width: 150px;
+}
+
+.doener {
+    width: 120px;
+}
+
 .category-grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;

@@ -2,6 +2,7 @@ import {FoodSpot} from "../types/FoodSpot.ts";
 import {Link, Location, useLocation} from "react-router-dom";
 import BackButton from "./BackButton.tsx";
 import convertCategoryToHeaderFormat from "../utils/convertCategoryToHeaderFormat.ts";
+import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -30,7 +31,7 @@ function FoodSpotCard({foodSpots}: Props) {
                                 <Link to={`/${foodSpot.category}/${foodSpot.id}`} className={"link"} key={foodSpot.id}>
                                     <div className={"foodspot-card-container"}>
                                         <h3>{foodSpot.name}</h3>
-                                        <img className={`card-image`} src={`${foodSpot.category}.png`}
+                                        <img className={`card-image ${convertGermanSpecialCharacters(foodSpot.category)}`} src={`${foodSpot.category}.png`}
                                              alt="food image"/>
                                         <p>{foodSpot.address}</p>
                                     </div>

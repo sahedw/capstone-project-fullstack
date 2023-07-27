@@ -26,8 +26,8 @@ function AddForm({onAdd}: Props) {
     return (
         <section>
             <section className={"form-add-container"}>
+                <BackButton setClass={"normal"}/>
                 <form onSubmit={handleAddFormSubmit} className={"form"}>
-                    <BackButton setClass={"from-form"}/>
                     <section className={"banner"}>
                         <img width={80} src="/banner.png" alt="free banner"/>
                     </section>
