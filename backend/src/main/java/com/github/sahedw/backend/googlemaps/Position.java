@@ -10,5 +10,8 @@ public class Position {
     private String longitude;
 
     public Position(String latitude, String longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
+
 }

@@ -12,9 +12,7 @@ class PositionTest {
         // GIVEN
         String latitude = "53.56147";
         String longitude = "9.91507";
-        Position position = new Position();
-        position.setLongitude(longitude);
-        position.setLatitude(latitude);
+        Position position = new Position(latitude, longitude);
 
         // THEN
         assertThat(position.getLatitude()).isEqualTo(latitude);

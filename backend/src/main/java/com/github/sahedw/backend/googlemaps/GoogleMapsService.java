@@ -13,30 +13,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-
 @Service
 @RequiredArgsConstructor
 public class GoogleMapsService {
 
     private final GoogleMapsConfig googleMapsConfig;
 
+    private final GeocodeApiService geocodeApiService;
+
     public String getKey() {
         return googleMapsConfig.getKey();
     }
 
     public Position getGeocode(String address) throws IOException, InterruptedException, ApiException {
-        GeoApiContext context = new GeoApiContext.Builder()
-                .apiKey(googleMapsConfig.getKey())
-                .build();
-        GeocodingResult[] results = GeocodingApi.geocode(context, address)
-                .await();
+        GeocodingResult[] results = geocodeApiService.geocode(address);
         if (results.length != 0) {
             LatLng location = results[0].geometry.location;
-            Position positionOfAddress = new Position();
-            positionOfAddress.setLatitude(String.valueOf(location.lat));
-            positionOfAddress.setLongitude(String.valueOf(location.lng));
-            context.shutdown();
-            return positionOfAddress;
+            return new Position(String.valueOf(location.lat),String.valueOf(location.lng));
         }
         throw new NotFoundException("No Position found");
     }

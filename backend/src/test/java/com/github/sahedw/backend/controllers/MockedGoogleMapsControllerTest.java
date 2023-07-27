@@ -28,9 +28,7 @@ class MockedGoogleMapsControllerTest {
 
     @Test
     void expectPosition_whenPostRequestAddressToGetGeocode() throws Exception {
-        Position neueFischePosition = new Position();
-        neueFischePosition.setLatitude("53.56147");
-        neueFischePosition.setLongitude("9.91507");
+        Position neueFischePosition = new Position("53.56147", "9.91507");
         Mockito.when(googleMapsService.getGeocode("Gasstraße 6a, 22761 Hamburg")).thenReturn(neueFischePosition);
         String expectedFoodSpot = """
                    {
