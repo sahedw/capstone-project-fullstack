@@ -33,7 +33,7 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
             <form onSubmit={handleSubmitUpdateForm} className={"form-update"}>
                 <section className={"form-header-container"}>
                     <h2>Wanna edit your FoodSpot?</h2>
-                    <p>Go for it, important things need care!</p>
+                    <p>Go for it, important things need care:</p>
                 </section>
                 <section className={"form-main-container"}>
                     <section className={"form-section-container"}>
