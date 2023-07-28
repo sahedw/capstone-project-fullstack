@@ -128,6 +128,7 @@ class FoodSpotControllerTest {
     }
 
     @Test
+    @DirtiesContext
     void expectDeletedFoodSpot_whenDeleteRequestIsCalled() throws Exception {
         FoodSpot toDelete = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER");
         foodSpotRepo.insert(toDelete);
