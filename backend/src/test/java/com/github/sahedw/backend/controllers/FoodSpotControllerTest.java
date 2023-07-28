@@ -98,6 +98,7 @@ class FoodSpotControllerTest {
     }
 
     @Test
+    @DirtiesContext
     void expectUpdatedFoodSpot_whenPutRequestWithFoodSpot() throws Exception {
         FoodSpot toUpdate = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER");
         foodSpotRepo.insert(toUpdate);
