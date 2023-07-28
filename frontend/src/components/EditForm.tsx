@@ -22,7 +22,7 @@ function EditForm({onEditMode, foodSpot, onUpdate}: Props) {
     }
     return (
         <>
-            <form onSubmit={handleSubmitUpdateForm}>
+            <form onSubmit={handleSubmitUpdateForm} className={"form-update"}>
                 <section className={"form-header-container"}>
                     <h2>Wanna edit your FoodSpot?</h2>
                     <p>Go for it, important things need care!</p>
@@ -52,7 +52,7 @@ function EditForm({onEditMode, foodSpot, onUpdate}: Props) {
                     </section>
                 </section>
                 <section>
-                    <button className={"edit-button"}>
+                    <button className={"edit-button save-changes"}>
                         <img width={40} src="/save.png" alt="approve changes"/>
                     </button>
                 </section>

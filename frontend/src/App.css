@@ -136,6 +136,17 @@
     position: relative;
 }
 
+.form-update {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 15px;
+    margin: 20px;
+    width: 350px;
+    position: relative;
+}
+
 .form-section-container {
     display: flex;
     flex-direction: column;
@@ -199,11 +210,15 @@
 }
 
 .edit-button {
-    background-color: white;
+    background-color: #ffffff;
     width: 50px;
     border: 2px solid black;
     -webkit-box-shadow: 7px 7px 0px -2px #000000;
     box-shadow: 7px 7px 0px -2px #000000;
+}
+
+.save-changes {
+    background-color: #12f49a;
 }
 
 .edit-button:active {
