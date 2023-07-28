@@ -80,6 +80,7 @@ class FoodSpotControllerTest {
     }
 
     @Test
+    @DirtiesContext
     void expectSearchedFoodSpot_whenGetRequestWithIdFoodSpot() throws Exception {
         FoodSpot searchedTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER");
         foodSpotRepo.insert(searchedTestFS);
