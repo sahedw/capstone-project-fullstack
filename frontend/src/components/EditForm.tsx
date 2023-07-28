@@ -51,10 +51,17 @@ function EditForm({onEditMode, foodSpot, onUpdate}: Props) {
                         />
                     </section>
                 </section>
-                <section>
-                    <button className={"edit-button save-changes"}>
-                        <img width={40} src="/save.png" alt="approve changes"/>
-                    </button>
+                <section className={"form-edit-buttons-container"}>
+                    <section>
+                        <button className={"edit-button save-changes"}>
+                            <img width={40} src="/save.png" alt="approve changes"/>
+                        </button>
+                    </section>
+                    <section>
+                        <button className={"delete-button"}>
+                            <img width={35} src="/delete.png" alt="approve changes"/>
+                        </button>
+                    </section>
                 </section>
             </form>
         </>
