@@ -1,26 +1,33 @@
 import {FoodSpot} from "../types/FoodSpot.ts";
+import EditForm from "./EditForm.tsx";
+import DetailCard from "./DetailCard.tsx";
+import {useState} from "react";
 import GoogleMaps from "./GoogleMaps.tsx";
 import BackButton from "./BackButton.tsx";
+import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
+
 
 type Props = {
     foodSpot: FoodSpot,
-    apiKey: string
+    apiKey: string,
+    onUpdate: (id: string, updatedFoodSpot: FoodSpotWithoutId) => void
 }
-function FoodSpotDetail({foodSpot, apiKey}: Props) {
-    return (<>
-            <section className={"foodspot-detail-container"}>
-                <BackButton setClass={"normal"}/>
-                <section>
-                    <h1>{foodSpot.name}</h1>
-                    <p>{foodSpot.address}</p>
-                </section>
-                <GoogleMaps address={foodSpot.address} apiKey={apiKey}/>
-                <section className={"foodspot-detail-category"}>
-                    <h3>{foodSpot.category === "DOENER" ? "DÖNER" : foodSpot.category}</h3>
-                </section>
-            </section>
 
-    </>
+function FoodSpotDetail({foodSpot, apiKey, onUpdate}: Props) {
+    const [editMode, setEditMode] = useState<boolean>(false)
+    function handleEditMode() {
+        setEditMode(!editMode)
+    }
+    return (<>
+        <section className={"foodspot-detail-container"}>
+            <BackButton setClass={"normal"}/>
+            {editMode ? <EditForm onEditMode={handleEditMode} onUpdate={onUpdate} foodSpot={foodSpot}/> : <DetailCard foodSpot={foodSpot} apiKey={apiKey} onEditMode={handleEditMode}/>}
+            <GoogleMaps address={foodSpot.address} apiKey={apiKey}/>
+            <section className={"foodspot-detail-category"}>
+                <h3>{foodSpot.category === "DOENER" ? "DÖNER" : foodSpot.category}</h3>
+            </section>
+        </section>
+        </>
     );
 }
 
