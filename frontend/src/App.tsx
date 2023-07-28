@@ -61,6 +61,14 @@ function App() {
             });
     }
 
+    function handleDeleteFoodSpot(id: string): void {
+        axios.delete(`/api/foodSpot/${id}`)
+            .then(() => getAllFoodSpots())
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
 
     return (
         <>
@@ -80,7 +88,7 @@ function App() {
                                 {filteredByCurrentCategory.map((foodSpot: FoodSpot) => {
                                     return (
                                         <Route path={`/${category}/${foodSpot.id}`} key={category+foodSpot.id}
-                                               element={<FoodSpotDetail onUpdate={handleUpdateFoodSpot} apiKey={apiKey} foodSpot={foodSpot}/>}>
+                                               element={<FoodSpotDetail onDelete={handleDeleteFoodSpot} onUpdate={handleUpdateFoodSpot} apiKey={apiKey} foodSpot={foodSpot}/>}>
                                         </Route>
                                     )
                                 })}

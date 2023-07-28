@@ -10,10 +10,11 @@ import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
 type Props = {
     foodSpot: FoodSpot,
     apiKey: string,
-    onUpdate: (id: string, updatedFoodSpot: FoodSpotWithoutId) => void
+    onUpdate: (id: string, updatedFoodSpot: FoodSpotWithoutId) => void,
+    onDelete: (id: string) => void
 }
 
-function FoodSpotDetail({foodSpot, apiKey, onUpdate}: Props) {
+function FoodSpotDetail({foodSpot, apiKey, onUpdate, onDelete}: Props) {
     const [editMode, setEditMode] = useState<boolean>(false)
     function handleEditMode() {
         setEditMode(!editMode)
@@ -21,7 +22,7 @@ function FoodSpotDetail({foodSpot, apiKey, onUpdate}: Props) {
     return (<>
         <section className={"foodspot-detail-container"}>
             <BackButton setClass={"normal"}/>
-            {editMode ? <EditForm onEditMode={handleEditMode} onUpdate={onUpdate} foodSpot={foodSpot}/> : <DetailCard foodSpot={foodSpot} apiKey={apiKey} onEditMode={handleEditMode}/>}
+            {editMode ? <EditForm onDelete={onDelete} onEditMode={handleEditMode} onUpdate={onUpdate} foodSpot={foodSpot}/> : <DetailCard foodSpot={foodSpot} apiKey={apiKey} onEditMode={handleEditMode}/>}
             <GoogleMaps address={foodSpot.address} apiKey={apiKey}/>
             <section className={"foodspot-detail-category"}>
                 <h3>{foodSpot.category === "DOENER" ? "DÖNER" : foodSpot.category}</h3>
