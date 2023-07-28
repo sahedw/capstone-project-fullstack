@@ -96,4 +96,31 @@ class FoodSpotControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedFoodSpot));
     }
+
+    @Test
+    void expectUpdatedFoodSpot_whenPutRequestWithFoodSpot() throws Exception {
+        FoodSpot toUpdate = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER");
+        foodSpotRepo.insert(toUpdate);
+        String expectedFoodSpot = """
+                    {
+                        "id": "456",
+                        "name": "Batman Restaurant - Updated",
+                        "address": "Steindamm 58",
+                        "category": "DOENER"
+                    }
+                """;
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/foodSpot/456")
+                        .contentType(MediaType.APPLICATION_JSON).content(
+                        """
+                    {
+                        "id": "456",
+                        "name": "Batman Restaurant - Updated",
+                        "address": "Steindamm 58",
+                        "category": "DOENER"
+                    }
+                """))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(expectedFoodSpot));
+    }
 }
