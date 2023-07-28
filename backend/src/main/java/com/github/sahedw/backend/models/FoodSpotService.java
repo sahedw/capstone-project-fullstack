@@ -49,7 +49,8 @@ public class FoodSpotService {
 
     public List<FoodSpot> deleteFoodSpot(String idToDelete) {
         if (foodSpotRepo.findById(idToDelete).isPresent()) {
-            foodSpotRepo.delete(foodSpotRepo.findById(idToDelete).get());
+            Optional<FoodSpot> foundFoodSpot = foodSpotRepo.findById(idToDelete);
+            foundFoodSpot.ifPresent(foodSpotRepo::delete);
         } else {
             throw new NoSuchElementException("No FoodSpot with ID: " + idToDelete + " found.");
         }
