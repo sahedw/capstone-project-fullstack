@@ -78,4 +78,21 @@ class FoodSpotServiceTest {
         // Assert
         assertThrows(NoSuchElementException.class, () -> foodSpotService.getById(nullId));
     }
+
+    @Test
+    void expectUpdatedFoodSpot_whenUpdateIsCalled() {
+        // GIVEN
+        FoodSpot expected = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI");
+        FoodSpotWithoutId foodSpotWithoutId = new FoodSpotWithoutId();
+        foodSpotWithoutId.setName(expected.getName());
+        foodSpotWithoutId.setAddress(expected.getAddress());
+        foodSpotWithoutId.setCategory(expected.getCategory());
+        String idToUpdate = "123";
+        // WHEN
+        when(foodSpotRepo.save(expected)).thenReturn(expected);
+        FoodSpot actual = foodSpotService.updateFoodSpot(idToUpdate, foodSpotWithoutId);
+        // Assert
+        verify(foodSpotRepo).save(expected);
+        assertEquals(expected, actual);
+    }
 }
