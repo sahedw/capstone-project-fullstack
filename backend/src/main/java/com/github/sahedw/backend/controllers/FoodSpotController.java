@@ -36,4 +36,9 @@ public class FoodSpotController {
     public FoodSpot update(@PathVariable String id, @RequestBody FoodSpotWithoutId updatedFoodSpotDto) {
         return foodSpotService.updateFoodSpot(id, updatedFoodSpotDto);
     }
+
+    @DeleteMapping("/{id}")
+    public List<FoodSpot> delete(@PathVariable String id) {
+        return foodSpotService.deleteFoodSpot(id);
+    }
 }

@@ -143,6 +143,7 @@
     align-items: center;
     gap: 15px;
     margin: 20px;
+    margin-bottom: 0;
     width: 350px;
     position: relative;
 }
@@ -227,6 +228,20 @@
     transform: translate(5px, 7px);
 }
 
+.delete-button {
+    background-color: #f40a0a;
+    width: 51px;
+    height: 48px;
+    border: 2px solid black;
+    -webkit-box-shadow: 7px 7px 0px -2px #000000;
+    box-shadow: 7px 7px 0px -2px #000000;
+}
+
+.form-edit-buttons-container {
+    display: flex;
+    gap: 30px;
+}
+
 .from-form{
     top: -70px;
     left: 0px;
@@ -299,6 +314,5 @@
 }
 
 .category-foodspots-header {
-    margin: 20px;
-    margin-top: 80px;
+    margin: 80px 20px 20px;
 }

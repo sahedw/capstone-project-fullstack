@@ -58,6 +58,7 @@ class FoodSpotControllerTest {
     }
 
     @Test
+    @DirtiesContext
     void expectNewFoodSpot_whenPostRequestAddFoodSpot() throws Exception {
         String expectedFoodSpot = """
                     {
@@ -124,5 +125,21 @@ class FoodSpotControllerTest {
                 """))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedFoodSpot));
+    }
+
+    @Test
+    @DirtiesContext
+    void expectDeletedFoodSpot_whenDeleteRequestIsCalled() throws Exception {
+        FoodSpot toDelete = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER");
+        foodSpotRepo.insert(toDelete);
+        String expectedFoodSpotsList = """
+                    [
+                    ]
+                """;
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/foodSpot/456"))
+
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(expectedFoodSpotsList));
     }
 }
