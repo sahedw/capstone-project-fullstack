@@ -3,7 +3,6 @@ package com.github.sahedw.backend.controllers;
 import com.github.sahedw.backend.models.FoodSpotWithoutId;
 import com.github.sahedw.backend.models.FoodSpot;
 import com.github.sahedw.backend.models.FoodSpotService;
-import com.github.sahedw.backend.models.IdService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
