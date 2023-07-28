@@ -1,12 +1,15 @@
 package com.github.sahedw.backend.models;
 
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.util.UUID;
 
+@NoArgsConstructor
+@Service
 public class IdService {
-    private IdService() {
-    }
 
-    public static String randomId(){
+    public String randomId(){
         return UUID.randomUUID().toString();
     }
 }

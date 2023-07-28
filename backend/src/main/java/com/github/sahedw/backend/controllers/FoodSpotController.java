@@ -25,17 +25,16 @@ public class FoodSpotController {
 
     @PostMapping
     public FoodSpot add(@RequestBody FoodSpotWithoutId foodSpotWithoutId) {
-      FoodSpot newFoodSpot = new FoodSpot(
-              IdService.randomId(),
-              foodSpotWithoutId.getName(),
-              foodSpotWithoutId.getAddress(),
-              foodSpotWithoutId.getCategory());
-
-      return foodSpotService.addFoodSpot(newFoodSpot);
+      return foodSpotService.addFoodSpot(foodSpotWithoutId);
     }
 
     @GetMapping("/{id}")
     public FoodSpot get(@PathVariable String id) {
        return foodSpotService.getById(id);
+    }
+
+    @PutMapping("/{id}")
+    public FoodSpot update(@PathVariable String id, @RequestBody FoodSpotWithoutId updatedFoodSpotDto) {
+        return foodSpotService.updateFoodSpot(id, updatedFoodSpotDto);
     }
 }
