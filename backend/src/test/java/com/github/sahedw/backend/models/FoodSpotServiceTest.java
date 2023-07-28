@@ -95,4 +95,34 @@ class FoodSpotServiceTest {
         verify(foodSpotRepo).save(expected);
         assertEquals(expected, actual);
     }
+
+    @Test
+    void expectListOfFoodSpotsWithoutDeleted_whenDeleteIsCalled() {
+        //GIVEN
+        FoodSpot expected = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI");
+        FoodSpotWithoutId foodSpotWithoutId = new FoodSpotWithoutId();
+        foodSpotWithoutId.setName(expected.getName());
+        foodSpotWithoutId.setAddress(expected.getAddress());
+        foodSpotWithoutId.setCategory(expected.getCategory());
+        String idToDelete = "123";
+        foodSpotService.addFoodSpot(foodSpotWithoutId);
+        //WHEN
+        when(foodSpotRepo.findById(idToDelete)).thenReturn(Optional.of(expected));
+        List<FoodSpot> actual = foodSpotService.deleteFoodSpot(idToDelete);
+        //THEN
+        verify(foodSpotRepo, times(2)).findById(idToDelete);
+        verify(foodSpotRepo).delete(expected);
+    }
+
+    @Test
+    void expectNoSuchElementException_whenDeleteIdIsNotExistent() {
+        //GIVEN
+        FoodSpot expected = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI");
+        String idToDelete = "123";
+        //WHEN
+        when(foodSpotRepo.findById(idToDelete)).thenReturn(Optional.of(expected));
+        List<FoodSpot> actual = foodSpotService.deleteFoodSpot(idToDelete);
+        //THEN
+        assertThrows(NoSuchElementException.class, () -> foodSpotService.deleteFoodSpot("000"));
+    }
 }

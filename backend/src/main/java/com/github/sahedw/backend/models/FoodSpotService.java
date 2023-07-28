@@ -16,7 +16,7 @@ public class FoodSpotService {
     private final IdService idService;
 
     public List<FoodSpot> allFoodSpots() {
-       return foodSpotRepo.findAll();
+        return foodSpotRepo.findAll();
     }
 
     public FoodSpot addFoodSpot(FoodSpotWithoutId newFoodSpotDto) {
@@ -38,13 +38,22 @@ public class FoodSpotService {
         }
     }
 
-    public FoodSpot updateFoodSpot(String id , FoodSpotWithoutId updatedFoodSpotDto) {
+    public FoodSpot updateFoodSpot(String id, FoodSpotWithoutId updatedFoodSpotDto) {
         FoodSpot newUpdatedFoodSpot = new FoodSpot(
                 id,
                 updatedFoodSpotDto.getName(),
                 updatedFoodSpotDto.getAddress(),
                 updatedFoodSpotDto.getCategory());
         return foodSpotRepo.save(newUpdatedFoodSpot);
+    }
+
+    public List<FoodSpot> deleteFoodSpot(String idToDelete) {
+        if (foodSpotRepo.findById(idToDelete).isPresent()) {
+            foodSpotRepo.delete(foodSpotRepo.findById(idToDelete).get());
+        } else {
+            throw new NoSuchElementException("No FoodSpot with ID: " + idToDelete + " found.");
+        }
+        return foodSpotRepo.findAll();
     }
 }
 
