@@ -136,6 +136,17 @@
     position: relative;
 }
 
+.form-update {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 15px;
+    margin: 20px;
+    width: 350px;
+    position: relative;
+}
+
 .form-section-container {
     display: flex;
     flex-direction: column;
@@ -198,6 +209,24 @@
     box-shadow: 7px 7px 0px -2px #000000;
 }
 
+.edit-button {
+    background-color: #ffffff;
+    width: 50px;
+    border: 2px solid black;
+    -webkit-box-shadow: 7px 7px 0px -2px #000000;
+    box-shadow: 7px 7px 0px -2px #000000;
+}
+
+.save-changes {
+    background-color: #12f49a;
+}
+
+.edit-button:active {
+    -webkit-box-shadow: 0px 0px 0px 0px #000000;
+    box-shadow: 0px 0px 0px 0px #000000;
+    transform: translate(5px, 7px);
+}
+
 .from-form{
     top: -70px;
     left: 0px;
@@ -224,7 +253,7 @@
 }
 
 .google-map {
-    height: 300px;
+    height: 200px;
     width: 350px;
     -webkit-box-shadow: 7px 7px 0px -2px #000000;
     box-shadow: 7px 7px 0px -2px #000000;

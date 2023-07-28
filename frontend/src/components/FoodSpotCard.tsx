@@ -33,7 +33,6 @@ function FoodSpotCard({foodSpots}: Props) {
                                         <h3>{foodSpot.name}</h3>
                                         <img className={`card-image ${convertGermanSpecialCharacters(foodSpot.category)}`} src={`${foodSpot.category}.png`}
                                              alt="food image"/>
-                                        <p>{foodSpot.address}</p>
                                     </div>
                                 </Link>
                             </>

@@ -53,7 +53,13 @@ function App() {
             });
     }
 
-
+    function handleUpdateFoodSpot(id: string ,updatedFoodSpot: FoodSpotWithoutId): void {
+        axios.put(`/api/foodSpot/${id}`, updatedFoodSpot)
+            .then(() => getAllFoodSpots())
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
 
 
     return (
@@ -74,7 +80,7 @@ function App() {
                                 {filteredByCurrentCategory.map((foodSpot: FoodSpot) => {
                                     return (
                                         <Route path={`/${category}/${foodSpot.id}`} key={category+foodSpot.id}
-                                               element={<FoodSpotDetail apiKey={apiKey} foodSpot={foodSpot}/>}>
+                                               element={<FoodSpotDetail onUpdate={handleUpdateFoodSpot} apiKey={apiKey} foodSpot={foodSpot}/>}>
                                         </Route>
                                     )
                                 })}

@@ -13,11 +13,18 @@ public class FoodSpotService {
 
     private final FoodSpotRepo foodSpotRepo;
 
+    private final IdService idService;
+
     public List<FoodSpot> allFoodSpots() {
        return foodSpotRepo.findAll();
     }
 
-    public FoodSpot addFoodSpot(FoodSpot newFoodSpot) {
+    public FoodSpot addFoodSpot(FoodSpotWithoutId newFoodSpotDto) {
+        FoodSpot newFoodSpot = new FoodSpot(
+                idService.randomId(),
+                newFoodSpotDto.getName(),
+                newFoodSpotDto.getAddress(),
+                newFoodSpotDto.getCategory());
         foodSpotRepo.insert(newFoodSpot);
         return newFoodSpot;
     }
@@ -29,6 +36,15 @@ public class FoodSpotService {
         } else {
             throw new NoSuchElementException();
         }
+    }
+
+    public FoodSpot updateFoodSpot(String id , FoodSpotWithoutId updatedFoodSpotDto) {
+        FoodSpot newUpdatedFoodSpot = new FoodSpot(
+                id,
+                updatedFoodSpotDto.getName(),
+                updatedFoodSpotDto.getAddress(),
+                updatedFoodSpotDto.getCategory());
+        return foodSpotRepo.save(newUpdatedFoodSpot);
     }
 }
 

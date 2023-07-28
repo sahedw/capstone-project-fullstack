@@ -11,8 +11,9 @@ import static org.mockito.Mockito.*;
 
 class FoodSpotServiceTest {
 
+    IdService idService = mock(IdService.class);
     FoodSpotRepo foodSpotRepo = mock(FoodSpotRepo.class);
-    FoodSpotService foodSpotService = new FoodSpotService(foodSpotRepo);
+    FoodSpotService foodSpotService = new FoodSpotService(foodSpotRepo, idService);
 
     @Test
     void expectAllFoodSpots_whenAllFoodSpotsIsCalled() {
@@ -31,13 +32,18 @@ class FoodSpotServiceTest {
     @Test
     void expectNewFoodSpot_whenAddFoodSpotIsCalled() {
         //GIVEN
-        FoodSpot toAddFS = new FoodSpot("789", "Luigi's", "Ditmar-Koel-Straße 21", "PIZZA");
+        FoodSpotWithoutId toAddFS = new FoodSpotWithoutId();
+        toAddFS.setName("Luigi's");
+        toAddFS.setAddress("Ditmar-Koel-Straße 21");
+        toAddFS.setCategory("PIZZA");
+        FoodSpot expected = new FoodSpot("789", toAddFS.getName(), toAddFS.getAddress(), toAddFS.getCategory());
         //WHEN
-        when(foodSpotRepo.insert(toAddFS)).thenReturn(toAddFS);
+        when(idService.randomId()).thenReturn("789");
+        when(foodSpotRepo.insert(expected)).thenReturn(expected);
         FoodSpot actual = foodSpotService.addFoodSpot(toAddFS);
         //THEN
-        verify(foodSpotRepo).insert(toAddFS);
-        assertEquals(toAddFS, actual);
+        verify(foodSpotRepo).insert(expected);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -71,5 +77,22 @@ class FoodSpotServiceTest {
         // No need to mock the repository since we expect the method to throw an exception directly
         // Assert
         assertThrows(NoSuchElementException.class, () -> foodSpotService.getById(nullId));
+    }
+
+    @Test
+    void expectUpdatedFoodSpot_whenUpdateIsCalled() {
+        // GIVEN
+        FoodSpot expected = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI");
+        FoodSpotWithoutId foodSpotWithoutId = new FoodSpotWithoutId();
+        foodSpotWithoutId.setName(expected.getName());
+        foodSpotWithoutId.setAddress(expected.getAddress());
+        foodSpotWithoutId.setCategory(expected.getCategory());
+        String idToUpdate = "123";
+        // WHEN
+        when(foodSpotRepo.save(expected)).thenReturn(expected);
+        FoodSpot actual = foodSpotService.updateFoodSpot(idToUpdate, foodSpotWithoutId);
+        // Assert
+        verify(foodSpotRepo).save(expected);
+        assertEquals(expected, actual);
     }
 }
