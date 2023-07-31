@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -29,6 +32,7 @@ class FoodSpotControllerTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser(username = "sahed")
     void expectAllFoodSpots_whenGetRequestForAllFoodSpots() throws Exception {
         FoodSpot firstTestFS = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI");
         FoodSpot secondTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER");
@@ -51,7 +55,8 @@ class FoodSpotControllerTest {
                 ]
                 """;
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/foodSpot"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/foodSpot")
+                        .with(csrf()))
 
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedList));
@@ -59,6 +64,7 @@ class FoodSpotControllerTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser(username = "sahed")
     void expectNewFoodSpot_whenPostRequestAddFoodSpot() throws Exception {
         String expectedFoodSpot = """
                     {
@@ -69,19 +75,21 @@ class FoodSpotControllerTest {
                 """;
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/foodSpot")
-                .contentType(MediaType.APPLICATION_JSON).content("""
-                    {
-                        "name": "Batman Restaurant",
-                        "address": "Steindamm 58",
-                        "category": "DOENER"
-                    }
-                """))
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON).content("""
+                                    {
+                                        "name": "Batman Restaurant",
+                                        "address": "Steindamm 58",
+                                        "category": "DOENER"
+                                    }
+                                """))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedFoodSpot));
     }
 
     @Test
     @DirtiesContext
+    @WithMockUser(username = "sahed")
     void expectSearchedFoodSpot_whenGetRequestWithIdFoodSpot() throws Exception {
         FoodSpot searchedTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER");
         foodSpotRepo.insert(searchedTestFS);
@@ -94,13 +102,15 @@ class FoodSpotControllerTest {
                     }
                 """;
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/foodSpot/456"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/foodSpot/456")
+                        .with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedFoodSpot));
     }
 
     @Test
     @DirtiesContext
+    @WithMockUser(username = "sahed")
     void expectUpdatedFoodSpot_whenPutRequestWithFoodSpot() throws Exception {
         FoodSpot toUpdate = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER");
         foodSpotRepo.insert(toUpdate);
@@ -114,21 +124,23 @@ class FoodSpotControllerTest {
                 """;
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/foodSpot/456")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON).content(
-                        """
-                    {
-                        "id": "456",
-                        "name": "Batman Restaurant - Updated",
-                        "address": "Steindamm 58",
-                        "category": "DOENER"
-                    }
-                """))
+                                """
+                                            {
+                                                "id": "456",
+                                                "name": "Batman Restaurant - Updated",
+                                                "address": "Steindamm 58",
+                                                "category": "DOENER"
+                                            }
+                                        """))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedFoodSpot));
     }
 
     @Test
     @DirtiesContext
+    @WithMockUser(username = "sahed")
     void expectDeletedFoodSpot_whenDeleteRequestIsCalled() throws Exception {
         FoodSpot toDelete = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER");
         foodSpotRepo.insert(toDelete);
@@ -137,8 +149,8 @@ class FoodSpotControllerTest {
                     ]
                 """;
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/foodSpot/456"))
-
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/foodSpot/456")
+                        .with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedFoodSpotsList));
     }

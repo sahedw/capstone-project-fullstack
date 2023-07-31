@@ -27,15 +27,13 @@ function FoodSpotCard({foodSpots}: Props) {
                 <section className={"category-card-grid"}>
                     {filteredFoodSpots.map((foodSpot: FoodSpot) => {
                         return (
-                            <>
                                 <Link to={`/${foodSpot.category}/${foodSpot.id}`} className={"link"} key={foodSpot.id}>
-                                    <div className={"foodspot-card-container"}>
+                                    <div className={"foodspot-card-container"} key={foodSpot.id}>
                                         <h3>{foodSpot.name}</h3>
                                         <img className={`card-image ${convertGermanSpecialCharacters(foodSpot.category)}`} src={`${foodSpot.category}.png`}
                                              alt="food image"/>
                                     </div>
                                 </Link>
-                            </>
                         )
                     })}
                 </section>
