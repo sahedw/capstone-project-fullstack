@@ -1,5 +1,5 @@
 import './App.css'
-import {Fragment, useEffect, useRef, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import {FoodSpot} from "./types/FoodSpot.ts";
 import axios from "axios";
 import {allCategories} from "./utils/allCategories.ts";
