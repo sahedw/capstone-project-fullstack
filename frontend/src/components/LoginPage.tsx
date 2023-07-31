@@ -52,3 +52,4 @@ function LoginPage({onLogin}: Props) {
 }
 
 export default LoginPage;
+
