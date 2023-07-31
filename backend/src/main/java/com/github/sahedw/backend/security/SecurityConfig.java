@@ -30,7 +30,6 @@ public class SecurityConfig {
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(httpRequests ->
                         httpRequests
-                                .requestMatchers(HttpMethod.GET, "/api/foodSpot").permitAll()
                                 .requestMatchers("/api/foodSpot").authenticated()
                                 .requestMatchers("/api/foodSpot/**").authenticated()
                                 .requestMatchers("/api/user/*").permitAll()
