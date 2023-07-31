@@ -5,16 +5,22 @@ import {useEffect} from "react";
 
 type Props = {
     onSignedIn: () => void,
+    onLogout: () => void,
     user?: string
 }
 
-function HomePage({onSignedIn, user}: Props) {
+function HomePage({onSignedIn, onLogout, user}: Props) {
     useEffect(onSignedIn, [])
     return (
         <>
             <section>
-                <h2>Wassup, {user}</h2>
-                <p>Take a look at your saved FoodSpots!</p>
+                <section>
+                    <h2>Wassup, {user}</h2>
+                    <p>Take a look at your saved FoodSpots!</p>
+                </section>
+                <section>
+                    <button onClick={onLogout}>{user !== undefined && "Logout, " + user}</button>
+                </section>
             </section>
             <section className={"category-grid-container"}>
                 {allCategories.map((category: string) => {

@@ -1,5 +1,5 @@
 import './App.css'
-import {useEffect, useState} from "react";
+import {Fragment, useEffect, useRef, useState} from "react";
 import {FoodSpot} from "./types/FoodSpot.ts";
 import axios from "axios";
 import {allCategories} from "./utils/allCategories.ts";
@@ -27,6 +27,13 @@ function App() {
             })
     }
 
+    function handleLogout() {
+        axios.post("/api/user/logout")
+            .then(() => {
+                setUser("anonymousUser")
+            })
+    }
+
     function handleLogin(username: string, password: string) {
         axios.post("/api/user/login", null, {auth: {username, password}})
             .then(response => {
@@ -35,7 +42,7 @@ function App() {
             })
     }
 
-    useEffect(handleSignedIn, [])
+    useEffect(handleSignedIn, [user])
 
     useEffect(() => {
         axios.get('/api/google/key')
@@ -48,14 +55,17 @@ function App() {
     }, [])
 
     useEffect((): void => {
-        axios.get('/api/foodSpot')
-            .then(response => {
-                setFoodSpots(response.data);
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
-    }, [])
+        if (user !== undefined && user !== "anonymousUser") {
+            axios.get('/api/foodSpot')
+                .then(response => {
+                    setFoodSpots(response.data);
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        }
+    }, [user])
+
 
     function getAllFoodSpots(): void {
         axios.get('/api/foodSpot')
@@ -97,27 +107,27 @@ function App() {
             <Routes>
                 <Route element={<ProtectedPaths user={user}/>}>
                     <Route path={"/"}
-                           element={<HomePage onSignedIn={handleSignedIn} user={user}/>}>
+                           element={<HomePage onSignedIn={handleSignedIn} user={user} onLogout={handleLogout}/>}>
                     </Route>
                     <Route path={"/addFoodSpot"}
                            element={<AddForm onAdd={handleAddFoodSpot}/>}>
                     </Route>
                     {allCategories.map((category: string) => {
                         const filteredByCurrentCategory: FoodSpot[] = foodSpots.filter((spot: FoodSpot) => spot.category == category)
-                        return (<>
-                                <Route path={`/${category}`} key={category}
+                        return (<Fragment key={category}>
+                                <Route path={`/${category}`}
                                        element={<FoodSpotCard foodSpots={foodSpots}/>}>
                                 </Route>
                                 {filteredByCurrentCategory.map((foodSpot: FoodSpot) => {
                                     return (
-                                        <Route path={`/${category}/${foodSpot.id}`} key={category + foodSpot.id}
+                                        <Route path={`/${foodSpot.category}/${foodSpot.id}`} key={category + foodSpot.id}
                                                element={<FoodSpotDetail onDelete={handleDeleteFoodSpot}
                                                                         onUpdate={handleUpdateFoodSpot} apiKey={apiKey}
                                                                         foodSpot={foodSpot}/>}>
                                         </Route>
                                     )
                                 })}
-                            </>
+                            </Fragment>
                         )
                     })}
                 </Route>
