@@ -35,7 +35,6 @@ public class FoodSpotUserController {
     @PostMapping("/sign-up")
     public String signUp(@RequestBody FoodSpotUserForSignUp dtoUser){
         return foodSpotUserService.signUp(dtoUser);
-
     }
 }
 
