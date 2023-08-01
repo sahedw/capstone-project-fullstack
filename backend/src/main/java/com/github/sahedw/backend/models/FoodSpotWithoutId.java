@@ -9,7 +9,7 @@ public class FoodSpotWithoutId {
     private String id;
 
     @NotBlank
-    @Size(min=1, max=150)
+    @Size(min=2, max=150)
     private String name;
 
     @NotBlank

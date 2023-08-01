@@ -54,12 +54,92 @@ class FoodSpotUserControllerTest {
                         .content("""
                                 {
                                     "username": "franz",
-                                    "password": "franz1"
+                                    "password": "franz1234"
                                 }
                                 """)
                         .with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(
                         "franz"));
+    }
+
+    @Test
+    void getException_whenSigningUpWithTooShortUsername() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/user/sign-up")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "username": "s",
+                                    "password": "franz19870"
+                                }
+                                """)
+                        .with(csrf()))
+                .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
+                .andExpect(MockMvcResultMatchers.content().json(
+                        """
+                                {
+                                    "message": "size must be between 5 and 50"
+                                }
+                                        """));
+    }
+
+    @Test
+    void getException_whenSigningUpWithBlankUsername() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/user/sign-up")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "username": "        ",
+                                    "password": "franz19870"
+                                }
+                                """)
+                        .with(csrf()))
+                .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
+                .andExpect(MockMvcResultMatchers.content().json(
+                        """
+                                {
+                                    "message": "must not be blank"
+                                }
+                                        """));
+    }
+
+    @Test
+    void getException_whenSigningUpWithTooShortPassword() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/user/sign-up")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "username": "franzi12345",
+                                    "password": "fra"
+                                }
+                                """)
+                        .with(csrf()))
+                .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
+                .andExpect(MockMvcResultMatchers.content().json(
+                        """
+                                {
+                                    "message": "size must be between 8 and 50"
+                                }
+                                        """));
+    }
+
+    @Test
+    void getException_whenSigningUpWithBlankPassword() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/user/sign-up")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "username": "franzi12345",
+                                    "password": "           "
+                                }
+                                """)
+                        .with(csrf()))
+                .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
+                .andExpect(MockMvcResultMatchers.content().json(
+                        """
+                                {
+                                    "message": "must not be blank"
+                                }
+                                        """));
     }
 }

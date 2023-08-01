@@ -1,5 +1,6 @@
 package com.github.sahedw.backend.controllers;
 
+import com.github.sahedw.backend.exceptions.ErrorMessage;
 import com.github.sahedw.backend.googlemaps.GoogleMapsConfig;
 import com.github.sahedw.backend.models.FoodSpot;
 import com.github.sahedw.backend.models.FoodSpotRepo;
@@ -153,5 +154,49 @@ class FoodSpotControllerTest {
                         .with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedFoodSpotsList));
+    }
+
+    @Test
+    @WithMockUser(username = "sahed")
+    void expectMethodArgumentNotValidException_whenNameTooShortPostRequest() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/foodSpot")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "name": "b",
+                                    "address": "Steindamm 58",
+                                    "category": "DOENER"
+                                }
+                                """)
+                        .with(csrf()))
+                .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                        {
+                            "message": "size must be between 2 and 150"
+                        }
+                        """));
+    }
+
+    @Test
+    @WithMockUser(username = "sahed")
+    void expectMethodArgumentNotValidException_whenBlankNamePostRequest() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/foodSpot")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "name": "   ",
+                                    "address": "Steindamm 58",
+                                    "category": "DOENER"
+                                }
+                                """)
+                        .with(csrf()))
+                .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                        {
+                            "message": "must not be blank"
+                        }
+                        """));
     }
 }
