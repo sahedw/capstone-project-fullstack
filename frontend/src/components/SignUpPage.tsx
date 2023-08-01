@@ -25,7 +25,7 @@ function SignUpPage({onRegistration}: Props) {
                 password: password
             }
             onRegistration(newUser);
-            navigate(-1);
+            navigate("/");
         } else {
             alert("Password is not identical")
         }

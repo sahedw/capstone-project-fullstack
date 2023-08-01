@@ -46,8 +46,8 @@ function App() {
 
     function handleRegistration(newUserForRegistration: FoodSpotUserWithoutId) {
         axios.post("/api/user/sign-up", newUserForRegistration)
-            .then(response => {
-                setUser(response.data)
+            .then(() => {
+                handleLogin(newUserForRegistration.username, newUserForRegistration.password)
             })
     }
 
