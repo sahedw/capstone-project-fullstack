@@ -22,5 +22,11 @@ public class FoodSpotUserController {
                 .getAuthentication()
                 .getName();
     }
+
+    @PostMapping("/sign-up")
+    public String signUp(){
+        return foodSpotUserService.signUp(dtoQuizUser);
+
+    }
 }
 
