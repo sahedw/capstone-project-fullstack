@@ -1,7 +1,7 @@
-import {useNavigate} from "react-router-dom";
 import {FormEvent, useState} from "react";
 import {FoodSpotUserWithoutId} from "../types/FoodSpotUserWithoutId.ts";
 import SeePassword from "../icons/SeePassword.tsx";
+import toast, {Toaster} from "react-hot-toast";
 
 type Props = {
     onRegistration: (newUser: FoodSpotUserWithoutId) => void
@@ -13,8 +13,6 @@ function SignUpPage({onRegistration}: Props) {
     const [repeatedPassword, setRepeatedPassword] = useState<string>("")
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [showRepeatedPassword, setShowRepeatedPassword] = useState<boolean>(false)
-
-    const navigate = useNavigate()
 
     function isIdentical(password: string, secondPassword: string) {
         return password === secondPassword;
@@ -28,10 +26,22 @@ function SignUpPage({onRegistration}: Props) {
                 username: username,
                 password: password
             }
-            onRegistration(newUser);
-            navigate("/");
+            toast.loading('Registering...');
+            setTimeout(() => {
+                onRegistration(newUser);
+            }, 2000);
         } else {
-            alert("Password is not identical")
+            toast("Passwort muss identisch sein", {
+                icon: '👀',
+                style: {
+                    border: '2px solid #713200',
+                    padding: '10px',
+                    color: 'black',
+                    boxShadow: "8px 8px 0px -2px #000000",
+                    backgroundColor: "#f3d935"
+
+                }
+            })
         }
     }
 
@@ -45,6 +55,8 @@ function SignUpPage({onRegistration}: Props) {
 
 
     return (
+        <>
+            <div><Toaster/></div>
         <section className={"form-add-container"}>
             <form onSubmit={handleSignUpSubmit} className={"form login"}>
                 <section className={"form-header-container"}>
@@ -95,6 +107,8 @@ function SignUpPage({onRegistration}: Props) {
                 </section>
             </form>
         </section>
+        </>
+
     );
 }
 
