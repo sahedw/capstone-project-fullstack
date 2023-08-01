@@ -1,11 +1,22 @@
 package com.github.sahedw.backend.models;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
 public class FoodSpotWithoutId {
     private String id;
+
+    @NotBlank
+    @Size(min=1, max=150)
     private String name;
+
+    @NotBlank
+    @Size(min=5, max=100)
     private String address;
+
+    @NotBlank
+    @Size(min=5, max=256)
     private String category;
 }
