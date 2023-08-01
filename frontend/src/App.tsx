@@ -11,6 +11,8 @@ import {FoodSpotWithoutId} from "./types/FoodSpotWithoutId.ts";
 import FoodSpotDetail from "./components/FoodSpotDetail.tsx";
 import ProtectedPaths from "./components/ProtectedPaths.tsx";
 import LoginPage from "./components/LoginPage.tsx";
+import SignUpPage from "./components/SignUpPage.tsx";
+import {FoodSpotUserWithoutId} from "./types/FoodSpotUserWithoutId.ts";
 
 
 function App() {
@@ -39,6 +41,13 @@ function App() {
             .then(response => {
                 setUser(response.data)
                 navigate("/")
+            })
+    }
+
+    function handleRegistration(newUserForRegistration: FoodSpotUserWithoutId) {
+        axios.post("/api/user/sign-up", newUserForRegistration)
+            .then(response => {
+                setUser(response.data)
             })
     }
 
@@ -132,6 +141,8 @@ function App() {
                     })}
                 </Route>
                 <Route path={"/login"} element={<LoginPage onLogin={handleLogin}/>}>
+                </Route>
+                <Route path={"/sign-up"} element={<SignUpPage onRegistration={handleRegistration}/>}>
                 </Route>
             </Routes>
         </>

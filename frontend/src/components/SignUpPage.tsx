@@ -1,24 +1,41 @@
+import {useNavigate} from "react-router-dom";
 import {FormEvent, useState} from "react";
-import {Link} from "react-router-dom";
+import {FoodSpotUserWithoutId} from "../types/FoodSpotUserWithoutId.ts";
 
 type Props = {
-    onLogin: (username: string, password: string) => void
+    onRegistration: (newUser: FoodSpotUserWithoutId) => void
 }
-
-function LoginPage({onLogin}: Props) {
+function SignUpPage({onRegistration}: Props) {
     const [username, setUsername] = useState<string>("")
     const [password, setPassword] = useState<string>("")
+    const [repeatedPassword, setRepeatedPassword] = useState<string>("")
 
-    function handleLogin(e: FormEvent) {
+    const navigate = useNavigate()
+
+    function isIdentical(password: string, secondPassword: string) {
+        return password === secondPassword;
+    }
+
+
+    function handleSignUpSubmit(e: FormEvent) {
         e.preventDefault()
-        onLogin(username, password)
+        if (isIdentical(password, repeatedPassword)) {
+            const newUser = {
+                username: username,
+                password: password
+            }
+            onRegistration(newUser);
+            navigate(-1);
+        } else {
+            alert("Password is not identical")
+        }
     }
 
     return (
         <section className={"form-add-container"}>
-            <form onSubmit={handleLogin} className={"form login"}>
+            <form onSubmit={handleSignUpSubmit} className={"form login"}>
                 <section className={"form-header-container"}>
-                    <h2>Login into your account:</h2>
+                    <h2>Insert your details:</h2>
                 </section>
                 <section className={"form-main-container"}>
                     <section className={"form-section-container"}>
@@ -43,11 +60,17 @@ function LoginPage({onLogin}: Props) {
                                required
                         />
                     </section>
-                </section>
-                <section>
-                    <Link to={"/sign-up"} className={"link sign-up"}>
-                        <strong>You don't have an account? Signup here!</strong>
-                    </Link>
+                    <section className={"form-section-container"}>
+                        <input className={"add-form-input"}
+                               placeholder={"Repeat your password"}
+                               type="text"
+                               name={"repeatedPassword"}
+                               onChange={(e) => {
+                                   setRepeatedPassword(e.currentTarget.value)
+                               }}
+                               required
+                        />
+                    </section>
                 </section>
                 <section className={"add-button-container"}>
                     <button className={"add-button"}>Login</button>
@@ -57,5 +80,4 @@ function LoginPage({onLogin}: Props) {
     );
 }
 
-export default LoginPage;
-
+export default SignUpPage;
