@@ -9,6 +9,20 @@
     text-decoration: none;
 }
 
+.sign-up {
+    color: rgb(50, 45, 194);
+}
+
+.password {
+    position: relative;
+}
+
+.password-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
 .foodspot-card-container {
     height: 170px;
     width: 120px;
@@ -134,6 +148,10 @@
     box-shadow: 9px 9px 0px -2px #000000;
     background-color: #f3d935;
     position: relative;
+}
+
+.login {
+    justify-content: center;
 }
 
 .form-update {
