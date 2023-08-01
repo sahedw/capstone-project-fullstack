@@ -3,6 +3,7 @@ package com.github.sahedw.backend.controllers;
 
 import com.github.sahedw.backend.security.FoodSpotUserForSignUp;
 import com.github.sahedw.backend.security.FoodSpotUserService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class FoodSpotUserController {
     }
 
     @PostMapping("/sign-up")
-    public String signUp(@RequestBody FoodSpotUserForSignUp dtoUser){
+    public String signUp(@Valid @RequestBody FoodSpotUserForSignUp dtoUser){
         return foodSpotUserService.signUp(dtoUser);
     }
 }

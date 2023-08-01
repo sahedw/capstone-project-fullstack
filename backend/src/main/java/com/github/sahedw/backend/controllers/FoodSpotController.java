@@ -3,6 +3,7 @@ package com.github.sahedw.backend.controllers;
 import com.github.sahedw.backend.models.FoodSpotWithoutId;
 import com.github.sahedw.backend.models.FoodSpot;
 import com.github.sahedw.backend.models.FoodSpotService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class FoodSpotController {
     }
 
     @PostMapping
-    public FoodSpot add(@RequestBody FoodSpotWithoutId foodSpotWithoutId) {
+    public FoodSpot add(@Valid @RequestBody FoodSpotWithoutId foodSpotWithoutId) {
       return foodSpotService.addFoodSpot(foodSpotWithoutId);
     }
 
@@ -33,7 +34,7 @@ public class FoodSpotController {
     }
 
     @PutMapping("/{id}")
-    public FoodSpot update(@PathVariable String id, @RequestBody FoodSpotWithoutId updatedFoodSpotDto) {
+    public FoodSpot update(@PathVariable String id, @Valid @RequestBody FoodSpotWithoutId updatedFoodSpotDto) {
         return foodSpotService.updateFoodSpot(id, updatedFoodSpotDto);
     }
 
