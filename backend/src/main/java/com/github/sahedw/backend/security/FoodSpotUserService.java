@@ -1,5 +1,6 @@
 package com.github.sahedw.backend.security;
 
+import com.github.sahedw.backend.models.IdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,12 +14,18 @@ public class FoodSpotUserService {
 
     private final FoodSpotUserRepo foodSpotUserRepo;
 
+    private final IdService idService;
+
     private final PasswordEncoder encoder = Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
 
-    public String signUp(DtoQuizUser quizUser) {
-        String hashedPassword = encoder.encode(quizUser.password());
-        QuizUser newQuizUser = new QuizUser(IdService.uuid(), quizUser.username(), hashedPassword, List.of());
-        quizUserRepo.insert(newQuizUser);
-        return newQuizUser.username();
+    public String signUp(FoodSpotUserForSignUp dtoUser) {
+        String hashedPassword = encoder.encode(dtoUser.password());
+        FoodSpotUser newFoodSpotUser = new FoodSpotUser(
+                idService.randomId(),
+                dtoUser.username(),
+                hashedPassword,
+                List.of());
+        foodSpotUserRepo.insert(newFoodSpotUser);
+        return newFoodSpotUser.username();
     }
 }
