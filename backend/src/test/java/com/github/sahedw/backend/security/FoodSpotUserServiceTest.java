@@ -1,5 +1,7 @@
 package com.github.sahedw.backend.security;
 
+import com.github.sahedw.backend.exceptions.UsernameAlreadyExistsException;
+import com.github.sahedw.backend.models.FoodSpot;
 import com.github.sahedw.backend.models.IdService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -8,17 +10,23 @@ import org.springframework.security.crypto.password.AbstractPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class FoodSpotUserServiceTest {
 
-    FoodSpotUserRepo foodSpotUserRepo = mock(FoodSpotUserRepo.class);
+    FoodSpotUserRepo foodSpotUserRepoMocked = mock(FoodSpotUserRepo.class);
 
-    IdService idService = mock(IdService.class);
+    IdService idServiceMocked = mock(IdService.class);
 
-    FoodSpotUserService foodSpotUserService = new FoodSpotUserService(foodSpotUserRepo, idService);
+    FoodSpotUserService foodSpotUserServiceMocked = new FoodSpotUserService(foodSpotUserRepoMocked, idServiceMocked);
+
+
+    IdService idServiceReal = new IdService();
+    FoodSpotUserService foodSpotUserServiceReal = new FoodSpotUserService(foodSpotUserRepoMocked, idServiceReal);
 
     PasswordEncoder encoder = mock(AbstractPasswordEncoder.class);
 
@@ -29,18 +37,32 @@ class FoodSpotUserServiceTest {
         FoodSpotUserForSignUp incomingUser = new FoodSpotUserForSignUp( "hans", "hans1");
         String expected = incomingUser.username();
         //WHEN
-        when(idService.randomId()).thenReturn("123");
+        when(idServiceMocked.randomId()).thenReturn("123");
         when(encoder.encode("hans1")).thenReturn("123456789");
-        FoodSpotUser newUser = new FoodSpotUser(idService.randomId(), incomingUser.username(), encoder.encode(incomingUser.password()), List.of());
-        when(foodSpotUserRepo.insert(ArgumentMatchers.any(FoodSpotUser.class))).thenReturn(null);
+        FoodSpotUser newUser = new FoodSpotUser(idServiceMocked.randomId(), incomingUser.username(), encoder.encode(incomingUser.password()), List.of());
+        when(foodSpotUserRepoMocked.insert(ArgumentMatchers.any(FoodSpotUser.class))).thenReturn(null);
 
-        String actual = foodSpotUserService.signUp(incomingUser);
+        String actual = foodSpotUserServiceMocked.signUp(incomingUser);
 
         // THEN
-        verify(idService, times(2)).randomId();
+        verify(idServiceMocked, times(2)).randomId();
         verify(encoder).encode("hans1");
-        verify(foodSpotUserRepo).insert(ArgumentMatchers.any(FoodSpotUser.class));
+        verify(foodSpotUserRepoMocked).insert(ArgumentMatchers.any(FoodSpotUser.class));
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void expectUsernameAlreadyExistsException_whenUsernameAlreadyExists() {
+        // GIVEN
+        FoodSpotUser newUser = new FoodSpotUser("123" ,"franz", "franz1", List.of());
+        FoodSpotUserForSignUp newUserSignUp = new FoodSpotUserForSignUp("franz", "franz1");
+        foodSpotUserServiceReal.signUp(newUserSignUp);
+        // WHEN
+        when(foodSpotUserRepoMocked.findByUsername("franz")).thenReturn(Optional.of(newUser));
+        FoodSpotUserForSignUp secondUser = new FoodSpotUserForSignUp("franz", "franz2");
+
+        // Assert
+        assertThrows(UsernameAlreadyExistsException.class, () -> foodSpotUserServiceReal.signUp(secondUser));
     }
 
 }
