@@ -13,6 +13,16 @@
     color: rgb(50, 45, 194);
 }
 
+.password {
+    position: relative;
+}
+
+.password-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
 .foodspot-card-container {
     height: 170px;
     width: 120px;

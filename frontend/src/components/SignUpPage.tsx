@@ -1,14 +1,18 @@
 import {useNavigate} from "react-router-dom";
 import {FormEvent, useState} from "react";
 import {FoodSpotUserWithoutId} from "../types/FoodSpotUserWithoutId.ts";
+import SeePassword from "../icons/SeePassword.tsx";
 
 type Props = {
     onRegistration: (newUser: FoodSpotUserWithoutId) => void
 }
+
 function SignUpPage({onRegistration}: Props) {
     const [username, setUsername] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [repeatedPassword, setRepeatedPassword] = useState<string>("")
+    const [showPassword, setShowPassword] = useState<boolean>(false)
+    const [showRepeatedPassword, setShowRepeatedPassword] = useState<boolean>(false)
 
     const navigate = useNavigate()
 
@@ -31,6 +35,15 @@ function SignUpPage({onRegistration}: Props) {
         }
     }
 
+    function handleShowPassword() {
+        setShowPassword(!showPassword)
+    }
+
+    function handleShowRepeatedPassword() {
+        setShowRepeatedPassword(!showRepeatedPassword)
+    }
+
+
     return (
         <section className={"form-add-container"}>
             <form onSubmit={handleSignUpSubmit} className={"form login"}>
@@ -48,32 +61,37 @@ function SignUpPage({onRegistration}: Props) {
                                }}
                                required
                         />
+
                     </section>
-                    <section className={"form-section-container"}>
+                    <section className={"form-section-container password"}>
                         <input className={"add-form-input"}
                                placeholder={"Password"}
-                               type="text"
+                               type={showPassword ? "text" : "password"}
                                name={"password"}
                                onChange={(e) => {
                                    setPassword(e.currentTarget.value)
                                }}
                                required
                         />
+                        <SeePassword className={"password-icon"} size={"1.5em"} onShowPassword={handleShowPassword}
+                                     currentShowValue={showPassword}/>
                     </section>
-                    <section className={"form-section-container"}>
+                    <section className={"form-section-container password"}>
                         <input className={"add-form-input"}
                                placeholder={"Repeat your password"}
-                               type="text"
+                               type={showRepeatedPassword ? "text" : "password"}
                                name={"repeatedPassword"}
                                onChange={(e) => {
                                    setRepeatedPassword(e.currentTarget.value)
                                }}
                                required
                         />
+                        <SeePassword className={"password-icon"} size={"1.5em"} onShowPassword={handleShowRepeatedPassword}
+                                     currentShowValue={showRepeatedPassword}/>
                     </section>
                 </section>
                 <section className={"add-button-container"}>
-                    <button className={"add-button"}>Login</button>
+                    <button className={"add-button"}>Sign-up</button>
                 </section>
             </form>
         </section>

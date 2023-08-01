@@ -1,5 +1,6 @@
 import {FormEvent, useState} from "react";
 import {Link} from "react-router-dom";
+import SeePassword from "../icons/SeePassword.tsx";
 
 type Props = {
     onLogin: (username: string, password: string) => void
@@ -8,6 +9,11 @@ type Props = {
 function LoginPage({onLogin}: Props) {
     const [username, setUsername] = useState<string>("")
     const [password, setPassword] = useState<string>("")
+    const [showPassword, setShowPassword] = useState<boolean>(false)
+
+    function handleShowPassword() {
+        setShowPassword(!showPassword)
+    }
 
     function handleLogin(e: FormEvent) {
         e.preventDefault()
@@ -32,16 +38,18 @@ function LoginPage({onLogin}: Props) {
                                required
                         />
                     </section>
-                    <section className={"form-section-container"}>
+                    <section className={"form-section-container password"}>
                         <input className={"add-form-input"}
                                placeholder={"Password"}
-                               type="text"
+                               type={showPassword ? "text" : "password"}
                                name={"password"}
                                onChange={(e) => {
                                    setPassword(e.currentTarget.value)
                                }}
                                required
                         />
+                        <SeePassword className={"password-icon"} size={"1.5em"} onShowPassword={handleShowPassword}
+                                     currentShowValue={showPassword}/>
                     </section>
                 </section>
                 <section>
