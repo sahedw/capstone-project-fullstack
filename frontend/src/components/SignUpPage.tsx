@@ -26,17 +26,27 @@ function SignUpPage({onRegistration}: Props) {
                 username: username,
                 password: password
             }
-            toast.loading('Registering...');
-            setTimeout(() => {
-                onRegistration(newUser);
-            }, 2000);
-        } else {
-            toast("Passwort muss identisch sein", {
-                icon: '👀',
+            const registerToast = toast.loading('Registering...',  {
                 style: {
                     border: '2px solid #713200',
                     padding: '10px',
                     color: 'black',
+                    boxShadow: "8px 8px 0px -2px #000000",
+                    backgroundColor: "#f3d935"
+
+                }
+            });
+            setTimeout(() => {
+                toast.dismiss(registerToast)
+                onRegistration(newUser);
+            }, 2000);
+        } else {
+            toast("Password must be identical", {
+                icon: '👀',
+                style: {
+                    border: '2px solid #713200',
+                    padding: '10px',
+                    color: 'orangered',
                     boxShadow: "8px 8px 0px -2px #000000",
                     backgroundColor: "#f3d935"
 
@@ -73,7 +83,10 @@ function SignUpPage({onRegistration}: Props) {
                                }}
                                required
                         />
-
+                    <ul>
+                        <li>Can't be blank</li>
+                        <li>Must contain at least five characters</li>
+                    </ul>
                     </section>
                     <section className={"form-section-container password"}>
                         <input className={"add-form-input"}
@@ -85,6 +98,10 @@ function SignUpPage({onRegistration}: Props) {
                                }}
                                required
                         />
+                        <ul>
+                            <li>Can't be blank</li>
+                            <li>Must contain at least eight characters</li>
+                        </ul>
                         <SeePassword className={"password-icon"} size={"1.5em"} onShowPassword={handleShowPassword}
                                      currentShowValue={showPassword}/>
                     </section>
@@ -98,6 +115,9 @@ function SignUpPage({onRegistration}: Props) {
                                }}
                                required
                         />
+                        <ul>
+                            <li>Must be identical</li>
+                        </ul>
                         <SeePassword className={"password-icon"} size={"1.5em"} onShowPassword={handleShowRepeatedPassword}
                                      currentShowValue={showRepeatedPassword}/>
                     </section>

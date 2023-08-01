@@ -14,6 +14,7 @@ import LoginPage from "./components/LoginPage.tsx";
 import SignUpPage from "./components/SignUpPage.tsx";
 import {FoodSpotUserWithoutId} from "./types/FoodSpotUserWithoutId.ts";
 import toast from "react-hot-toast";
+import executeRightToast from "./utils/executeRightToast.ts";
 
 
 function App() {
@@ -53,15 +54,14 @@ function App() {
             .catch(error => {
                 console.log(error)
                 navigate("/sign-up");
-               // toast.error(`${error.response.data.message}`)
-                toast(`${error.response.data.message}`, {
+                toast("Some requirements are not met.", {
                     icon: '🤷🏻‍',
                     style: {
                         border: '2px solid #713200',
                         padding: '10px',
                         color: 'black',
                         boxShadow: "8px 8px 0px -2px #000000",
-                        backgroundColor: "#f3d935"
+                        backgroundColor: "orangered"
 
                     }
                 })
