@@ -5,6 +5,7 @@ import com.github.sahedw.backend.exceptions.ErrorMessage;
 import com.github.sahedw.backend.exceptions.UsernameAlreadyExistsException;
 import com.github.sahedw.backend.security.FoodSpotUserForSignUp;
 import com.github.sahedw.backend.security.FoodSpotUserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,7 +33,7 @@ public class FoodSpotUserController {
     }
 
     @PostMapping("/login")
-    public String login() {
+    public String login(HttpServletRequest request) {
         return SecurityContextHolder
                 .getContext()
                 .getAuthentication()

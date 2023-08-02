@@ -41,13 +41,34 @@ function App() {
         axios.post("/api/user/login", null, {auth: {username, password}})
             .then(response => {
                 setUser(response.data)
-                toast.success("You're logged in!")
+                toast("You're logged in!", {
+                    icon: '🎉',
+                    style: {
+                        border: '2px solid #713200',
+                        padding: '10px',
+                        color: 'black',
+                        boxShadow: "8px 8px 0px -2px #000000",
+                        backgroundColor: "lightgreen"
+
+                    }
+                })
                 setTimeout(() => {
                     navigate("/")
                 }, 1000);
             })
             .catch(error => {
-                toast.error("Something is off..")
+                if (error.response.status === 401)
+                    toast("Username doesn't exist.", {
+                        icon: '🤷🏻‍',
+                        style: {
+                            border: '2px solid #713200',
+                            padding: '10px',
+                            color: 'black',
+                            boxShadow: "8px 8px 0px -2px #000000",
+                            backgroundColor: "orangered"
+
+                        }
+                    })
             });
     }
 
