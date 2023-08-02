@@ -1,14 +1,19 @@
 package com.github.sahedw.backend.controllers;
 
+import com.github.sahedw.backend.security.FoodSpotUser;
+import com.github.sahedw.backend.security.FoodSpotUserRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -19,6 +24,9 @@ class FoodSpotUserControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @Autowired
+    FoodSpotUserRepo foodSpotUserRepo;
 
     @Test
     void getAnonymousUser_whenEndpointIsCalled() throws Exception {
@@ -48,6 +56,7 @@ class FoodSpotUserControllerTest {
     }
 
     @Test
+    @DirtiesContext
     void getNewUsername_whenSigningUp() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/user/sign-up")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -61,6 +70,28 @@ class FoodSpotUserControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(
                         "franz"));
+    }
+
+    @Test
+    @DirtiesContext
+    void getUsernameAlreadyExistsException_whenSigningUpWithAlreadyExistingUsername() throws Exception {
+        FoodSpotUser existingUser = new FoodSpotUser("123", "franz", "098ß98ß088", List.of());
+        foodSpotUserRepo.insert(existingUser);
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/user/sign-up")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "username": "franz",
+                                    "password": "franz1234"
+                                }
+                                """)
+                        .with(csrf()))
+                .andExpect(MockMvcResultMatchers.status().isConflict())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                        {
+                            "message": "The username franz already exists."
+                        }
+                        """));
     }
 
     @Test
