@@ -87,7 +87,7 @@ function SignUpPage({onRegistration}: Props) {
                             />
                             <ul className={"requirement-list-container"}>
                                 <li className={username.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
-                                <li className={username.length < 5 ? "invalid" : "valid"}>Must contain at least five
+                                <li className={username.length < 5 ? "invalid" : "valid"}>Must contain at least 5
                                     characters
                                 </li>
                             </ul>
@@ -104,7 +104,7 @@ function SignUpPage({onRegistration}: Props) {
                             />
                             <ul className={"requirement-list-container"}>
                                 <li className={password.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
-                                <li className={password.length < 8 ? "invalid" : "valid"}>Must contain at least eight
+                                <li className={password.length < 8 ? "invalid" : "valid"}>Must contain at least 8
                                     characters
                                 </li>
                             </ul>
@@ -122,7 +122,10 @@ function SignUpPage({onRegistration}: Props) {
                                    required
                             />
                             <ul className={"requirement-list-container"}>
-                                <li className={repeatedPassword !== password ? "invalid" : "valid"}>Must be identical
+                                <li className={repeatedPassword !== password
+                                && repeatedPassword.trim().length === 0
+                                    ? "invalid" : "valid"}>
+                                    Must be identical
                                 </li>
                             </ul>
                             <SeePassword className={"password-icon"} size={"1.5em"}

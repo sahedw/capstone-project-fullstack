@@ -26,7 +26,6 @@ public class FoodSpot {
     private String address;
 
     @NotBlank
-    @Size(min=5, max=256)
     private String category;
 
 }

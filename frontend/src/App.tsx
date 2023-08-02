@@ -148,9 +148,34 @@ function App() {
 
     function handleAddFoodSpot(newFoodSpot: FoodSpotWithoutId): void {
         axios.post("/api/foodSpot", newFoodSpot)
-            .then(() => getAllFoodSpots())
+            .then(() => {
+                getAllFoodSpots()
+                toast("Successful!", {
+                    duration: 1000,
+                    icon: '🕺🏻',
+                    style: {
+                        border: '2px solid #713200',
+                        padding: '10px',
+                        color: 'black',
+                        boxShadow: "8px 8px 0px -2px #000000",
+                        backgroundColor: "lightgreen"
+
+                    }
+                })
+            })
             .catch(function (error) {
                 console.error(error);
+                toast("Some requirements were not met", {
+                    icon: '🤷🏻‍',
+                    style: {
+                        border: '2px solid #713200',
+                        padding: '10px',
+                        color: 'black',
+                        boxShadow: "8px 8px 0px -2px #000000",
+                        backgroundColor: "orangered"
+
+                    }
+                })
             });
     }
 

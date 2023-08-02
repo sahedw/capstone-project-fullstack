@@ -2,6 +2,7 @@ import {allCategories} from "../utils/allCategories.ts";
 import {FormEvent, useState} from "react";
 import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
 import BackButton from "./BackButton.tsx";
+import toast, {Toaster} from "react-hot-toast";
 
 type Props = {
     onAdd: (newFoodSpot: FoodSpotWithoutId) => void;
@@ -9,9 +10,9 @@ type Props = {
 
 function AddForm({onAdd}: Props) {
 
-    const [name, setName] = useState<string>()
-    const [category, setCategory] = useState<string>()
-    const [address, setAddress] = useState<string>()
+    const [name, setName] = useState<string>("")
+    const [category, setCategory] = useState<string>("")
+    const [address, setAddress] = useState<string>("")
 
     function handleAddFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -20,11 +21,25 @@ function AddForm({onAdd}: Props) {
             category: category,
             address: address
         };
-        onAdd(newDtoFoodSpot)
+        const addFoodSpotToast = toast.loading('Add to collection...', {
+            style: {
+                border: '2px solid #713200',
+                padding: '10px',
+                color: 'black',
+                boxShadow: "8px 8px 0px -2px #000000",
+                backgroundColor: "#f3d935"
+
+            }
+        });
+        setTimeout(() => {
+            toast.dismiss(addFoodSpotToast)
+            onAdd(newDtoFoodSpot)
+        }, 1500);
     }
 
     return (
         <section>
+            <div><Toaster/></div>
             <section className={"form-add-container"}>
                 <BackButton setClass={"normal"}/>
                 <form onSubmit={handleAddFormSubmit} className={"form"}>
@@ -49,6 +64,12 @@ function AddForm({onAdd}: Props) {
                                    }}
                                    required
                             />
+                            <ul className={"requirement-list-container"}>
+                                <li className={name.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
+                                <li className={name.length < 2 ? "invalid" : "valid"}>Must contain at least 2
+                                    characters
+                                </li>
+                            </ul>
                         </section>
                         <section className={"form-section-container"}>
                             <input className={"add-form-input"}
@@ -60,6 +81,12 @@ function AddForm({onAdd}: Props) {
                                    }}
                                    required
                             />
+                            <ul className={"requirement-list-container"}>
+                                <li className={address.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
+                                <li className={address.length < 5 ? "invalid" : "valid"}>Must contain at least 5
+                                    characters
+                                </li>
+                            </ul>
                         </section>
                         <section className={"form-section-container"}>
                             <select
@@ -73,10 +100,13 @@ function AddForm({onAdd}: Props) {
                                 <option value="default" disabled={true} hidden>Choose the category</option>
                                 {allCategories.map((category: string) => {
                                     return (
-                                        <option value={`${category}`} key={category}>{category}</option>
+                                        <option value={`${category}`} key={category}>{category === "DOENER" ? "DÖNER" : category}</option>
                                     )
                                 })}
                             </select>
+                            <ul className={"requirement-list-container"}>
+                                <li className={category === "" ? "invalid" : "valid"}>Mandatory pick</li>
+                            </ul>
                         </section>
                     </section>
                     <section className={"add-button-container"}>
