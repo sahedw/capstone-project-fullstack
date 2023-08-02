@@ -29,6 +29,21 @@ public class FoodSpotService {
         }
     }
 
+    private int getIndex(String id) {
+        int foundIndex = -1;
+        for (FoodSpot foodSpot : getUser().ownFoodSpots()) {
+            if (foodSpot.getId().equals(id)) {
+                foundIndex = getUser().ownFoodSpots().indexOf(foodSpot);
+            }
+        }
+
+        if (foundIndex != -1) {
+            return foundIndex;
+        } else {
+            throw new NoSuchElementException();
+        }
+    }
+
     public List<FoodSpot> allFoodSpots() {
         FoodSpotUser currentUser = getUser();
         return currentUser.ownFoodSpots();
@@ -55,12 +70,14 @@ public class FoodSpotService {
     }
 
     public FoodSpot updateFoodSpot(String id, FoodSpotWithoutId updatedFoodSpotDto) {
+        FoodSpotUser currentUserToUpdate = getUser();
         FoodSpot newUpdatedFoodSpot = new FoodSpot(
                 id,
                 updatedFoodSpotDto.getName(),
                 updatedFoodSpotDto.getAddress(),
                 updatedFoodSpotDto.getCategory());
-        return foodSpotRepo.save(newUpdatedFoodSpot);
+        currentUserToUpdate.ownFoodSpots().set(getIndex(id), newUpdatedFoodSpot);
+        return newUpdatedFoodSpot;
     }
 
     public List<FoodSpot> deleteFoodSpot(String idToDelete) {
