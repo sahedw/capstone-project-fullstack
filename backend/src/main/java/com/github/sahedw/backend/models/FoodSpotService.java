@@ -29,7 +29,8 @@ public class FoodSpotService {
     }
 
     public List<FoodSpot> allFoodSpots() {
-        return foodSpotRepo.findAll();
+        FoodSpotUser currentUser = getUser();
+        return currentUser.ownFoodSpots();
     }
 
     public FoodSpot addFoodSpot(FoodSpotWithoutId newFoodSpotDto) {
