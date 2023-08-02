@@ -14,7 +14,6 @@ import LoginPage from "./components/LoginPage.tsx";
 import SignUpPage from "./components/SignUpPage.tsx";
 import {FoodSpotUserWithoutId} from "./types/FoodSpotUserWithoutId.ts";
 import toast from "react-hot-toast";
-import executeRightToast from "./utils/executeRightToast.ts";
 
 
 function App() {
@@ -42,8 +41,14 @@ function App() {
         axios.post("/api/user/login", null, {auth: {username, password}})
             .then(response => {
                 setUser(response.data)
-                navigate("/")
+                toast.success("You're logged in!")
+                setTimeout(() => {
+                    navigate("/")
+                }, 1000);
             })
+            .catch(error => {
+                toast.error("Something is off..")
+            });
     }
 
     function handleRegistration(newUserForRegistration: FoodSpotUserWithoutId) {
@@ -54,17 +59,32 @@ function App() {
             .catch(error => {
                 console.log(error)
                 navigate("/sign-up");
-                toast("Some requirements are not met.", {
-                    icon: '🤷🏻‍',
-                    style: {
-                        border: '2px solid #713200',
-                        padding: '10px',
-                        color: 'black',
-                        boxShadow: "8px 8px 0px -2px #000000",
-                        backgroundColor: "orangered"
+                if (error.response.status === 409) {
+                    toast("Username already exists..", {
+                        icon: '🤷🏻‍',
+                        style: {
+                            border: '2px solid #713200',
+                            padding: '10px',
+                            color: 'black',
+                            boxShadow: "8px 8px 0px -2px #000000",
+                            backgroundColor: "orangered"
 
-                    }
-                })
+                        }
+                    })
+                } else {
+                    toast("Some requirements were not met", {
+                        icon: '🤷🏻‍',
+                        style: {
+                            border: '2px solid #713200',
+                            padding: '10px',
+                            color: 'black',
+                            boxShadow: "8px 8px 0px -2px #000000",
+                            backgroundColor: "orangered"
+
+                        }
+                    })
+                }
+
             })
     }
 

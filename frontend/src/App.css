@@ -154,6 +154,18 @@
     justify-content: center;
 }
 
+.requirement-list-container {
+    list-style-type: none;
+}
+
+.invalid {
+    color: red;
+}
+
+.valid {
+    color: green;
+}
+
 .form-update {
     display: flex;
     flex-direction: column;

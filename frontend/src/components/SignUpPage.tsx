@@ -46,9 +46,9 @@ function SignUpPage({onRegistration}: Props) {
                 style: {
                     border: '2px solid #713200',
                     padding: '10px',
-                    color: 'orangered',
+                    color: 'black',
                     boxShadow: "8px 8px 0px -2px #000000",
-                    backgroundColor: "#f3d935"
+                    backgroundColor: "orangered"
 
                 }
             })
@@ -83,9 +83,9 @@ function SignUpPage({onRegistration}: Props) {
                                }}
                                required
                         />
-                    <ul>
-                        <li>Can't be blank</li>
-                        <li>Must contain at least five characters</li>
+                    <ul className={"requirement-list-container"}>
+                        <li className={username.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
+                        <li className={username.length < 5 ? "invalid" : "valid"}>Must contain at least five characters</li>
                     </ul>
                     </section>
                     <section className={"form-section-container password"}>
@@ -98,9 +98,9 @@ function SignUpPage({onRegistration}: Props) {
                                }}
                                required
                         />
-                        <ul>
-                            <li>Can't be blank</li>
-                            <li>Must contain at least eight characters</li>
+                        <ul className={"requirement-list-container"} >
+                            <li className={password.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
+                            <li className={password.length < 8 ? "invalid" : "valid"}>Must contain at least eight characters</li>
                         </ul>
                         <SeePassword className={"password-icon"} size={"1.5em"} onShowPassword={handleShowPassword}
                                      currentShowValue={showPassword}/>
@@ -115,8 +115,8 @@ function SignUpPage({onRegistration}: Props) {
                                }}
                                required
                         />
-                        <ul>
-                            <li>Must be identical</li>
+                        <ul className={"requirement-list-container"}>
+                            <li className={repeatedPassword !== password ? "invalid" : "valid"}>Must be identical</li>
                         </ul>
                         <SeePassword className={"password-icon"} size={"1.5em"} onShowPassword={handleShowRepeatedPassword}
                                      currentShowValue={showRepeatedPassword}/>

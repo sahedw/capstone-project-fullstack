@@ -1,6 +1,7 @@
 import {FormEvent, useState} from "react";
 import {Link} from "react-router-dom";
 import SeePassword from "../icons/SeePassword.tsx";
+import toast, {Toaster} from "react-hot-toast";
 
 type Props = {
     onLogin: (username: string, password: string) => void
@@ -17,10 +18,24 @@ function LoginPage({onLogin}: Props) {
 
     function handleLogin(e: FormEvent) {
         e.preventDefault()
-        onLogin(username, password)
+        const registerToast = toast.loading('Logging in...',  {
+            style: {
+                border: '2px solid #713200',
+                padding: '10px',
+                color: 'black',
+                boxShadow: "8px 8px 0px -2px #000000",
+                backgroundColor: "#f3d935"
+
+            }
+        });
+        setTimeout(() => {
+            toast.dismiss(registerToast)
+            onLogin(username, password)
+        }, 2000);
     }
 
-    return (
+    return (<>
+        <div><Toaster/></div>
         <section className={"form-add-container"}>
             <form onSubmit={handleLogin} className={"form login"}>
                 <section className={"form-header-container"}>
@@ -62,6 +77,7 @@ function LoginPage({onLogin}: Props) {
                 </section>
             </form>
         </section>
+        </>
     );
 }
 
