@@ -42,6 +42,7 @@ function App() {
             .then(response => {
                 setUser(response.data)
                 toast("You're logged in!", {
+                    duration: 1000,
                     icon: '🎉',
                     style: {
                         border: '2px solid #713200',
@@ -59,6 +60,7 @@ function App() {
             .catch(error => {
                 if (error.response.status === 401)
                     toast("Username doesn't exist.", {
+                        duration: 1500,
                         icon: '🤷🏻‍',
                         style: {
                             border: '2px solid #713200',
