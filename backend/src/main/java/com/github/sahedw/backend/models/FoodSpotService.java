@@ -1,6 +1,9 @@
 package com.github.sahedw.backend.models;
 
+import com.github.sahedw.backend.security.FoodSpotUser;
+import com.github.sahedw.backend.security.FoodSpotUserRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +15,18 @@ import java.util.Optional;
 public class FoodSpotService {
 
     private final FoodSpotRepo foodSpotRepo;
-
     private final IdService idService;
+    private final FoodSpotUserRepo foodSpotUserRepo;
+
+    private FoodSpotUser getUser() {
+        Optional<FoodSpotUser> currentUser = foodSpotUserRepo.findByUsername(
+                SecurityContextHolder.getContext().getAuthentication().getName());
+        if (currentUser.isPresent()) {
+            return currentUser.get();
+        } else {
+            throw new NoSuchElementException();
+        }
+    }
 
     public List<FoodSpot> allFoodSpots() {
         return foodSpotRepo.findAll();
