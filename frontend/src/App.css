@@ -154,6 +154,18 @@
     justify-content: center;
 }
 
+.requirement-list-container {
+    list-style-type: none;
+}
+
+.invalid {
+    color: red;
+}
+
+.valid {
+    color: green;
+}
+
 .form-update {
     display: flex;
     flex-direction: column;
@@ -314,6 +326,11 @@
 .normal {
     left: 15px;
     top: 15px;
+}
+
+.sign-up-form {
+    top: 0;
+
 }
 
 .category-foodspots-container {

@@ -13,6 +13,7 @@ import ProtectedPaths from "./components/ProtectedPaths.tsx";
 import LoginPage from "./components/LoginPage.tsx";
 import SignUpPage from "./components/SignUpPage.tsx";
 import {FoodSpotUserWithoutId} from "./types/FoodSpotUserWithoutId.ts";
+import toast from "react-hot-toast";
 
 
 function App() {
@@ -40,14 +41,73 @@ function App() {
         axios.post("/api/user/login", null, {auth: {username, password}})
             .then(response => {
                 setUser(response.data)
-                navigate("/")
+                toast("You're logged in!", {
+                    duration: 1000,
+                    icon: '🎉',
+                    style: {
+                        border: '2px solid #713200',
+                        padding: '10px',
+                        color: 'black',
+                        boxShadow: "8px 8px 0px -2px #000000",
+                        backgroundColor: "lightgreen"
+
+                    }
+                })
+                setTimeout(() => {
+                    navigate("/")
+                }, 1000);
             })
+            .catch(error => {
+                if (error.response.status === 401)
+                    toast("Username doesn't exist.", {
+                        duration: 1500,
+                        icon: '🤷🏻‍',
+                        style: {
+                            border: '2px solid #713200',
+                            padding: '10px',
+                            color: 'black',
+                            boxShadow: "8px 8px 0px -2px #000000",
+                            backgroundColor: "orangered"
+
+                        }
+                    })
+            });
     }
 
     function handleRegistration(newUserForRegistration: FoodSpotUserWithoutId) {
         axios.post("/api/user/sign-up", newUserForRegistration)
             .then(() => {
                 handleLogin(newUserForRegistration.username, newUserForRegistration.password)
+            })
+            .catch(error => {
+                console.log(error)
+                navigate("/sign-up");
+                if (error.response.status === 409) {
+                    toast("Username already exists..", {
+                        icon: '🤷🏻‍',
+                        style: {
+                            border: '2px solid #713200',
+                            padding: '10px',
+                            color: 'black',
+                            boxShadow: "8px 8px 0px -2px #000000",
+                            backgroundColor: "orangered"
+
+                        }
+                    })
+                } else {
+                    toast("Some requirements were not met", {
+                        icon: '🤷🏻‍',
+                        style: {
+                            border: '2px solid #713200',
+                            padding: '10px',
+                            color: 'black',
+                            boxShadow: "8px 8px 0px -2px #000000",
+                            backgroundColor: "orangered"
+
+                        }
+                    })
+                }
+
             })
     }
 
@@ -88,9 +148,34 @@ function App() {
 
     function handleAddFoodSpot(newFoodSpot: FoodSpotWithoutId): void {
         axios.post("/api/foodSpot", newFoodSpot)
-            .then(() => getAllFoodSpots())
+            .then(() => {
+                getAllFoodSpots()
+                toast("Successful!", {
+                    duration: 1000,
+                    icon: '🕺🏻',
+                    style: {
+                        border: '2px solid #713200',
+                        padding: '10px',
+                        color: 'black',
+                        boxShadow: "8px 8px 0px -2px #000000",
+                        backgroundColor: "lightgreen"
+
+                    }
+                })
+            })
             .catch(function (error) {
                 console.error(error);
+                toast("Some requirements were not met", {
+                    icon: '🤷🏻‍',
+                    style: {
+                        border: '2px solid #713200',
+                        padding: '10px',
+                        color: 'black',
+                        boxShadow: "8px 8px 0px -2px #000000",
+                        backgroundColor: "orangered"
+
+                    }
+                })
             });
     }
 
