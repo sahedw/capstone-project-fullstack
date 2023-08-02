@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -31,9 +32,11 @@ public class FoodSpotService {
 
     private int getIndex(String id) {
         int foundIndex = -1;
-        for (FoodSpot foodSpot : getUser().ownFoodSpots()) {
+        List<FoodSpot> ownFoodSpots = getUser().ownFoodSpots();
+        for (FoodSpot foodSpot : ownFoodSpots) {
             if (foodSpot.getId().equals(id)) {
-                foundIndex = getUser().ownFoodSpots().indexOf(foodSpot);
+                foundIndex = ownFoodSpots.indexOf(foodSpot);
+                break;
             }
         }
 
@@ -55,8 +58,10 @@ public class FoodSpotService {
                 idService.randomId(),
                 newFoodSpotDto.getName(),
                 newFoodSpotDto.getAddress(),
-                newFoodSpotDto.getCategory());
+                newFoodSpotDto.getCategory(),
+                newFoodSpotDto.getPriceLevel());
         currentUserToAddTo.ownFoodSpots().add(newFoodSpot);
+        foodSpotUserRepo.save(currentUserToAddTo);
         return newFoodSpot;
     }
 
@@ -75,15 +80,27 @@ public class FoodSpotService {
                 id,
                 updatedFoodSpotDto.getName(),
                 updatedFoodSpotDto.getAddress(),
-                updatedFoodSpotDto.getCategory());
+                updatedFoodSpotDto.getCategory(),
+                updatedFoodSpotDto.getPriceLevel());
         currentUserToUpdate.ownFoodSpots().set(getIndex(id), newUpdatedFoodSpot);
+        foodSpotUserRepo.save(currentUserToUpdate);
         return newUpdatedFoodSpot;
     }
 
     public List<FoodSpot> deleteFoodSpot(String idToDelete) {
         FoodSpotUser currentUserToDeleteFrom = getUser();
-        if (currentUserToDeleteFrom.ownFoodSpots().contains(getById(idToDelete))) {
+        List<FoodSpot> listWithFoodSpotToDelete = new ArrayList<>();
+
+        for (FoodSpot foodSpot : currentUserToDeleteFrom.ownFoodSpots()) {
+            if (foodSpot.getId().equals(idToDelete)) {
+                int index = currentUserToDeleteFrom.ownFoodSpots().indexOf(foodSpot);
+                listWithFoodSpotToDelete.add(currentUserToDeleteFrom.ownFoodSpots().get(index));
+            }
+        }
+
+        if (!listWithFoodSpotToDelete.isEmpty()) {
             currentUserToDeleteFrom.ownFoodSpots().remove(getIndex(idToDelete));
+            foodSpotUserRepo.save(currentUserToDeleteFrom);
         } else {
             throw new NoSuchElementException("No FoodSpot with ID: " + idToDelete + " found.");
         }

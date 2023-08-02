@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class FoodSpotWithoutId {
-    private String id;
 
     @NotBlank
     @Size(min=2, max=150)
@@ -19,4 +18,6 @@ public class FoodSpotWithoutId {
     @NotBlank
     @Size(min=5, max=256)
     private String category;
+
+    private PriceLevel priceLevel;
 }

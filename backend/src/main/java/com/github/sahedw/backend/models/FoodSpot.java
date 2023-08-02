@@ -28,7 +28,6 @@ public class FoodSpot {
     @NotBlank
     private String category;
 
-    @NotBlank
     private PriceLevel priceLevel;
 
 }
