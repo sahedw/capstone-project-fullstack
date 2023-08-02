@@ -18,6 +18,7 @@ public class FoodSpotService {
     private final IdService idService;
     private final FoodSpotUserRepo foodSpotUserRepo;
 
+
     private FoodSpotUser getUser() {
         Optional<FoodSpotUser> currentUser = foodSpotUserRepo.findByUsername(
                 SecurityContextHolder.getContext().getAuthentication().getName());
@@ -34,12 +35,13 @@ public class FoodSpotService {
     }
 
     public FoodSpot addFoodSpot(FoodSpotWithoutId newFoodSpotDto) {
+        FoodSpotUser currentUserToAddTo = getUser();
         FoodSpot newFoodSpot = new FoodSpot(
                 idService.randomId(),
                 newFoodSpotDto.getName(),
                 newFoodSpotDto.getAddress(),
                 newFoodSpotDto.getCategory());
-        foodSpotRepo.insert(newFoodSpot);
+        currentUserToAddTo.ownFoodSpots().add(newFoodSpot);
         return newFoodSpot;
     }
 
