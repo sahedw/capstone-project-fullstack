@@ -81,13 +81,13 @@ public class FoodSpotService {
     }
 
     public List<FoodSpot> deleteFoodSpot(String idToDelete) {
-        if (foodSpotRepo.findById(idToDelete).isPresent()) {
-            Optional<FoodSpot> foundFoodSpot = foodSpotRepo.findById(idToDelete);
-            foundFoodSpot.ifPresent(foodSpotRepo::delete);
+        FoodSpotUser currentUserToDeleteFrom = getUser();
+        if (currentUserToDeleteFrom.ownFoodSpots().contains(getById(idToDelete))) {
+            currentUserToDeleteFrom.ownFoodSpots().remove(getIndex(idToDelete));
         } else {
             throw new NoSuchElementException("No FoodSpot with ID: " + idToDelete + " found.");
         }
-        return foodSpotRepo.findAll();
+        return currentUserToDeleteFrom.ownFoodSpots();
     }
 }
 
