@@ -6,6 +6,8 @@ import ChoosePriceLevels from "../icons/ChoosePriceLevels.tsx";
 import getPriceLevelEnum from "../utils/getPriceLevelEnum.ts";
 import {allCategories} from "../utils/allCategories.ts";
 import toast, {Toaster} from "react-hot-toast";
+import {Option} from "react-select";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 
 type EditMode = () => void;
 
@@ -13,15 +15,18 @@ type Props = {
     onEditMode: () => void,
     foodSpot: FoodSpot,
     onUpdate: (id: string, updatedFoodSpot: FoodSpotWithoutId, editMode: EditMode) => void,
-    onDelete: (id: string) => void
+    onDelete: (id: string) => void,
+    apiKey: string
 }
 
-function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
+function EditForm({onEditMode, foodSpot, onUpdate, onDelete, apiKey}: Props) {
     const [name, setName] = useState<string>(foodSpot.name);
     const [address, setAddress] = useState<string>(foodSpot.address);
     const [category, setCategory] = useState<string>(foodSpot.category)
     const [instagramUsername, setInstagramUsername] = useState<string>("")
     const [priceLevel, setPriceLevel] = useState<boolean[]>([true, false, false])
+    const [selectedPlace, setSelectedPlace] = useState<Option | null>(null);
+
     const navigate = useNavigate();
 
     function handleSubmitUpdateForm(e: FormEvent) {
@@ -81,13 +86,20 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
         }, 1500);
     }
 
+    const handlePlaceSelect = (selectedOption: Option | null) => {
+        setSelectedPlace(selectedOption);
+        console.log(selectedOption)
+        if (selectedOption) {
+            setAddress(selectedOption.label);
+        }
+    };
+
     return (
         <>
             <div><Toaster/></div>
             <form onSubmit={handleSubmitUpdateForm} className={"form-update"}>
                 <section className={"form-header-container"}>
                     <h2>Wanna edit your FoodSpot?</h2>
-                    <p>Go for it, important things need care:</p>
                 </section>
                 <section className={"form-main-container"}>
                     <section className={"form-section-container"}>
@@ -108,14 +120,36 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
                         </ul>
                     </section>
                     <section className={"form-section-container"}>
-                        <input className={"add-form-input"}
-                               type="text"
-                               name={"address"}
-                               value={address}
-                               onChange={(e) => {
-                                   setAddress(e.currentTarget.value)
-                               }}
-                               required
+                        <GooglePlacesAutocomplete
+                            apiKey={apiKey}
+                            selectProps={{
+                                value: selectedPlace,
+                                onChange: handlePlaceSelect,
+                                styles: {
+                                    container: (provided) => ({
+                                        ...provided,
+                                        height: "40px",
+                                        width: "250px",
+                                        border: "1px solid black",
+                                        boxShadow: "7px 7px 0px -2px #000000",
+                                        backgroundColor: "white"
+                                        // Add container styles here
+                                    }),
+                                    control: (provided) => ({
+                                        // Add control styles here
+                                        ...provided,
+                                        border: "1px black solid",
+                                        borderRadius: "none",
+
+                                    }),
+                                    input: (provided) => ({
+                                        ...provided,
+                                        color: 'black',
+                                        fontSize: "16px",
+
+                                    })
+                                }
+                            }}
                         />
                         <ul className={"requirement-list-container"}>
                             <li className={address.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>

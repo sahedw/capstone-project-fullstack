@@ -31,7 +31,7 @@ function FoodSpotDetail({foodSpot, apiKey, onUpdate, onDelete}: Props) {
                 {editMode ?
                     <>
                         <EditForm onDelete={onDelete} onEditMode={handleEditMode} onUpdate={onUpdate}
-                                  foodSpot={foodSpot}/>
+                                  foodSpot={foodSpot} apiKey={apiKey}/>
                     </>
                     :
                     <>

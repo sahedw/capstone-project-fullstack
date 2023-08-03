@@ -5,8 +5,8 @@ import BackButton from "./BackButton.tsx";
 import toast, {Toaster} from "react-hot-toast";
 import ChoosePriceLevels from "../icons/ChoosePriceLevels.tsx";
 import getPriceLevelEnum from "../utils/getPriceLevelEnum.ts";
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Option } from 'react-select';
+import AutocompleteInput from "./AutocompleteInput.tsx";
 
 type Props = {
     onAdd: (newFoodSpot: FoodSpotWithoutId) => void,
@@ -101,37 +101,7 @@ function AddForm({onAdd, apiKey}: Props) {
                             </ul>
                         </section>
                         <section className={"form-section-container"}>
-                            <GooglePlacesAutocomplete
-                                apiKey={apiKey}
-                                selectProps={{
-                                    value: selectedPlace,
-                                    onChange: handlePlaceSelect,
-                                    styles: {
-                                        container: (provided) => ({
-                                            ...provided,
-                                            height: "40px",
-                                            width: "250px",
-                                            border: "1px solid black",
-                                            boxShadow: "7px 7px 0px -2px #000000",
-                                            backgroundColor: "white"
-                                            // Add container styles here
-                                        }),
-                                        control: (provided) => ({
-                                            // Add control styles here
-                                            ...provided,
-                                            border: "1px black solid",
-                                            borderRadius: "none",
-
-                                        }),
-                                        input: (provided) => ({
-                                            ...provided,
-                                            color: 'black',
-                                            fontSize: "16px",
-
-                                        })
-                                    }
-                                }}
-                            />
+                        <AutocompleteInput apiKey={apiKey} selectedPlace={selectedPlace} handlePlaceSelect={handlePlaceSelect}/>
                             <ul className={"requirement-list-container"}>
                                 <li className={address.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
                                 <li className={address.length < 5 ? "invalid" : "valid"}>Must contain at least 5
