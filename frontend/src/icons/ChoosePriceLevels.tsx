@@ -4,7 +4,7 @@ type Props = {
     priceLevel: boolean[],
     onPriceLevel: (pickedPriceLevel: number) => void
 }
-export default function PriceLevels({size, priceLevel, onPriceLevel}: Props) {
+export default function ChoosePriceLevels({size, priceLevel, onPriceLevel}: Props) {
 
     return (
 <>

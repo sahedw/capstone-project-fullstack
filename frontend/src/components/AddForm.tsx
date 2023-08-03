@@ -3,8 +3,8 @@ import {FormEvent, useState} from "react";
 import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
 import BackButton from "./BackButton.tsx";
 import toast, {Toaster} from "react-hot-toast";
-import PriceLevels from "../icons/PriceLevels.tsx";
-import {PriceLevel} from "../types/PriceLevel.ts";
+import ChoosePriceLevels from "../icons/ChoosePriceLevels.tsx";
+import getPriceLevelEnum from "../utils/getPriceLevelEnum.ts";
 
 type Props = {
     onAdd: (newFoodSpot: FoodSpotWithoutId) => void,
@@ -19,16 +19,6 @@ function AddForm({onAdd, apiKey}: Props) {
     const [instagramUsername, setInstagramUsername] = useState<string>("")
     const [priceLevel, setPriceLevel] = useState<boolean[]>([true, false, false])
 
-    function getPriceLevelEnum(number: number) {
-        const level = PriceLevel;
-        if (number === 1) {
-           return level.LOW
-        } else if (number === 2) {
-            return level.MIDDLE
-        } else {
-            return level.HIGH
-        }
-    }
     function handleAddFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
         console.log(instagramUsername)
@@ -146,7 +136,7 @@ function AddForm({onAdd, apiKey}: Props) {
                                            setInstagramUsername(e.currentTarget.value)
                                        }}/>
                                 <section>
-                                    <PriceLevels size={"1.5em"} onPriceLevel={handlePriceLevel} priceLevel={priceLevel}/>
+                                    <ChoosePriceLevels size={"1.5em"} onPriceLevel={handlePriceLevel} priceLevel={priceLevel}/>
                                 </section>
                             </section>
                         </section>

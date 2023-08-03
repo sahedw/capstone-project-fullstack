@@ -179,11 +179,37 @@ function App() {
             });
     }
 
-    function handleUpdateFoodSpot(id: string, updatedFoodSpot: FoodSpotWithoutId): void {
+    function handleUpdateFoodSpot(id: string, updatedFoodSpot: FoodSpotWithoutId, editMode): void {
         axios.put(`/api/foodSpot/${id}`, updatedFoodSpot)
-            .then(() => getAllFoodSpots())
+            .then(() => {
+                getAllFoodSpots()
+                toast("Saved Changes!", {
+                    duration: 1500,
+                    icon: '🫱🏼‍🫲🏽',
+                    style: {
+                        border: '2px solid #713200',
+                        padding: '10px',
+                        color: 'black',
+                        boxShadow: "8px 8px 0px -2px #000000",
+                        backgroundColor: "lightgreen"
+
+                    }
+                })
+                editMode()
+            })
             .catch(function (error) {
                 console.error(error);
+                toast("Some requirements were not met", {
+                    icon: '🤷🏻‍',
+                    style: {
+                        border: '2px solid #713200',
+                        padding: '10px',
+                        color: 'black',
+                        boxShadow: "8px 8px 0px -2px #000000",
+                        backgroundColor: "orangered"
+
+                    }
+                })
             });
     }
 
