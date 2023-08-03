@@ -28,6 +28,9 @@ public class FoodSpot {
     @NotBlank
     private String category;
 
+    @NotBlank
+    private String instagramUsername;
+
     private PriceLevel priceLevel;
 
 }

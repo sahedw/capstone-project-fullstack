@@ -59,6 +59,7 @@ public class FoodSpotService {
                 newFoodSpotDto.getName(),
                 newFoodSpotDto.getAddress(),
                 newFoodSpotDto.getCategory(),
+                newFoodSpotDto.getInstagramUsername(),
                 newFoodSpotDto.getPriceLevel());
         currentUserToAddTo.ownFoodSpots().add(newFoodSpot);
         foodSpotUserRepo.save(currentUserToAddTo);
@@ -81,6 +82,7 @@ public class FoodSpotService {
                 updatedFoodSpotDto.getName(),
                 updatedFoodSpotDto.getAddress(),
                 updatedFoodSpotDto.getCategory(),
+                updatedFoodSpotDto.getInstagramUsername(),
                 updatedFoodSpotDto.getPriceLevel());
         currentUserToUpdate.ownFoodSpots().set(getIndex(id), newUpdatedFoodSpot);
         foodSpotUserRepo.save(currentUserToUpdate);

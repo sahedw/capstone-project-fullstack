@@ -3,12 +3,14 @@ import {FormEvent, useState} from "react";
 import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
 import BackButton from "./BackButton.tsx";
 import toast, {Toaster} from "react-hot-toast";
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 
 type Props = {
-    onAdd: (newFoodSpot: FoodSpotWithoutId) => void;
+    onAdd: (newFoodSpot: FoodSpotWithoutId) => void,
+    apiKey: string
 }
 
-function AddForm({onAdd}: Props) {
+function AddForm({onAdd, apiKey}: Props) {
 
     const [name, setName] = useState<string>("")
     const [category, setCategory] = useState<string>("")
@@ -81,6 +83,11 @@ function AddForm({onAdd}: Props) {
                                    }}
                                    required
                             />
+
+
+                            <GooglePlacesAutocomplete apiKey={apiKey} />
+
+
                             <ul className={"requirement-list-container"}>
                                 <li className={address.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
                                 <li className={address.length < 5 ? "invalid" : "valid"}>Must contain at least 5

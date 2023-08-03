@@ -44,8 +44,8 @@ class FoodSpotControllerTest {
     @DirtiesContext
     @WithMockUser(username = "sahed")
     void expectAllFoodSpots_whenGetRequestForAllFoodSpots() throws Exception {
-        FoodSpot firstTestFS = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", PriceLevel.LOW);
-        FoodSpot secondTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER", PriceLevel.LOW);
+        FoodSpot firstTestFS = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", "sencha_barmbek",PriceLevel.LOW);
+        FoodSpot secondTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER", "batman",PriceLevel.LOW);
 
         FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", List.of(firstTestFS, secondTestFS));
 
@@ -59,6 +59,7 @@ class FoodSpotControllerTest {
                         "name": "Sencha Sushi",
                         "address": "Fuhlsbüttler Str. 110",
                         "category": "SUSHI",
+                        "instagramUsername": "sencha_barmbek",
                         "priceLevel": "LOW"
                     },
                     {
@@ -66,6 +67,7 @@ class FoodSpotControllerTest {
                         "name": "Batman Restaurant",
                         "address": "Steindamm 58",
                         "category": "DOENER",
+                        "instagramUsername": "batman",
                         "priceLevel": "LOW"
                     }
                 ]
@@ -91,6 +93,7 @@ class FoodSpotControllerTest {
                         "name": "Batman Restaurant",
                         "address": "Steindamm 58",
                         "category": "DOENER",
+                        "instagramUsername": "batman",
                         "priceLevel": "LOW"
                     }
                 """;
@@ -102,6 +105,7 @@ class FoodSpotControllerTest {
                                         "name": "Batman Restaurant",
                                         "address": "Steindamm 58",
                                         "category": "DOENER",
+                                        "instagramUsername": "batman",
                                         "priceLevel": "LOW"
                                     }
                                 """))
@@ -113,13 +117,14 @@ class FoodSpotControllerTest {
     @DirtiesContext
     @WithMockUser(username = "sahed")
     void expectSearchedFoodSpot_whenGetRequestWithIdFoodSpot() throws Exception {
-        FoodSpot searchedTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER", PriceLevel.LOW);
+        FoodSpot searchedTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER", "batman",PriceLevel.LOW);
         foodSpotRepo.insert(searchedTestFS);
         String expectedFoodSpot = """
                     {
                         "id": "456",
                         "name": "Batman Restaurant",
                         "address": "Steindamm 58",
+                        "instagramUsername": "batman",
                         "category": "DOENER"
                     }
                 """;
@@ -134,7 +139,7 @@ class FoodSpotControllerTest {
     @DirtiesContext
     @WithMockUser(username = "sahed")
     void expectUpdatedFoodSpot_whenPutRequestWithFoodSpot() throws Exception {
-        FoodSpot toUpdate = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER", PriceLevel.LOW);
+        FoodSpot toUpdate = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER", "batman",PriceLevel.LOW);
         FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", new ArrayList<>(List.of(toUpdate)));
 
         Mockito.when(foodSpotUserRepo.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
@@ -144,6 +149,7 @@ class FoodSpotControllerTest {
                         "name": "Batman Restaurant - Updated",
                         "address": "Steindamm 58",
                         "category": "DOENER",
+                        "instagramUsername": "batman",
                         "priceLevel": "LOW"
                     }
                 """;
@@ -157,6 +163,7 @@ class FoodSpotControllerTest {
                                                 "name": "Batman Restaurant - Updated",
                                                 "address": "Steindamm 58",
                                                 "category": "DOENER",
+                                                "instagramUsername": "batman",
                                                 "priceLevel": "LOW"
                                             }
                                         """))
@@ -168,7 +175,7 @@ class FoodSpotControllerTest {
     @DirtiesContext
     @WithMockUser(username = "sahed")
     void expectDeletedFoodSpot_whenDeleteRequestIsCalled() throws Exception {
-        FoodSpot toDelete = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER", PriceLevel.LOW);
+        FoodSpot toDelete = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER", "batman",PriceLevel.LOW);
         FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", new ArrayList<>(List.of(toDelete)));
 
         Mockito.when(foodSpotUserRepo.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
@@ -193,7 +200,9 @@ class FoodSpotControllerTest {
                                 {
                                     "name": "b",
                                     "address": "Steindamm 58",
-                                    "category": "DOENER"
+                                    "category": "DOENER",
+                                    "instagramUsername": "batman",
+                                    "priceLevel": "LOW"
                                 }
                                 """)
                         .with(csrf()))
@@ -215,7 +224,9 @@ class FoodSpotControllerTest {
                                 {
                                     "name": "   ",
                                     "address": "Steindamm 58",
-                                    "category": "DOENER"
+                                    "category": "DOENER",
+                                    "instagramUsername": "batman",
+                                    "priceLevel": "LOW"
                                 }
                                 """)
                         .with(csrf()))

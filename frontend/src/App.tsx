@@ -204,7 +204,7 @@ function App() {
                            element={<HomePage onSignedIn={handleSignedIn} user={user} onLogout={handleLogout}/>}>
                     </Route>
                     <Route path={"/addFoodSpot"}
-                           element={<AddForm onAdd={handleAddFoodSpot}/>}>
+                           element={<AddForm apiKey={apiKey} onAdd={handleAddFoodSpot}/>}>
                     </Route>
                     {allCategories.map((category: string) => {
                         const filteredByCurrentCategory: FoodSpot[] = foodSpots.filter((spot: FoodSpot) => spot.category == category)

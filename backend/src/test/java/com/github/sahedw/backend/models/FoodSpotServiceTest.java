@@ -37,8 +37,8 @@ class FoodSpotServiceTest {
     @Test
     void expectAllFoodSpots_whenAllFoodSpotsIsCalled() {
         //GIVEN
-        FoodSpot firstTestFS = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", PriceLevel.LOW);
-        FoodSpot secondTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER", PriceLevel.LOW);
+        FoodSpot firstTestFS = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", "sencha_barmbek", PriceLevel.LOW);
+        FoodSpot secondTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER", "batman",PriceLevel.LOW);
         List<FoodSpot> expectedList = List.of(firstTestFS, secondTestFS);
         FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1",expectedList);
         //WHEN
@@ -63,8 +63,9 @@ class FoodSpotServiceTest {
         toAddFS.setAddress("Ditmar-Koel-Straße 21");
         toAddFS.setCategory("PIZZA");
         toAddFS.setPriceLevel(PriceLevel.LOW);
+        toAddFS.setInstagramUsername("Luigi");
 
-        FoodSpot expected = new FoodSpot("789", toAddFS.getName(), toAddFS.getAddress(), toAddFS.getCategory(), toAddFS.getPriceLevel());
+        FoodSpot expected = new FoodSpot("789", toAddFS.getName(), toAddFS.getAddress(), toAddFS.getCategory(), toAddFS.getInstagramUsername(),toAddFS.getPriceLevel());
 
         FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1",new ArrayList<>(List.of(expected)));
 
@@ -89,7 +90,7 @@ class FoodSpotServiceTest {
     void expectSpecificFoodSpot_whenGetByIdIsCalled() {
         //GIVEN
         Optional<FoodSpot> expected = Optional.of(
-                new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", PriceLevel.LOW));
+                new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", "sencha_barmbek",PriceLevel.LOW));
         String idToFind = "123";
         //WHEN
         when(foodSpotRepo.findById(idToFind)).thenReturn(expected);
@@ -121,11 +122,12 @@ class FoodSpotServiceTest {
     @Test
     void expectUpdatedFoodSpot_whenUpdateIsCalled() {
         // GIVEN
-        FoodSpot expected = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", PriceLevel.LOW);
+        FoodSpot expected = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", "sencha_barmbek",PriceLevel.LOW);
         FoodSpotWithoutId foodSpotWithoutId = new FoodSpotWithoutId();
         foodSpotWithoutId.setName(expected.getName());
         foodSpotWithoutId.setAddress(expected.getAddress());
         foodSpotWithoutId.setCategory(expected.getCategory());
+        foodSpotWithoutId.setInstagramUsername(expected.getInstagramUsername());
         foodSpotWithoutId.setPriceLevel(expected.getPriceLevel());
         String idToUpdate = "123";
 
@@ -147,7 +149,7 @@ class FoodSpotServiceTest {
     @Test
     void expectListOfFoodSpotsWithoutDeleted_whenDeleteIsCalled() {
         //GIVEN
-        FoodSpot expected = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", PriceLevel.LOW);
+        FoodSpot expected = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", "sencha_barmbek",PriceLevel.LOW);
         FoodSpotWithoutId foodSpotWithoutId = new FoodSpotWithoutId();
         foodSpotWithoutId.setName(expected.getName());
         foodSpotWithoutId.setAddress(expected.getAddress());
@@ -173,7 +175,7 @@ class FoodSpotServiceTest {
     @Test
     void expectNoSuchElementException_whenDeleteIdIsNotExistent() {
         //GIVEN
-        FoodSpot expected = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", PriceLevel.LOW);
+        FoodSpot expected = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", "sencha_barmbek",PriceLevel.LOW);
         String idToDelete = "123";
         //WHEN
         FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1",new ArrayList<>(List.of(expected)));

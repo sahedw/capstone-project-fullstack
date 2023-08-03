@@ -19,5 +19,9 @@ public class FoodSpotWithoutId {
     @Size(min=5, max=256)
     private String category;
 
+    @NotBlank
+    private String instagramUsername;
+
     private PriceLevel priceLevel;
+
 }
