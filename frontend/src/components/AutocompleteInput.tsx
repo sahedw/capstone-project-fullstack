@@ -1,6 +1,5 @@
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import Option from 'react-select';
-import { ValueType } from 'react-select';
+import Option, { ValueType } from 'react-select';
 
 type Props = {
     apiKey: string;
