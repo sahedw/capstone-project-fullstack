@@ -7,17 +7,19 @@ import getPriceLevelEnum from "../utils/getPriceLevelEnum.ts";
 import {allCategories} from "../utils/allCategories.ts";
 import toast, {Toaster} from "react-hot-toast";
 
+type EditMode = () => void;
+
 type Props = {
     onEditMode: () => void,
     foodSpot: FoodSpot,
-    onUpdate: (id: string, updatedFoodSpot: FoodSpotWithoutId) => void,
+    onUpdate: (id: string, updatedFoodSpot: FoodSpotWithoutId, editMode: EditMode) => void,
     onDelete: (id: string) => void
 }
 
 function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
     const [name, setName] = useState<string>(foodSpot.name);
     const [address, setAddress] = useState<string>(foodSpot.address);
-    const [category, setCategory] = useState<string>("")
+    const [category, setCategory] = useState<string>(foodSpot.category)
     const [instagramUsername, setInstagramUsername] = useState<string>("")
     const [priceLevel, setPriceLevel] = useState<boolean[]>([true, false, false])
     const navigate = useNavigate();
@@ -61,8 +63,22 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
     }
 
     function handleDelete(id: string): void {
+        toast("Deleted FoodSpot!", {
+            duration: 1500,
+            icon: '🚮',
+            style: {
+                border: '2px solid #713200',
+                padding: '10px',
+                color: 'black',
+                boxShadow: "8px 8px 0px -2px #000000",
+                backgroundColor: "orangered"
+
+            }
+        })
+        setTimeout(() => {
         onDelete(id);
-        navigate(-1)
+            navigate(-1)
+        }, 1500);
     }
 
     return (
@@ -117,7 +133,6 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
                             id="category"
                             defaultValue={"default"}
                             required>
-                            <option value="default" disabled={true} hidden>Choose the category</option>
                             {allCategories.map((category: string) => {
                                 return (
                                     <option value={`${category}`}

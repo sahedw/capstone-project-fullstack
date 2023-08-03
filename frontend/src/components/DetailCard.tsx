@@ -14,12 +14,17 @@ function DetailCard({foodSpot, onEditMode}: Props) {
         <>
             <p>{foodSpot.address}</p>
             <section className={"detail-card-bottom"}>
-                <a className={"link"} href={`https://www.instagram.com/${foodSpot.instagramUsername}/?hl=de`}>
-                    <section className={"instagram-container"}>
-                        <Instagram size={"1.5em"}/>
-                        <p>{foodSpot.instagramUsername}</p>
-                    </section>
-                </a>
+                {foodSpot.instagramUsername !== "" ?
+                    <a className={"link"} href={`https://www.instagram.com/${foodSpot.instagramUsername}/?hl=de`}>
+                        <section className={"instagram-container"}>
+                            <Instagram size={"1.5em"}/>
+                            <p>{foodSpot.instagramUsername}</p>
+                        </section>
+                    </a>
+                    :
+                    <>
+                    </>
+                }
                 <section>
                     <DisplayPriceLevels priceLevel={foodSpot.priceLevel} size={"1.5em"}/>
                 </section>

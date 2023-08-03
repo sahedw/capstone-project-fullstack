@@ -179,7 +179,9 @@ function App() {
             });
     }
 
-    function handleUpdateFoodSpot(id: string, updatedFoodSpot: FoodSpotWithoutId, editMode): void {
+    type EditMode = () => void;
+
+    function handleUpdateFoodSpot(id: string, updatedFoodSpot: FoodSpotWithoutId, editMode: EditMode): void {
         axios.put(`/api/foodSpot/${id}`, updatedFoodSpot)
             .then(() => {
                 getAllFoodSpots()
@@ -215,7 +217,9 @@ function App() {
 
     function handleDeleteFoodSpot(id: string): void {
         axios.delete(`/api/foodSpot/${id}`)
-            .then(() => getAllFoodSpots())
+            .then(() => {
+                getAllFoodSpots()
+            })
             .catch(function (error) {
                 console.error(error);
             });

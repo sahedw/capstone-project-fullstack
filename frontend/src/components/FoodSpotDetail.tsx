@@ -7,13 +7,15 @@ import BackButton from "./BackButton.tsx";
 import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
 import {Toaster} from "react-hot-toast";
 
+type EditMode = () => void;
 
 type Props = {
     foodSpot: FoodSpot,
     apiKey: string,
-    onUpdate: (id: string, updatedFoodSpot: FoodSpotWithoutId) => void,
+    onUpdate: (id: string, updatedFoodSpot: FoodSpotWithoutId, editMode: EditMode) => void,
     onDelete: (id: string) => void
 }
+
 
 function FoodSpotDetail({foodSpot, apiKey, onUpdate, onDelete}: Props) {
     const [editMode, setEditMode] = useState<boolean>(false)
