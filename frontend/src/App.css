@@ -150,6 +150,19 @@
     position: relative;
 }
 
+.form-center {
+    justify-content: center;
+}
+
+.input-instagram {
+    width: 52%;
+    border: 2px solid black;
+    -webkit-box-shadow: 7px 7px 0px -2px #000000;
+    box-shadow: 7px 7px 0px -2px #000000;
+    padding-left: 5px;
+    font-size: 16px;
+}
+
 .login {
     justify-content: center;
 }
@@ -350,4 +363,9 @@
 
 .category-foodspots-header {
     margin: 80px 20px 20px;
+}
+
+.form-bottom-inputs {
+    display: flex;
+    justify-content: space-between;
 }

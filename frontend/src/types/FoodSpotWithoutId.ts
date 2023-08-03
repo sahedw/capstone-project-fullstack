@@ -1,5 +1,9 @@
+import {PriceLevel} from "./PriceLevel.ts";
+
 export type FoodSpotWithoutId = {
-    name: string | undefined,
-    address: string | undefined,
-    category: string | undefined
+    name: string,
+    address: string,
+    category: string,
+    instagramUsername: string,
+    priceLevel: PriceLevel
 }

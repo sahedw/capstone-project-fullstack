@@ -3,7 +3,8 @@ import {FormEvent, useState} from "react";
 import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
 import BackButton from "./BackButton.tsx";
 import toast, {Toaster} from "react-hot-toast";
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import PriceLevels from "../icons/PriceLevels.tsx";
+import {PriceLevel} from "../types/PriceLevel.ts";
 
 type Props = {
     onAdd: (newFoodSpot: FoodSpotWithoutId) => void,
@@ -15,13 +16,29 @@ function AddForm({onAdd, apiKey}: Props) {
     const [name, setName] = useState<string>("")
     const [category, setCategory] = useState<string>("")
     const [address, setAddress] = useState<string>("")
+    const [instagramUsername, setInstagramUsername] = useState<string>("")
+    const [priceLevel, setPriceLevel] = useState<boolean[]>([true, false, false])
 
+    function getPriceLevelEnum(number: number) {
+        const level = PriceLevel;
+        if (number === 1) {
+           return level.LOW
+        } else if (number === 2) {
+            return level.MIDDLE
+        } else {
+            return level.HIGH
+        }
+    }
     function handleAddFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
+        console.log(instagramUsername)
         const newDtoFoodSpot: FoodSpotWithoutId = {
             name: name,
+            address: address,
             category: category,
-            address: address
+            instagramUsername: instagramUsername,
+            priceLevel: getPriceLevelEnum(priceLevel.filter((level) => level).length)
+
         };
         const addFoodSpotToast = toast.loading('Add to collection...', {
             style: {
@@ -39,12 +56,22 @@ function AddForm({onAdd, apiKey}: Props) {
         }, 1500);
     }
 
+    function handlePriceLevel(pickedPriceLevel: number) {
+        if (pickedPriceLevel == 1) {
+            setPriceLevel([true, false, false])
+        } else if (pickedPriceLevel == 2) {
+            setPriceLevel([true, !priceLevel[1], false])
+        } else {
+            setPriceLevel([true, true, !priceLevel[2]])
+        }
+    }
+
     return (
         <section>
             <div><Toaster/></div>
             <section className={"form-add-container"}>
                 <BackButton setClass={"normal"}/>
-                <form onSubmit={handleAddFormSubmit} className={"form"}>
+                <form onSubmit={handleAddFormSubmit} className={"form form-center"}>
                     <section className={"banner"}>
                         <img width={80} src="/banner.png" alt="free banner"/>
                     </section>
@@ -53,7 +80,6 @@ function AddForm({onAdd, apiKey}: Props) {
                     </section>
                     <section className={"form-header-container"}>
                         <h2>You wanna add a FoodSpot?</h2>
-                        <p>Nice, gatekeeping is for losers!</p>
                     </section>
                     <section className={"form-main-container"}>
                         <section className={"form-section-container"}>
@@ -83,11 +109,6 @@ function AddForm({onAdd, apiKey}: Props) {
                                    }}
                                    required
                             />
-
-
-                            <GooglePlacesAutocomplete apiKey={apiKey} />
-
-
                             <ul className={"requirement-list-container"}>
                                 <li className={address.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
                                 <li className={address.length < 5 ? "invalid" : "valid"}>Must contain at least 5
@@ -114,6 +135,20 @@ function AddForm({onAdd, apiKey}: Props) {
                             <ul className={"requirement-list-container"}>
                                 <li className={category === "" ? "invalid" : "valid"}>Mandatory pick</li>
                             </ul>
+                        </section>
+                        <section className={"form-section-container"}>
+                            <section className={"form-bottom-inputs"}>
+                                <input type="text"
+                                       className={"input-instagram"}
+                                       placeholder={"Insta-Username"}
+                                       name={"instagram"}
+                                       onChange={(e) => {
+                                           setInstagramUsername(e.currentTarget.value)
+                                       }}/>
+                                <section>
+                                    <PriceLevels size={"1.5em"} onPriceLevel={handlePriceLevel} priceLevel={priceLevel}/>
+                                </section>
+                            </section>
                         </section>
                     </section>
                     <section className={"add-button-container"}>
