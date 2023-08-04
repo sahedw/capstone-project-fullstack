@@ -13,6 +13,7 @@
     "@react-google-maps/api": "^2.19.2",
     "axios": "^1.4.0",
     "dom": "^0.0.3",
+    "google-maps-react": "github:fullstackreact/google-maps-react",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-google-autocomplete": "^2.7.3",

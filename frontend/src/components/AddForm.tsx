@@ -22,6 +22,7 @@ function AddForm({onAdd, apiKey}: Props) {
     const [priceLevel, setPriceLevel] = useState<boolean[]>([true, false, false])
     const [selectedPlace, setSelectedPlace] = useState<Option | null>(null);
 
+
     function handleAddFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
         console.log(instagramUsername)

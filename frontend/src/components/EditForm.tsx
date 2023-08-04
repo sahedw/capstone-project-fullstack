@@ -7,7 +7,7 @@ import getPriceLevelEnum from "../utils/getPriceLevelEnum.ts";
 import {allCategories} from "../utils/allCategories.ts";
 import toast, {Toaster} from "react-hot-toast";
 import {Option} from "react-select";
-import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import AutocompleteInput from "./AutocompleteInput.tsx";
 
 type EditMode = () => void;
 
@@ -25,7 +25,7 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete, apiKey}: Props) {
     const [category, setCategory] = useState<string>(foodSpot.category)
     const [instagramUsername, setInstagramUsername] = useState<string>("")
     const [priceLevel, setPriceLevel] = useState<boolean[]>([true, false, false])
-    const [selectedPlace, setSelectedPlace] = useState<Option | null>(null);
+    const [selectedPlace, setSelectedPlace] = useState<never>();
 
     const navigate = useNavigate();
 
@@ -88,7 +88,6 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete, apiKey}: Props) {
 
     const handlePlaceSelect = (selectedOption: Option | null) => {
         setSelectedPlace(selectedOption);
-        console.log(selectedOption)
         if (selectedOption) {
             setAddress(selectedOption.label);
         }
@@ -120,37 +119,11 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete, apiKey}: Props) {
                         </ul>
                     </section>
                     <section className={"form-section-container"}>
-                        <GooglePlacesAutocomplete
-                            apiKey={apiKey}
-                            selectProps={{
-                                value: selectedPlace,
-                                onChange: handlePlaceSelect,
-                                styles: {
-                                    container: (provided) => ({
-                                        ...provided,
-                                        height: "40px",
-                                        width: "250px",
-                                        border: "1px solid black",
-                                        boxShadow: "7px 7px 0px -2px #000000",
-                                        backgroundColor: "white"
-                                        // Add container styles here
-                                    }),
-                                    control: (provided) => ({
-                                        // Add control styles here
-                                        ...provided,
-                                        border: "1px black solid",
-                                        borderRadius: "none",
-
-                                    }),
-                                    input: (provided) => ({
-                                        ...provided,
-                                        color: 'black',
-                                        fontSize: "16px",
-
-                                    })
-                                }
-                            }}
-                        />
+                        {apiKey === "" ?
+                        <p>Loading...</p>
+                            :
+                            <AutocompleteInput apiKey={apiKey} selectedPlace={selectedPlace} handlePlaceSelect={handlePlaceSelect}/>
+                        }
                         <ul className={"requirement-list-container"}>
                             <li className={address.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
                             <li className={address.length < 5 ? "invalid" : "valid"}>Must contain at least 5
