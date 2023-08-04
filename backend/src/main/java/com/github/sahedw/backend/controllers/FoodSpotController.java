@@ -29,6 +29,7 @@ public class FoodSpotController {
 
     @PostMapping
     public FoodSpot add(@Valid @RequestBody FoodSpotWithoutId foodSpotWithoutId) {
+
       return foodSpotService.addFoodSpot(foodSpotWithoutId);
     }
 

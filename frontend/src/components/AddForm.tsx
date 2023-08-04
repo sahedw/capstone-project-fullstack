@@ -3,23 +3,36 @@ import {FormEvent, useState} from "react";
 import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
 import BackButton from "./BackButton.tsx";
 import toast, {Toaster} from "react-hot-toast";
+import ChoosePriceLevels from "../icons/ChoosePriceLevels.tsx";
+import getPriceLevelEnum from "../utils/getPriceLevelEnum.ts";
+import { Option } from 'react-select';
+import AutocompleteInput from "./AutocompleteInput.tsx";
 
 type Props = {
-    onAdd: (newFoodSpot: FoodSpotWithoutId) => void;
+    onAdd: (newFoodSpot: FoodSpotWithoutId) => void,
+    apiKey: string
 }
 
-function AddForm({onAdd}: Props) {
+function AddForm({onAdd, apiKey}: Props) {
 
     const [name, setName] = useState<string>("")
     const [category, setCategory] = useState<string>("")
     const [address, setAddress] = useState<string>("")
+    const [instagramUsername, setInstagramUsername] = useState<string>("")
+    const [priceLevel, setPriceLevel] = useState<boolean[]>([true, false, false])
+    const [selectedPlace, setSelectedPlace] = useState<Option | null>(null);
+
 
     function handleAddFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
+        console.log(instagramUsername)
         const newDtoFoodSpot: FoodSpotWithoutId = {
             name: name,
+            address: address,
             category: category,
-            address: address
+            instagramUsername: instagramUsername,
+            priceLevel: getPriceLevelEnum(priceLevel.filter((level) => level).length)
+
         };
         const addFoodSpotToast = toast.loading('Add to collection...', {
             style: {
@@ -37,12 +50,31 @@ function AddForm({onAdd}: Props) {
         }, 1500);
     }
 
+    function handlePriceLevel(pickedPriceLevel: number) {
+        if (pickedPriceLevel == 1) {
+            setPriceLevel([true, false, false])
+        } else if (pickedPriceLevel == 2) {
+            setPriceLevel([true, !priceLevel[1], false])
+        } else {
+            setPriceLevel([true, true, !priceLevel[2]])
+        }
+    }
+
+    const handlePlaceSelect = (selectedOption: Option | null) => {
+        setSelectedPlace(selectedOption);
+        console.log(selectedOption)
+        if (selectedOption) {
+            setAddress(selectedOption.label);
+        }
+    };
+
+
     return (
         <section>
             <div><Toaster/></div>
             <section className={"form-add-container"}>
                 <BackButton setClass={"normal"}/>
-                <form onSubmit={handleAddFormSubmit} className={"form"}>
+                <form onSubmit={handleAddFormSubmit} className={"form form-center"}>
                     <section className={"banner"}>
                         <img width={80} src="/banner.png" alt="free banner"/>
                     </section>
@@ -51,7 +83,6 @@ function AddForm({onAdd}: Props) {
                     </section>
                     <section className={"form-header-container"}>
                         <h2>You wanna add a FoodSpot?</h2>
-                        <p>Nice, gatekeeping is for losers!</p>
                     </section>
                     <section className={"form-main-container"}>
                         <section className={"form-section-container"}>
@@ -72,15 +103,7 @@ function AddForm({onAdd}: Props) {
                             </ul>
                         </section>
                         <section className={"form-section-container"}>
-                            <input className={"add-form-input"}
-                                   placeholder={"Address"}
-                                   type="text"
-                                   name={"address"}
-                                   onChange={(e) => {
-                                       setAddress(e.currentTarget.value)
-                                   }}
-                                   required
-                            />
+                        <AutocompleteInput apiKey={apiKey} selectedPlace={selectedPlace} handlePlaceSelect={handlePlaceSelect}/>
                             <ul className={"requirement-list-container"}>
                                 <li className={address.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
                                 <li className={address.length < 5 ? "invalid" : "valid"}>Must contain at least 5
@@ -107,6 +130,20 @@ function AddForm({onAdd}: Props) {
                             <ul className={"requirement-list-container"}>
                                 <li className={category === "" ? "invalid" : "valid"}>Mandatory pick</li>
                             </ul>
+                        </section>
+                        <section className={"form-section-container"}>
+                            <section className={"form-bottom-inputs"}>
+                                <input type="text"
+                                       className={"input-instagram"}
+                                       placeholder={"Insta-Username"}
+                                       name={"instagram"}
+                                       onChange={(e) => {
+                                           setInstagramUsername(e.currentTarget.value)
+                                       }}/>
+                                <section>
+                                    <ChoosePriceLevels size={"1.5em"} onPriceLevel={handlePriceLevel} priceLevel={priceLevel}/>
+                                </section>
+                            </section>
                         </section>
                     </section>
                     <section className={"add-button-container"}>

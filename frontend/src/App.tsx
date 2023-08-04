@@ -179,17 +179,47 @@ function App() {
             });
     }
 
-    function handleUpdateFoodSpot(id: string, updatedFoodSpot: FoodSpotWithoutId): void {
+    type EditMode = () => void;
+
+    function handleUpdateFoodSpot(id: string, updatedFoodSpot: FoodSpotWithoutId, editMode: EditMode): void {
         axios.put(`/api/foodSpot/${id}`, updatedFoodSpot)
-            .then(() => getAllFoodSpots())
+            .then(() => {
+                getAllFoodSpots()
+                toast("Saved Changes!", {
+                    duration: 1500,
+                    icon: '🫱🏼‍🫲🏽',
+                    style: {
+                        border: '2px solid #713200',
+                        padding: '10px',
+                        color: 'black',
+                        boxShadow: "8px 8px 0px -2px #000000",
+                        backgroundColor: "lightgreen"
+
+                    }
+                })
+                editMode()
+            })
             .catch(function (error) {
                 console.error(error);
+                toast("Some requirements were not met", {
+                    icon: '🤷🏻‍',
+                    style: {
+                        border: '2px solid #713200',
+                        padding: '10px',
+                        color: 'black',
+                        boxShadow: "8px 8px 0px -2px #000000",
+                        backgroundColor: "orangered"
+
+                    }
+                })
             });
     }
 
     function handleDeleteFoodSpot(id: string): void {
         axios.delete(`/api/foodSpot/${id}`)
-            .then(() => getAllFoodSpots())
+            .then(() => {
+                getAllFoodSpots()
+            })
             .catch(function (error) {
                 console.error(error);
             });
@@ -204,7 +234,7 @@ function App() {
                            element={<HomePage onSignedIn={handleSignedIn} user={user} onLogout={handleLogout}/>}>
                     </Route>
                     <Route path={"/addFoodSpot"}
-                           element={<AddForm onAdd={handleAddFoodSpot}/>}>
+                           element={<AddForm apiKey={apiKey} onAdd={handleAddFoodSpot}/>}>
                     </Route>
                     {allCategories.map((category: string) => {
                         const filteredByCurrentCategory: FoodSpot[] = foodSpots.filter((spot: FoodSpot) => spot.category == category)

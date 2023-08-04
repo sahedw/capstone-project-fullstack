@@ -126,11 +126,11 @@
 
 .form-add-container {
     width: 100vw;
+    height: 100vh;
+    background-color: #12f49a;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #12f49a;
-    height: 100vh;
     position: relative;
 }
 
@@ -148,6 +148,31 @@
     box-shadow: 9px 9px 0px -2px #000000;
     background-color: #f3d935;
     position: relative;
+}
+
+.form-center {
+    justify-content: center;
+}
+
+.input-instagram {
+    width: 52%;
+    border: 2px solid black;
+    -webkit-box-shadow: 7px 7px 0px -2px #000000;
+    box-shadow: 7px 7px 0px -2px #000000;
+    padding-left: 5px;
+    font-size: 16px;
+}
+
+.detail-card-bottom {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+}
+
+.instagram-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
 }
 
 .login {
@@ -192,6 +217,28 @@
     box-shadow: 7px 7px 0px -2px #000000;
     padding-left: 5px;
     font-size: 16px;
+}
+
+.homepage-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: #f3d935;
+}
+
+.homepage-header-container {
+    display: flex;
+    flex-direction: column;
+   align-items: center;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.logout-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 .add-form-input:focus {
@@ -350,4 +397,9 @@
 
 .category-foodspots-header {
     margin: 80px 20px 20px;
+}
+
+.form-bottom-inputs {
+    display: flex;
+    justify-content: space-between;
 }
