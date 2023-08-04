@@ -1,13 +1,13 @@
-import Option from 'react-select';
 import {lazy, Suspense} from "react";
-import {ValueType} from "react-select"
+import Option, {ValueType} from 'react-select';
+
 
 
 const GooglePlacesAutocomplete = lazy(() => import('react-google-places-autocomplete'));
 
 type Props = {
     apiKey: string;
-    selectedPlace: never;
+    selectedPlace: Option | null | undefined;
     handlePlaceSelect: (selectedOption: ValueType<Option, true>) => void;
 };
 
