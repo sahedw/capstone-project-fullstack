@@ -6,8 +6,6 @@ import ChoosePriceLevels from "../icons/ChoosePriceLevels.tsx";
 import getPriceLevelEnum from "../utils/getPriceLevelEnum.ts";
 import {allCategories} from "../utils/allCategories.ts";
 import toast, {Toaster} from "react-hot-toast";
-import {Option} from "react-select";
-import AutocompleteInput from "./AutocompleteInput.tsx";
 
 type EditMode = () => void;
 
@@ -19,13 +17,12 @@ type Props = {
     apiKey: string
 }
 
-function EditForm({onEditMode, foodSpot, onUpdate, onDelete, apiKey}: Props) {
+function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
     const [name, setName] = useState<string>(foodSpot.name);
     const [address, setAddress] = useState<string>(foodSpot.address);
     const [category, setCategory] = useState<string>(foodSpot.category)
     const [instagramUsername, setInstagramUsername] = useState<string>("")
     const [priceLevel, setPriceLevel] = useState<boolean[]>([true, false, false])
-    const [selectedPlace, setSelectedPlace] = useState<never>();
 
     const navigate = useNavigate();
 
@@ -86,13 +83,6 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete, apiKey}: Props) {
         }, 1500);
     }
 
-    const handlePlaceSelect = (selectedOption: Option | null) => {
-        setSelectedPlace(selectedOption);
-        if (selectedOption) {
-            setAddress(selectedOption.label);
-        }
-    };
-
     return (
         <>
             <div><Toaster/></div>
@@ -119,12 +109,16 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete, apiKey}: Props) {
                         </ul>
                     </section>
                     <section className={"form-section-container"}>
-                        {apiKey === "" ?
-                        <p>Loading...</p>
-                            :
-                            <AutocompleteInput apiKey={apiKey} selectedPlace={selectedPlace} handlePlaceSelect={handlePlaceSelect}/>
-                        }
-                        <ul className={"requirement-list-container"}>
+                        <input className={"add-form-input"}
+                               type="text"
+                               name={"name"}
+                               value={address}
+                               onChange={(e) => {
+                                   setAddress(e.currentTarget.value)
+                               }}
+                               required
+                        />
+                    <ul className={"requirement-list-container"}>
                             <li className={address.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
                             <li className={address.length < 5 ? "invalid" : "valid"}>Must contain at least 5
                                 characters

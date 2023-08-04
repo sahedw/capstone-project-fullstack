@@ -5,22 +5,19 @@ import BackButton from "./BackButton.tsx";
 import toast, {Toaster} from "react-hot-toast";
 import ChoosePriceLevels from "../icons/ChoosePriceLevels.tsx";
 import getPriceLevelEnum from "../utils/getPriceLevelEnum.ts";
-import { Option } from 'react-select';
-import AutocompleteInput from "./AutocompleteInput.tsx";
 
 type Props = {
     onAdd: (newFoodSpot: FoodSpotWithoutId) => void,
     apiKey: string
 }
 
-function AddForm({onAdd, apiKey}: Props) {
+function AddForm({onAdd}: Props) {
 
     const [name, setName] = useState<string>("")
     const [category, setCategory] = useState<string>("")
     const [address, setAddress] = useState<string>("")
     const [instagramUsername, setInstagramUsername] = useState<string>("")
     const [priceLevel, setPriceLevel] = useState<boolean[]>([true, false, false])
-    const [selectedPlace, setSelectedPlace] = useState<Option | null>(null);
 
 
     function handleAddFormSubmit(event: FormEvent<HTMLFormElement>) {
@@ -60,14 +57,6 @@ function AddForm({onAdd, apiKey}: Props) {
         }
     }
 
-    const handlePlaceSelect = (selectedOption: Option | null) => {
-        setSelectedPlace(selectedOption);
-        console.log(selectedOption)
-        if (selectedOption) {
-            setAddress(selectedOption.label);
-        }
-    };
-
 
     return (
         <section>
@@ -103,7 +92,15 @@ function AddForm({onAdd, apiKey}: Props) {
                             </ul>
                         </section>
                         <section className={"form-section-container"}>
-                        <AutocompleteInput apiKey={apiKey} selectedPlace={selectedPlace} handlePlaceSelect={handlePlaceSelect}/>
+                            <input className={"add-form-input"}
+                                   type="text"
+                                   name={"name"}
+                                   value={address}
+                                   onChange={(e) => {
+                                       setAddress(e.currentTarget.value)
+                                   }}
+                                   required
+                            />
                             <ul className={"requirement-list-container"}>
                                 <li className={address.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
                                 <li className={address.length < 5 ? "invalid" : "valid"}>Must contain at least 5
