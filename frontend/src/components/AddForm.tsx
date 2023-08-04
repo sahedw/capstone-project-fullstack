@@ -7,8 +7,6 @@ import ChoosePriceLevels from "../icons/ChoosePriceLevels.tsx";
 import getPriceLevelEnum from "../utils/getPriceLevelEnum.ts";
 import { Option } from 'react-select';
 import AutocompleteInput from "./AutocompleteInput.tsx";
-import {Autocomplete} from "@react-google-maps/api";
-import {usePlacesWidget} from "react-google-autocomplete";
 
 type Props = {
     onAdd: (newFoodSpot: FoodSpotWithoutId) => void,
