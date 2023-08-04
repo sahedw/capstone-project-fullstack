@@ -2,15 +2,12 @@ package com.github.sahedw.backend.models;
 
 import com.github.sahedw.backend.security.FoodSpotUser;
 import com.github.sahedw.backend.security.FoodSpotUserRepo;
-import com.github.sahedw.backend.security.FoodSpotUserService;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -190,5 +187,45 @@ class FoodSpotServiceTest {
         List<FoodSpot> actual = foodSpotService.deleteFoodSpot(idToDelete);
         //THEN
         assertThrows(NoSuchElementException.class, () -> foodSpotService.deleteFoodSpot("000"));
+    }
+
+    @Test
+    void expectNoSuchElementException_whenGetUserWithNoExistingUsernameIsCalled() {
+        //GIVEN
+        //WHEN
+
+        //WHEN
+        when(foodSpotUserRepo.findByUsername("sahed")).thenReturn(Optional.empty());
+        when(authentication.getName()).thenReturn("sahed");
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        //THEN
+        assertThrows(NoSuchElementException.class, () -> foodSpotService.allFoodSpots());
+    }
+
+    @Test
+    void expectNoSuchElementException_whenGetIndexForNonExistentIdInFoodSpotList() {
+        // GIVEN
+        FoodSpot expected = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", "sencha_barmbek",PriceLevel.LOW);
+        FoodSpotWithoutId foodSpotWithoutId = new FoodSpotWithoutId();
+        foodSpotWithoutId.setName(expected.getName());
+        foodSpotWithoutId.setAddress(expected.getAddress());
+        foodSpotWithoutId.setCategory(expected.getCategory());
+        foodSpotWithoutId.setInstagramUsername(expected.getInstagramUsername());
+        foodSpotWithoutId.setPriceLevel(expected.getPriceLevel());
+        String idToUpdate = "000";
+
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1",new ArrayList<>(List.of(expected)));
+        when(foodSpotUserRepo.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
+        when(foodSpotUserRepo.save(currentUser)).thenReturn(currentUser);
+        when(authentication.getName()).thenReturn("sahed");
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        // WHEN
+        // Assert
+        assertThrows(NoSuchElementException.class, () -> foodSpotService.updateFoodSpot(idToUpdate, foodSpotWithoutId));
+        verify(foodSpotUserRepo, times(2)).findByUsername("sahed");
+        verify(securityContext, times(2)).getAuthentication();
+        verify(authentication, times(2)).getName();
     }
 }

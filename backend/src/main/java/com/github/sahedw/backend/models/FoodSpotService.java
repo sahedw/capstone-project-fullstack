@@ -26,7 +26,7 @@ public class FoodSpotService {
         if (currentUser.isPresent()) {
             return currentUser.get();
         } else {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("No user logged in");
         }
     }
 
@@ -43,7 +43,7 @@ public class FoodSpotService {
         if (foundIndex != -1) {
             return foundIndex;
         } else {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("Id not in your account");
         }
     }
 
