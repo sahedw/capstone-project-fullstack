@@ -177,6 +177,7 @@
 
 .login {
     justify-content: center;
+    gap: 0;
 }
 
 .requirement-list-container {
@@ -279,7 +280,7 @@
 .form-main-container {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 10px;
 }
 
 .add-button {
@@ -376,7 +377,11 @@
 }
 
 .map-view {
-    height: 450px;
+    height: 430px;
+}
+
+.form-map-view {
+    margin: 15px;
 }
 
 .foodspot-detail-container {

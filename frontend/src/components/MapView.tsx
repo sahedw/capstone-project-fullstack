@@ -13,6 +13,7 @@ type Props = {
 function MapView({foodSpots, apiKey}: Props) {
     const [positions, setPositions] = useState<Position[]>()
     const [userCenter, setUserCenter] = useState<Position>()
+    const [centerInput, setCenterInput] = useState<string>("")
     const allAddresses: string[] = [];
 
     foodSpots.forEach(foodSpot => allAddresses.push(convertGermanSpecialCharacters(foodSpot.address)))
@@ -43,6 +44,17 @@ function MapView({foodSpots, apiKey}: Props) {
             });
     }, [])
 
+    function handleUserViewInput(e) {
+        e.preventDefault()
+        axios.post("/api/google/convert-address", `${centerInput}`)
+            .then((response) => {
+                setUserCenter(response.data)
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
 
 
    // const center = {lat: Number(position?[0].latitude), lng: Number(position?.longitude)};
@@ -58,9 +70,15 @@ function MapView({foodSpots, apiKey}: Props) {
 
     return (
         <>
-            <button onClick={() => console.log(positions)}></button>
+            <form onSubmit={handleUserViewInput} className={"form-map-view"}>
+                <input type="text" name={"input"} value={centerInput} onChange={(e) => {
+                    setCenterInput(e.currentTarget.value)
+                }}/>
+                <button>View Location</button>
+            </form>
             <GoogleMap
                 zoom={10}
+
                 center={{lat: Number(userCenter?.latitude), lng: Number(userCenter?.longitude)}}
                 mapContainerClassName={"google-map map-view"}
             >
