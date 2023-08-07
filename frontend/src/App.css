@@ -241,6 +241,29 @@
     right: 10px;
 }
 
+
+
+.category-tab-container {
+    display: flex;
+    margin: 5px;
+}
+
+.category-tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    width: 50px;
+    border: none;
+    background-color: #f3d935;
+
+}
+
+.tab-inactive {
+    background-color: orangered;
+    transform: scale(1.2);
+}
+
 .add-form-input:focus {
     outline: none;
     border-color: black;
