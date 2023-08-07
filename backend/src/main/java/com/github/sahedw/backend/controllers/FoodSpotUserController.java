@@ -32,6 +32,11 @@ public class FoodSpotUserController {
                 .getName();
     }
 
+    @GetMapping("/city")
+    public String getUserCity() {
+       return foodSpotUserService.getUserCity();
+    }
+
     @PostMapping("/login")
     public String login(HttpServletRequest request) {
         return SecurityContextHolder

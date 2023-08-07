@@ -375,6 +375,10 @@
     border: 2px solid black;
 }
 
+.map-view {
+    height: 450px;
+}
+
 .foodspot-detail-container {
     width: 100vw;
     display: flex;

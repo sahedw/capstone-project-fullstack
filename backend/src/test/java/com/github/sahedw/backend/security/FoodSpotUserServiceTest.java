@@ -34,12 +34,12 @@ class FoodSpotUserServiceTest {
     @Test
     void expectNewUser_whenSignUp() {
         //GIVEN
-        FoodSpotUserForSignUp incomingUser = new FoodSpotUserForSignUp( "hans", "hans1");
+        FoodSpotUserForSignUp incomingUser = new FoodSpotUserForSignUp( "hans", "hans1", "Hamburg");
         String expected = incomingUser.username();
         //WHEN
         when(idServiceMocked.randomId()).thenReturn("123");
         when(encoder.encode("hans1")).thenReturn("123456789");
-        FoodSpotUser newUser = new FoodSpotUser(idServiceMocked.randomId(), incomingUser.username(), encoder.encode(incomingUser.password()), List.of());
+        FoodSpotUser newUser = new FoodSpotUser(idServiceMocked.randomId(), incomingUser.username(), encoder.encode(incomingUser.password()), "Hamburg", List.of());
         when(foodSpotUserRepoMocked.insert(ArgumentMatchers.any(FoodSpotUser.class))).thenReturn(null);
 
         String actual = foodSpotUserServiceMocked.signUp(incomingUser);
@@ -54,12 +54,12 @@ class FoodSpotUserServiceTest {
     @Test
     void expectUsernameAlreadyExistsException_whenUsernameAlreadyExists() {
         // GIVEN
-        FoodSpotUser newUser = new FoodSpotUser("123" ,"franz", "franz1", List.of());
-        FoodSpotUserForSignUp newUserSignUp = new FoodSpotUserForSignUp("franz", "franz1");
+        FoodSpotUser newUser = new FoodSpotUser("123" ,"franz", "franz1","Hamburg", List.of());
+        FoodSpotUserForSignUp newUserSignUp = new FoodSpotUserForSignUp("franz", "franz1" , "Hamburg");
         foodSpotUserServiceReal.signUp(newUserSignUp);
         // WHEN
         when(foodSpotUserRepoMocked.findByUsername("franz")).thenReturn(Optional.of(newUser));
-        FoodSpotUserForSignUp secondUser = new FoodSpotUserForSignUp("franz", "franz2");
+        FoodSpotUserForSignUp secondUser = new FoodSpotUserForSignUp("franz", "franz2" , "Hamburg");
 
         // Assert
         assertThrows(UsernameAlreadyExistsException.class, () -> foodSpotUserServiceReal.signUp(secondUser));

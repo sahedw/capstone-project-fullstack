@@ -12,7 +12,7 @@ type Props = {
 }
 function MapView({foodSpots, apiKey}: Props) {
     const [positions, setPositions] = useState<Position[]>()
-    const [userCeter, setUserCenter] = useState<Position>()
+    const [userCenter, setUserCenter] = useState<Position>()
     const allAddresses: string[] = [];
 
     foodSpots.forEach(foodSpot => allAddresses.push(convertGermanSpecialCharacters(foodSpot.address)))
@@ -27,6 +27,23 @@ function MapView({foodSpots, apiKey}: Props) {
             });
     }, [])
 
+    useEffect(() => {
+        axios.get("/api/user/city")
+            .then((response) => {
+                axios.post("/api/google/convert-address", `${response.data}`)
+                    .then((response) => {
+                        setUserCenter(response.data)
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                    });
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }, [])
+
+
 
    // const center = {lat: Number(position?[0].latitude), lng: Number(position?.longitude)};
 
@@ -36,14 +53,16 @@ function MapView({foodSpots, apiKey}: Props) {
 
     if (!positions) return <h1>Loading...</h1>
 
+    if (!userCenter) return <h1>Loading...</h1>
+
 
     return (
         <>
             <button onClick={() => console.log(positions)}></button>
             <GoogleMap
                 zoom={10}
-                center={{lat: 53.5488282, lng: 9.987170299999999}}
-                mapContainerClassName={"google-map"}
+                center={{lat: Number(userCenter?.latitude), lng: Number(userCenter?.longitude)}}
+                mapContainerClassName={"google-map map-view"}
             >
                 {positions.map((location: Position) => {
                     return (

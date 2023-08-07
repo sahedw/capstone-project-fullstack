@@ -62,7 +62,8 @@ class FoodSpotUserControllerTest {
                         .content("""
                                 {
                                     "username": "franz",
-                                    "password": "franz1234"
+                                    "password": "franz1234",
+                                    "city": "Hamburg"
                                 }
                                 """)
                         .with(csrf()))
@@ -74,14 +75,15 @@ class FoodSpotUserControllerTest {
     @Test
     @DirtiesContext
     void getUsernameAlreadyExistsException_whenSigningUpWithAlreadyExistingUsername() throws Exception {
-        FoodSpotUser existingUser = new FoodSpotUser("123", "franz", "098ß98ß088", List.of());
+        FoodSpotUser existingUser = new FoodSpotUser("123", "franz", "098ß98ß088", "Hamburg", List.of());
         foodSpotUserRepo.insert(existingUser);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/user/sign-up")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
                                     "username": "franz",
-                                    "password": "franz1234"
+                                    "password": "franz1234",
+                                    "city": "Hamburg"
                                 }
                                 """)
                         .with(csrf()))
@@ -100,7 +102,8 @@ class FoodSpotUserControllerTest {
                         .content("""
                                 {
                                     "username": "s",
-                                    "password": "franz19870"
+                                    "password": "franz19870",
+                                    "city": "Hamburg"
                                 }
                                 """)
                         .with(csrf()))
@@ -120,7 +123,8 @@ class FoodSpotUserControllerTest {
                         .content("""
                                 {
                                     "username": "        ",
-                                    "password": "franz19870"
+                                    "password": "franz19870",
+                                    "city": "Hamburg"
                                 }
                                 """)
                         .with(csrf()))
@@ -140,7 +144,8 @@ class FoodSpotUserControllerTest {
                         .content("""
                                 {
                                     "username": "franzi12345",
-                                    "password": "fra"
+                                    "password": "fra",
+                                    "city": "Hamburg"
                                 }
                                 """)
                         .with(csrf()))
@@ -160,7 +165,8 @@ class FoodSpotUserControllerTest {
                         .content("""
                                 {
                                     "username": "franzi12345",
-                                    "password": "           "
+                                    "password": "           ",
+                                    "city": "Hamburg"
                                 }
                                 """)
                         .with(csrf()))
