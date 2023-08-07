@@ -240,7 +240,7 @@ function App() {
                         const filteredByCurrentCategory: FoodSpot[] = foodSpots.filter((spot: FoodSpot) => spot.category == category)
                         return (<Fragment key={category}>
                                 <Route path={`/${category}`}
-                                       element={<FoodSpotCard foodSpots={foodSpots}/>}>
+                                       element={<FoodSpotCard foodSpots={foodSpots} apiKey={apiKey}/>}>
                                 </Route>
                                 {filteredByCurrentCategory.map((foodSpot: FoodSpot) => {
                                     return (
