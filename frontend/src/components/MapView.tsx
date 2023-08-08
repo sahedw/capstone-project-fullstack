@@ -1,7 +1,7 @@
 
 import {FoodSpot} from "../types/FoodSpot.ts";
 import {GoogleMap, MarkerF, useLoadScript} from "@react-google-maps/api";
-import {useEffect, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import {Position} from "../types/Position.ts";
 import axios from "axios";
 import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
@@ -14,6 +14,7 @@ function MapView({foodSpots, apiKey}: Props) {
     const [positions, setPositions] = useState<Position[]>()
     const [userCenter, setUserCenter] = useState<Position>()
     const [centerInput, setCenterInput] = useState<string>("")
+    const [clickedMarker, setClickedMarker] = useState<FoodSpot>()
     const allAddresses: string[] = [];
 
     foodSpots.forEach(foodSpot => allAddresses.push(convertGermanSpecialCharacters(foodSpot.address)))
@@ -44,7 +45,7 @@ function MapView({foodSpots, apiKey}: Props) {
             });
     }, [])
 
-    function handleUserViewInput(e) {
+    function handleUserViewInput(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
         axios.post("/api/google/convert-address", `${centerInput}`)
             .then((response) => {
@@ -53,6 +54,11 @@ function MapView({foodSpots, apiKey}: Props) {
             .catch(function (error) {
                 console.error(error);
             });
+    }
+
+    function handleMarkerForFoodSpot(index: number) {
+        const foundFoodSpot : FoodSpot | undefined = foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.toLowerCase().replace(/,/g, "")) === allAddresses[index])
+        setClickedMarker(foundFoodSpot)
     }
 
 
@@ -76,15 +82,16 @@ function MapView({foodSpots, apiKey}: Props) {
                 }}/>
                 <button>View Location</button>
             </form>
+            <p>{clickedMarker?.address}</p>
+            <p>{clickedMarker?.name}</p>
             <GoogleMap
                 zoom={10}
-
                 center={{lat: Number(userCenter?.latitude), lng: Number(userCenter?.longitude)}}
                 mapContainerClassName={"google-map map-view"}
             >
-                {positions.map((location: Position) => {
+                {positions.map((location: Position, index: number) => {
                     return (
-                        <MarkerF position={{lat: Number(location.latitude), lng: Number(location.longitude)}} key={location.latitude}/>
+                        <MarkerF onClick={() => handleMarkerForFoodSpot(index)} position={{lat: Number(location.latitude), lng: Number(location.longitude)}} key={location.latitude}/>
                     )
                 })}
 

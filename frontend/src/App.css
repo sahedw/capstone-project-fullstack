@@ -177,6 +177,11 @@
 
 .login {
     justify-content: center;
+    gap: 15px;
+}
+
+.register {
+    justify-content: center;
     gap: 0;
 }
 

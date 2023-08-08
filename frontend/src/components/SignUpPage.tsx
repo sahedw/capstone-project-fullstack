@@ -72,7 +72,7 @@ function SignUpPage({onRegistration}: Props) {
             <div><Toaster/></div>
             <section className={"form-add-container"}>
                 <BackButton setClass={"normal"}/>
-                <form onSubmit={handleSignUpSubmit} className={"form login"}>
+                <form onSubmit={handleSignUpSubmit} className={"form register"}>
                     <section className={"form-header-container"}>
                         <h2>Insert your details:</h2>
                     </section>
