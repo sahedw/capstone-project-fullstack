@@ -58,7 +58,7 @@ function AddForm({onAdd}: Props) {
         }
     }
 
-    function handleSelectPlace(place) {
+    function handleSelectPlace(place: any) {
         console.log(place.label)
         setAddress(place.label)
     }

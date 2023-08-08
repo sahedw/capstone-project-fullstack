@@ -13,7 +13,7 @@ function GoogleMaps({address}: Props) {
     const [position, setPosition] = useState<Position>()
 
     useEffect(() => {
-        const delay = 500;
+        const delay = 1000;
         const timeoutId = setTimeout(() => {
             axios.post("/api/google/convert-address", `${convertGermanSpecialCharacters(address)}`)
                 .then((response) => {
