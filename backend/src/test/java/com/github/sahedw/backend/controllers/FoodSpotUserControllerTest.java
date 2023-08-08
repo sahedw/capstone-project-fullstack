@@ -1,6 +1,8 @@
 package com.github.sahedw.backend.controllers;
 
+import com.github.sahedw.backend.exceptions.UsernameAlreadyExistsException;
 import com.github.sahedw.backend.security.FoodSpotUser;
+import com.github.sahedw.backend.security.FoodSpotUserForSignUp;
 import com.github.sahedw.backend.security.FoodSpotUserRepo;
 import com.github.sahedw.backend.security.FoodSpotUserService;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
@@ -29,9 +32,6 @@ class FoodSpotUserControllerTest {
 
     @Autowired
     FoodSpotUserRepo foodSpotUserRepo;
-
-    @MockBean
-    FoodSpotUserService foodSpotUserService;
 
     @Test
     void getAnonymousUser_whenEndpointIsCalled() throws Exception {
@@ -82,7 +82,9 @@ class FoodSpotUserControllerTest {
     @DirtiesContext
     @WithMockUser(username = "sahed")
     void getUserCity_whenGetUserCity() throws Exception {
-        Mockito.when(foodSpotUserService.getUserCity()).thenReturn("Hamburg");
+        FoodSpotUser existingUser = new FoodSpotUser("123", "sahed", "franz1234", "Hamburg", List.of());
+        foodSpotUserRepo.insert(existingUser);
+
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/city")
                         .with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -93,8 +95,9 @@ class FoodSpotUserControllerTest {
     @Test
     @DirtiesContext
     void getUsernameAlreadyExistsException_whenSigningUpWithAlreadyExistingUsername() throws Exception {
-        FoodSpotUser existingUser = new FoodSpotUser("123", "franz", "098ß98ß088", "Hamburg", List.of());
+        FoodSpotUser existingUser = new FoodSpotUser("123", "franz", "franz1234", "Hamburg", List.of());
         foodSpotUserRepo.insert(existingUser);
+
         mockMvc.perform(MockMvcRequestBuilders.post("/api/user/sign-up")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
@@ -111,7 +114,10 @@ class FoodSpotUserControllerTest {
                             "message": "The username franz already exists."
                         }
                         """));
+
+
     }
+
 
     @Test
     void getException_whenSigningUpWithTooShortUsername() throws Exception {
