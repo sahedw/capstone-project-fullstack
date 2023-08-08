@@ -382,11 +382,21 @@
 }
 
 .map-view {
-    height: 430px;
+    height: 380px;
 }
 
 .form-map-view {
+    display: flex;
+    gap: 10px;
     margin: 15px;
+}
+
+.marker-label-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin: 10px;
 }
 
 .foodspot-detail-container {

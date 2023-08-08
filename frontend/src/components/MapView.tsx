@@ -79,11 +79,14 @@ function MapView({foodSpots, apiKey}: Props) {
             <form onSubmit={handleUserViewInput} className={"form-map-view"}>
                 <input type="text" name={"input"} value={centerInput} onChange={(e) => {
                     setCenterInput(e.currentTarget.value)
-                }}/>
+                }}
+                required={true}/>
                 <button>View Location</button>
             </form>
-            <p>{clickedMarker?.address}</p>
-            <p>{clickedMarker?.name}</p>
+            <section className={"marker-label-text"}>
+                <p>{clickedMarker?.name}</p>
+                <p>{clickedMarker?.address}</p>
+            </section>
             <GoogleMap
                 zoom={10}
                 center={{lat: Number(userCenter?.latitude), lng: Number(userCenter?.longitude)}}
