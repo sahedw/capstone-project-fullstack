@@ -2,10 +2,13 @@ package com.github.sahedw.backend.controllers;
 
 import com.github.sahedw.backend.security.FoodSpotUser;
 import com.github.sahedw.backend.security.FoodSpotUserRepo;
+import com.github.sahedw.backend.security.FoodSpotUserService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
@@ -26,6 +29,9 @@ class FoodSpotUserControllerTest {
 
     @Autowired
     FoodSpotUserRepo foodSpotUserRepo;
+
+    @MockBean
+    FoodSpotUserService foodSpotUserService;
 
     @Test
     void getAnonymousUser_whenEndpointIsCalled() throws Exception {
@@ -70,6 +76,18 @@ class FoodSpotUserControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(
                         "franz"));
+    }
+
+    @Test
+    @DirtiesContext
+    @WithMockUser(username = "sahed")
+    void getUserCity_whenGetUserCity() throws Exception {
+        Mockito.when(foodSpotUserService.getUserCity()).thenReturn("Hamburg");
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/city")
+                        .with(csrf()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(
+                        "Hamburg"));
     }
 
     @Test

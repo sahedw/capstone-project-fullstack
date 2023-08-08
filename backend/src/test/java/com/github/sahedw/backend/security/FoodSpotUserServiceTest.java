@@ -2,13 +2,19 @@ package com.github.sahedw.backend.security;
 
 import com.github.sahedw.backend.exceptions.UsernameAlreadyExistsException;
 import com.github.sahedw.backend.models.FoodSpot;
+import com.github.sahedw.backend.models.FoodSpotRepo;
 import com.github.sahedw.backend.models.IdService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
+import org.mockito.Mock;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.AbstractPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -23,6 +29,11 @@ class FoodSpotUserServiceTest {
     IdService idServiceMocked = mock(IdService.class);
 
     FoodSpotUserService foodSpotUserServiceMocked = new FoodSpotUserService(foodSpotUserRepoMocked, idServiceMocked);
+
+    SecurityContext securityContext = mock(SecurityContext.class);
+
+    @Mock
+    Authentication authentication = mock(Authentication.class);
 
 
     IdService idServiceReal = new IdService();
@@ -65,4 +76,20 @@ class FoodSpotUserServiceTest {
         assertThrows(UsernameAlreadyExistsException.class, () -> foodSpotUserServiceReal.signUp(secondUser));
     }
 
+    @Test
+    void expectUserCity_whenGetUserCityIsCalled() {
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()));
+        String expected = "Hamburg";
+        when(foodSpotUserRepoMocked.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
+        when(foodSpotUserRepoMocked.save(currentUser)).thenReturn(currentUser);
+        when(authentication.getName()).thenReturn("sahed");
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        String actual = foodSpotUserServiceReal.getUserCity();
+
+        verify(securityContext).getAuthentication();
+        verify(authentication).getName();
+        assertEquals(expected, actual);
+    }
 }

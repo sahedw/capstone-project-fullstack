@@ -34,13 +34,12 @@ public class GoogleMapsService {
     }
 
     public List<Position> getGeocodeMulti(List<String> addressList) throws IOException, InterruptedException, ApiException {
-        List<GeocodingResult[]> resultsMulti = new ArrayList<>();
         List<Position> allPositions = new ArrayList<>();
 
         for (String address : addressList) {
             GeocodingResult[] results = geocodeApiService.geocode(address);
 
-            if (results != null && results.length > 0) {
+            if (results != null)  {
                 LatLng location = results[0].geometry.location;
                 allPositions.add(new Position(String.valueOf(location.lat), String.valueOf(location.lng)));
             } else {
