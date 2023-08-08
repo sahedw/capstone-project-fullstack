@@ -5,6 +5,7 @@ import BackButton from "./BackButton.tsx";
 import toast, {Toaster} from "react-hot-toast";
 import ChoosePriceLevels from "../icons/ChoosePriceLevels.tsx";
 import getPriceLevelEnum from "../utils/getPriceLevelEnum.ts";
+import AutocompleteInput from "./AutocompleteInput.tsx";
 
 type Props = {
     onAdd: (newFoodSpot: FoodSpotWithoutId) => void,
@@ -57,6 +58,11 @@ function AddForm({onAdd}: Props) {
         }
     }
 
+    function handleSelectPlace(place) {
+        console.log(place.label)
+        setAddress(place.label)
+    }
+
 
     return (
         <section>
@@ -92,15 +98,7 @@ function AddForm({onAdd}: Props) {
                             </ul>
                         </section>
                         <section className={"form-section-container"}>
-                            <input className={"add-form-input"}
-                                   type="text"
-                                   name={"name"}
-                                   value={address}
-                                   onChange={(e) => {
-                                       setAddress(e.currentTarget.value)
-                                   }}
-                                   required
-                            />
+                             <AutocompleteInput onSelectPlace={handleSelectPlace}/>
                             <ul className={"requirement-list-container"}>
                                 <li className={address.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
                                 <li className={address.length < 5 ? "invalid" : "valid"}>Must contain at least 5

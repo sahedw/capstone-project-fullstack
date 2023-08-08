@@ -1,4 +1,4 @@
-import {GoogleMap, useLoadScript, MarkerF} from "@react-google-maps/api";
+import {GoogleMap, MarkerF} from "@react-google-maps/api";
 import {Position} from "../types/Position.ts";
 import axios from "axios";
 import {useEffect, useState} from "react";
@@ -9,24 +9,31 @@ type Props = {
     address: string
 }
 
-function GoogleMaps({apiKey, address}: Props) {
+function GoogleMaps({address}: Props) {
     const [position, setPosition] = useState<Position>()
 
     useEffect(() => {
-        axios.post("/api/google/convert-address", `${convertGermanSpecialCharacters(address)}`)
-            .then((response) => {
-                setPosition(response.data)
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
-    }, [address])
+        const delay = 500;
+        const timeoutId = setTimeout(() => {
+            axios.post("/api/google/convert-address", `${convertGermanSpecialCharacters(address)}`)
+                .then((response) => {
+                    setPosition(response.data);
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        }, delay);
+        return () => clearTimeout(timeoutId);
+    }, [address]);
 
     const center = {lat: Number(position?.latitude), lng: Number(position?.longitude)};
 
-    const {isLoaded} = useLoadScript({googleMapsApiKey: apiKey})
 
-    if (!isLoaded) return <h1>Loading...</h1>
+    if (!position) return (
+        <section className={"placeholder-detail-map"}>
+            <p>Loading...</p>
+        </section>
+    )
 
     if (!position || isNaN(Number(position.latitude)) || isNaN(Number(position.longitude))) {
         return <h1>Invalid address. Please check the address and update it.</h1>;

@@ -381,6 +381,15 @@
     border: 2px solid black;
 }
 
+.placeholder-detail-map {
+    height: 200px;
+    width: 350px;
+    -webkit-box-shadow: 7px 7px 0px -2px #000000;
+    box-shadow: 7px 7px 0px -2px #000000;
+    border: 2px solid black;
+}
+
+
 .map-view {
     height: 380px;
 }
