@@ -92,4 +92,19 @@ class FoodSpotUserServiceTest {
         verify(authentication).getName();
         assertEquals(expected, actual);
     }
+
+    @Test
+    void expectNoSuchElementException_whenGetUserCityIsCalled() {
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()));
+
+        when(foodSpotUserRepoMocked.findByUsername("sahed")).thenReturn(Optional.empty());
+        when(foodSpotUserRepoMocked.save(currentUser)).thenReturn(currentUser);
+        when(authentication.getName()).thenReturn("");
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        assertThrows(NoSuchElementException.class, () -> foodSpotUserServiceReal.getUserCity());
+        verify(securityContext).getAuthentication();
+        verify(authentication).getName();
+    }
 }

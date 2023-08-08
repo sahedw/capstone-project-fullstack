@@ -124,6 +124,35 @@ class GoogleMapsServiceTest {
         //THEN
         assertThrows(NotFoundException.class, () ->  googleMapsService.getGeocodeMulti(addresses));
     }
+
+    @Test
+    void expectNotFoundException_whenGetGeocodeMultiIsCalledWithResultsNull() throws IOException, InterruptedException, ApiException {
+        //GIVEN
+        List<String> addresses = new ArrayList<>();
+        addresses.add("dsd");
+        addresses.add("sdsd");
+        Position expectedFirst = new Position("53.56147", "9.91507");
+        //FIRST POSITION
+        GeocodingResult geocodingResult = new GeocodingResult();
+        Geometry geometry = new Geometry();
+        geometry.location = new LatLng(0.00000000, 0.00000000);
+        geocodingResult.geometry = geometry;
+        GeocodingResult[] results = null;
+        //SECOND POSITION
+        GeocodingResult geocodingResultTwo = new GeocodingResult();
+        Geometry geometryTwo = new Geometry();
+        geometry.location = new LatLng(0.00000000, 0.00000000);
+        geocodingResultTwo.geometry = geometry;
+        GeocodingResult[] resultsTwo = null;
+
+        //WHEN
+        when(googleMapsConfig.getKey()).thenReturn("Test");
+        when(geocodeApiService.geocode(addresses.get(0))).thenReturn(null);
+        when(geocodeApiService.geocode(addresses.get(1))).thenThrow(NotFoundException.class);
+
+        //THEN
+        assertThrows(NotFoundException.class, () ->  googleMapsService.getGeocodeMulti(addresses));
+    }
 }
 
 
