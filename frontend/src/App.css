@@ -473,7 +473,7 @@
     top: 0;
     height: 100vh;
     width: 200px;
-    background-color: lightcoral;
+    background-color: #FF7A5C;
     z-index: 1;
     right: 0;
     transition: 0.2s ease-in-out;
@@ -485,5 +485,27 @@
 
 .menu-closed {
     right: -200px;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.navbar-list {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    font-size: 20px;
+}
+
+.active-link {
+    color: black;
+    text-decoration: #12f49a wavy underline;
+    text-decoration-skip-ink: none;
+    height: 1.5em;
 }
 
