@@ -1,11 +1,16 @@
 package com.github.sahedw.backend.controllers;
 
+import com.github.sahedw.backend.exceptions.UsernameAlreadyExistsException;
 import com.github.sahedw.backend.security.FoodSpotUser;
+import com.github.sahedw.backend.security.FoodSpotUserForSignUp;
 import com.github.sahedw.backend.security.FoodSpotUserRepo;
+import com.github.sahedw.backend.security.FoodSpotUserService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
@@ -14,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
@@ -62,7 +68,8 @@ class FoodSpotUserControllerTest {
                         .content("""
                                 {
                                     "username": "franz",
-                                    "password": "franz1234"
+                                    "password": "franz1234",
+                                    "city": "Hamburg"
                                 }
                                 """)
                         .with(csrf()))
@@ -73,15 +80,31 @@ class FoodSpotUserControllerTest {
 
     @Test
     @DirtiesContext
-    void getUsernameAlreadyExistsException_whenSigningUpWithAlreadyExistingUsername() throws Exception {
-        FoodSpotUser existingUser = new FoodSpotUser("123", "franz", "098ß98ß088", List.of());
+    @WithMockUser(username = "sahed")
+    void getUserCity_whenGetUserCity() throws Exception {
+        FoodSpotUser existingUser = new FoodSpotUser("123", "sahed", "franz1234", "Hamburg", List.of());
         foodSpotUserRepo.insert(existingUser);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/city")
+                        .with(csrf()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(
+                        "Hamburg"));
+    }
+
+    @Test
+    @DirtiesContext
+    void getUsernameAlreadyExistsException_whenSigningUpWithAlreadyExistingUsername() throws Exception {
+        FoodSpotUser existingUser = new FoodSpotUser("123", "franz", "franz1234", "Hamburg", List.of());
+        foodSpotUserRepo.insert(existingUser);
+
         mockMvc.perform(MockMvcRequestBuilders.post("/api/user/sign-up")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
                                     "username": "franz",
-                                    "password": "franz1234"
+                                    "password": "franz1234",
+                                    "city": "Hamburg"
                                 }
                                 """)
                         .with(csrf()))
@@ -91,7 +114,10 @@ class FoodSpotUserControllerTest {
                             "message": "The username franz already exists."
                         }
                         """));
+
+
     }
+
 
     @Test
     void getException_whenSigningUpWithTooShortUsername() throws Exception {
@@ -100,7 +126,8 @@ class FoodSpotUserControllerTest {
                         .content("""
                                 {
                                     "username": "s",
-                                    "password": "franz19870"
+                                    "password": "franz19870",
+                                    "city": "Hamburg"
                                 }
                                 """)
                         .with(csrf()))
@@ -120,7 +147,8 @@ class FoodSpotUserControllerTest {
                         .content("""
                                 {
                                     "username": "        ",
-                                    "password": "franz19870"
+                                    "password": "franz19870",
+                                    "city": "Hamburg"
                                 }
                                 """)
                         .with(csrf()))
@@ -140,7 +168,8 @@ class FoodSpotUserControllerTest {
                         .content("""
                                 {
                                     "username": "franzi12345",
-                                    "password": "fra"
+                                    "password": "fra",
+                                    "city": "Hamburg"
                                 }
                                 """)
                         .with(csrf()))
@@ -160,7 +189,8 @@ class FoodSpotUserControllerTest {
                         .content("""
                                 {
                                     "username": "franzi12345",
-                                    "password": "           "
+                                    "password": "           ",
+                                    "city": "Hamburg"
                                 }
                                 """)
                         .with(csrf()))

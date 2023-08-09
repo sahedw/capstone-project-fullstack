@@ -10,6 +10,7 @@ type Props = {
 
 function SignUpPage({onRegistration}: Props) {
     const [username, setUsername] = useState<string>("")
+    const [city, setCity] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [repeatedPassword, setRepeatedPassword] = useState<string>("")
     const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -25,6 +26,7 @@ function SignUpPage({onRegistration}: Props) {
         if (isIdentical(password, repeatedPassword)) {
             const newUser = {
                 username: username,
+                city: city,
                 password: password
             }
             const registerToast = toast.loading('Registering...', {
@@ -70,7 +72,7 @@ function SignUpPage({onRegistration}: Props) {
             <div><Toaster/></div>
             <section className={"form-add-container"}>
                 <BackButton setClass={"normal"}/>
-                <form onSubmit={handleSignUpSubmit} className={"form login"}>
+                <form onSubmit={handleSignUpSubmit} className={"form register"}>
                     <section className={"form-header-container"}>
                         <h2>Insert your details:</h2>
                     </section>
@@ -88,6 +90,23 @@ function SignUpPage({onRegistration}: Props) {
                             <ul className={"requirement-list-container"}>
                                 <li className={username.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
                                 <li className={username.length < 5 ? "invalid" : "valid"}>Must contain at least 5
+                                    characters
+                                </li>
+                            </ul>
+                        </section>
+                        <section className={"form-section-container"}>
+                            <input className={"add-form-input"}
+                                   placeholder={"City"}
+                                   type="text"
+                                   name={"city"}
+                                   onChange={(e) => {
+                                       setCity(e.currentTarget.value)
+                                   }}
+                                   required
+                            />
+                            <ul className={"requirement-list-container"}>
+                                <li className={city.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
+                                <li className={city.length < 2 ? "invalid" : "valid"}>Must contain at least 2
                                     characters
                                 </li>
                             </ul>

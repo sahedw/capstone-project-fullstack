@@ -14,6 +14,7 @@ import LoginPage from "./components/LoginPage.tsx";
 import SignUpPage from "./components/SignUpPage.tsx";
 import {FoodSpotUserWithoutId} from "./types/FoodSpotUserWithoutId.ts";
 import toast from "react-hot-toast";
+import HeaderJsLibraryApi from "./components/HeaderJSLibraryAPI.tsx";
 
 
 function App() {
@@ -181,6 +182,8 @@ function App() {
 
     type EditMode = () => void;
 
+
+
     function handleUpdateFoodSpot(id: string, updatedFoodSpot: FoodSpotWithoutId, editMode: EditMode): void {
         axios.put(`/api/foodSpot/${id}`, updatedFoodSpot)
             .then(() => {
@@ -228,13 +231,14 @@ function App() {
 
     return (
         <>
+            <HeaderJsLibraryApi apiKey={apiKey}/>
             <Routes>
                 <Route element={<ProtectedPaths user={user}/>}>
                     <Route path={"/"}
                            element={<HomePage onSignedIn={handleSignedIn} user={user} onLogout={handleLogout}/>}>
                     </Route>
                     <Route path={"/addFoodSpot"}
-                           element={<AddForm apiKey={apiKey} onAdd={handleAddFoodSpot}/>}>
+                           element={<AddForm onAdd={handleAddFoodSpot}/>}>
                     </Route>
                     {allCategories.map((category: string) => {
                         const filteredByCurrentCategory: FoodSpot[] = foodSpots.filter((spot: FoodSpot) => spot.category == category)
@@ -246,7 +250,7 @@ function App() {
                                     return (
                                         <Route path={`/${foodSpot.category}/${foodSpot.id}`} key={category + foodSpot.id}
                                                element={<FoodSpotDetail onDelete={handleDeleteFoodSpot}
-                                                                        onUpdate={handleUpdateFoodSpot} apiKey={apiKey}
+                                                                        onUpdate={handleUpdateFoodSpot}
                                                                         foodSpot={foodSpot}/>}>
                                         </Route>
                                     )

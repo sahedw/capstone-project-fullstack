@@ -22,6 +22,10 @@ public record FoodSpotUser(
         String password,
 
         @NotBlank
+        @Size(min=2, max=50)
+        String city,
+
+        @NotBlank
         List<FoodSpot> ownFoodSpots
 ) {
 }

@@ -37,7 +37,7 @@ class FoodSpotServiceTest {
         FoodSpot firstTestFS = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", "sencha_barmbek", PriceLevel.LOW);
         FoodSpot secondTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER", "batman",PriceLevel.LOW);
         List<FoodSpot> expectedList = List.of(firstTestFS, secondTestFS);
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1",expectedList);
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1","Hamburg", expectedList);
         //WHEN
         when(foodSpotUserRepo.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
         when(authentication.getName()).thenReturn("sahed");
@@ -64,7 +64,7 @@ class FoodSpotServiceTest {
 
         FoodSpot expected = new FoodSpot("789", toAddFS.getName(), toAddFS.getAddress(), toAddFS.getCategory(), toAddFS.getInstagramUsername(),toAddFS.getPriceLevel());
 
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1",new ArrayList<>(List.of(expected)));
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1","Hamburg", new ArrayList<>(List.of(expected)));
 
 
         //WHEN
@@ -128,7 +128,7 @@ class FoodSpotServiceTest {
         foodSpotWithoutId.setPriceLevel(expected.getPriceLevel());
         String idToUpdate = "123";
 
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1",new ArrayList<>(List.of(expected)));
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg", new ArrayList<>(List.of(expected)));
         when(foodSpotUserRepo.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
         when(foodSpotUserRepo.save(currentUser)).thenReturn(currentUser);
         when(authentication.getName()).thenReturn("sahed");
@@ -152,7 +152,7 @@ class FoodSpotServiceTest {
         foodSpotWithoutId.setAddress(expected.getAddress());
         foodSpotWithoutId.setCategory(expected.getCategory());
         String idToDelete = "123";
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1",new ArrayList<>(List.of(expected)));
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of(expected)));
 
         //WHEN
         when(foodSpotUserRepo.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
@@ -175,7 +175,7 @@ class FoodSpotServiceTest {
         FoodSpot expected = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", "sencha_barmbek",PriceLevel.LOW);
         String idToDelete = "123";
         //WHEN
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1",new ArrayList<>(List.of(expected)));
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of(expected)));
 
         //WHEN
         when(foodSpotUserRepo.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
@@ -215,7 +215,7 @@ class FoodSpotServiceTest {
         foodSpotWithoutId.setPriceLevel(expected.getPriceLevel());
         String idToUpdate = "000";
 
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1",new ArrayList<>(List.of(expected)));
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of(expected)));
         when(foodSpotUserRepo.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
         when(foodSpotUserRepo.save(currentUser)).thenReturn(currentUser);
         when(authentication.getName()).thenReturn("sahed");

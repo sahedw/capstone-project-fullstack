@@ -1,8 +1,10 @@
 import {FoodSpot} from "../types/FoodSpot.ts";
-import {Link, Location, useLocation} from "react-router-dom";
+import {Location, useLocation} from "react-router-dom";
 import BackButton from "./BackButton.tsx";
 import convertCategoryToHeaderFormat from "../utils/convertCategoryToHeaderFormat.ts";
-import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
+import {useState} from "react";
+import ListView from "./ListView.tsx";
+import MapView from "./MapView.tsx";
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -10,10 +12,12 @@ type Props = {
 
 
 function FoodSpotCard({foodSpots}: Props) {
+    const [showMap, setShowMap] = useState(false)
     const location: Location = useLocation();
     const filteredFoodSpots: FoodSpot[] = foodSpots
         .filter((foodSpot) =>
             foodSpot.category === location.pathname.slice(1))
+
 
     if (filteredFoodSpots.length == 0) return <h1>No saved FoodSpots</h1>
 
@@ -24,19 +28,21 @@ function FoodSpotCard({foodSpots}: Props) {
             <section className={"category-foodspots-container"}>
                 <h1 className={"category-foodspots-header"}>All
                     your {convertCategoryToHeaderFormat(filteredFoodSpots[0].category) === "Doener" ? "Döner" : convertCategoryToHeaderFormat(filteredFoodSpots[0].category)} FoodSpots:</h1>
-                <section className={"category-card-grid"}>
-                    {filteredFoodSpots.map((foodSpot: FoodSpot) => {
-                        return (
-                                <Link to={`/${foodSpot.category}/${foodSpot.id}`} className={"link"} key={foodSpot.id}>
-                                    <div className={"foodspot-card-container"} key={foodSpot.id}>
-                                        <h3>{foodSpot.name}</h3>
-                                        <img className={`card-image ${convertGermanSpecialCharacters(foodSpot.category)}`} src={`${foodSpot.category}.png`}
-                                             alt="food image"/>
-                                    </div>
-                                </Link>
-                        )
-                    })}
+                <section className={"category-tabs-container"}>
+                    <section className={"category-tab-container"}>
+                        <button className={`category-tab ${showMap ? "tab-inactive" : ""}`}
+                                onClick={() => setShowMap(false)}>List
+                        </button>
+                        <button className={`category-tab ${showMap ? "" : "tab-inactive"}`}
+                                onClick={() => setShowMap(true)}>Map
+                        </button>
+                    </section>
                 </section>
+                {showMap ?
+                    <MapView foodSpots={filteredFoodSpots}/>
+                    :
+                    <ListView foodSpots={filteredFoodSpots}/>
+                }
             </section>
         </>
     );

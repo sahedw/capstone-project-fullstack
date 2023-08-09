@@ -6,6 +6,7 @@ import ChoosePriceLevels from "../icons/ChoosePriceLevels.tsx";
 import getPriceLevelEnum from "../utils/getPriceLevelEnum.ts";
 import {allCategories} from "../utils/allCategories.ts";
 import toast, {Toaster} from "react-hot-toast";
+import AutocompleteInput from "./AutocompleteInput.tsx";
 
 type EditMode = () => void;
 
@@ -14,7 +15,6 @@ type Props = {
     foodSpot: FoodSpot,
     onUpdate: (id: string, updatedFoodSpot: FoodSpotWithoutId, editMode: EditMode) => void,
     onDelete: (id: string) => void,
-    apiKey: string
 }
 
 function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
@@ -83,6 +83,10 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
         }, 1500);
     }
 
+    function handleSelectPlace(place: any) {
+        setAddress(place.label)
+    }
+
     return (
         <>
             <div><Toaster/></div>
@@ -109,15 +113,7 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
                         </ul>
                     </section>
                     <section className={"form-section-container"}>
-                        <input className={"add-form-input"}
-                               type="text"
-                               name={"name"}
-                               value={address}
-                               onChange={(e) => {
-                                   setAddress(e.currentTarget.value)
-                               }}
-                               required
-                        />
+                        <AutocompleteInput onSelectPlace={handleSelectPlace}/>
                     <ul className={"requirement-list-container"}>
                             <li className={address.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
                             <li className={address.length < 5 ? "invalid" : "valid"}>Must contain at least 5
