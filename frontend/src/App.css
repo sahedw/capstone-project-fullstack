@@ -4,6 +4,13 @@
     margin: 0;
 }
 
+body {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+
 .link {
     color: black;
     text-decoration: none;
@@ -132,6 +139,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    overflow-x: hidden;
 }
 
 .form {
@@ -230,6 +238,8 @@
     width: 100vw;
     height: 100vh;
     background-color: #f3d935;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .homepage-header-container {
@@ -507,5 +517,22 @@
     text-decoration: #12f49a wavy underline;
     text-decoration-skip-ink: none;
     height: 1.5em;
+}
+
+.inactive-link {
+    color: black;
+    text-decoration: none;
+}
+
+.fixed-burger-menu {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+}
+
+.overflow-menu {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 

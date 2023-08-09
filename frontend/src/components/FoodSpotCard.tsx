@@ -5,6 +5,7 @@ import convertCategoryToHeaderFormat from "../utils/convertCategoryToHeaderForma
 import {useState} from "react";
 import ListView from "./ListView.tsx";
 import MapView from "./MapView.tsx";
+import BurgerMenu from "./BurgerMenu.tsx";
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -24,25 +25,28 @@ function FoodSpotCard({foodSpots}: Props) {
 
     return (
         <>
-            <BackButton setClass={"normal"}/>
-            <section className={"category-foodspots-container"}>
-                <h1 className={"category-foodspots-header"}>All
-                    your {convertCategoryToHeaderFormat(filteredFoodSpots[0].category) === "Doener" ? "Döner" : convertCategoryToHeaderFormat(filteredFoodSpots[0].category)} FoodSpots:</h1>
-                <section className={"category-tabs-container"}>
-                    <section className={"category-tab-container"}>
-                        <button className={`category-tab ${showMap ? "tab-inactive" : ""}`}
-                                onClick={() => setShowMap(false)}>List
-                        </button>
-                        <button className={`category-tab ${showMap ? "" : "tab-inactive"}`}
-                                onClick={() => setShowMap(true)}>Map
-                        </button>
+            <section className={"overflow-menu"}>
+                <BurgerMenu/>
+                <BackButton setClass={"normal"}/>
+                <section className={"category-foodspots-container"}>
+                    <h1 className={"category-foodspots-header"}>All
+                        your {convertCategoryToHeaderFormat(filteredFoodSpots[0].category) === "Doener" ? "Döner" : convertCategoryToHeaderFormat(filteredFoodSpots[0].category)} FoodSpots:</h1>
+                    <section className={"category-tabs-container"}>
+                        <section className={"category-tab-container"}>
+                            <button className={`category-tab ${showMap ? "tab-inactive" : ""}`}
+                                    onClick={() => setShowMap(false)}>List
+                            </button>
+                            <button className={`category-tab ${showMap ? "" : "tab-inactive"}`}
+                                    onClick={() => setShowMap(true)}>Map
+                            </button>
+                        </section>
                     </section>
+                    {showMap ?
+                        <MapView foodSpots={filteredFoodSpots}/>
+                        :
+                        <ListView foodSpots={filteredFoodSpots}/>
+                    }
                 </section>
-                {showMap ?
-                    <MapView foodSpots={filteredFoodSpots}/>
-                    :
-                    <ListView foodSpots={filteredFoodSpots}/>
-                }
             </section>
         </>
     );

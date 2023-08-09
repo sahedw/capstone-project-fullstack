@@ -20,7 +20,7 @@ function HomePage({onSignedIn, onLogout, user}: Props) {
                 <h2>Wassup, {user}</h2>
                 <p>Take a look at your saved FoodSpots!</p>
             </section>
-            <button className={"logout-button"} onClick={onLogout}>{user !== undefined && "Logout"}</button>
+            {/*<button className={"logout-button"} onClick={onLogout}>{user !== undefined && "Logout"}</button>*/}
             <section className={"category-grid-container"}>
                 {allCategories.map((category: string) => {
                     return (
@@ -30,12 +30,6 @@ function HomePage({onSignedIn, onLogout, user}: Props) {
                     )
                 })}
             </section>
-            <Link to={"/addFoodSpot"}>
-                <button className={"button-add"}>
-                    <img width={40} src="/plus.png" alt="plus icon"/>
-                </button>
-            </Link>
-
         </section>
     );
 }

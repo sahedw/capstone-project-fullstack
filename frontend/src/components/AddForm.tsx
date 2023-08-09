@@ -6,6 +6,7 @@ import toast, {Toaster} from "react-hot-toast";
 import ChoosePriceLevels from "../icons/ChoosePriceLevels.tsx";
 import getPriceLevelEnum from "../utils/getPriceLevelEnum.ts";
 import AutocompleteInput from "./AutocompleteInput.tsx";
+import BurgerMenu from "./BurgerMenu.tsx";
 
 type Props = {
     onAdd: (newFoodSpot: FoodSpotWithoutId) => void,
@@ -64,8 +65,9 @@ function AddForm({onAdd}: Props) {
 
 
     return (
-        <section>
+        <section className={"overflow-menu"}>
             <div><Toaster/></div>
+            <BurgerMenu/>
             <section className={"form-add-container"}>
                 <BackButton setClass={"normal"}/>
                 <form onSubmit={handleAddFormSubmit} className={"form form-center"}>
