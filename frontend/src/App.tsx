@@ -16,6 +16,7 @@ import {FoodSpotUserWithoutId} from "./types/FoodSpotUserWithoutId.ts";
 import toast from "react-hot-toast";
 import HeaderJsLibraryApi from "./components/HeaderJSLibraryAPI.tsx";
 import BurgerMenu from "./components/BurgerMenu.tsx";
+import MapOverview from "./components/MapOverview.tsx";
 
 
 
@@ -260,6 +261,10 @@ function App() {
                             </Fragment>
                         )
                     })}
+                    <Route path={"/map"}
+                           element={<MapOverview foodSpots={foodSpots}/>}>
+
+                    </Route>
                 </Route>
                 <Route path={"/login"} element={<LoginPage onLogin={handleLogin}/>}>
                 </Route>
