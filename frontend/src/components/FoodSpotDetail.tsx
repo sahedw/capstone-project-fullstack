@@ -11,13 +11,12 @@ type EditMode = () => void;
 
 type Props = {
     foodSpot: FoodSpot,
-    apiKey: string,
     onUpdate: (id: string, updatedFoodSpot: FoodSpotWithoutId, editMode: EditMode) => void,
     onDelete: (id: string) => void
 }
 
 
-function FoodSpotDetail({foodSpot, apiKey, onUpdate, onDelete}: Props) {
+function FoodSpotDetail({foodSpot, onUpdate, onDelete}: Props) {
     const [editMode, setEditMode] = useState<boolean>(false)
 
     function handleEditMode() {
@@ -31,13 +30,13 @@ function FoodSpotDetail({foodSpot, apiKey, onUpdate, onDelete}: Props) {
                 {editMode ?
                     <>
                         <EditForm onDelete={onDelete} onEditMode={handleEditMode} onUpdate={onUpdate}
-                                  foodSpot={foodSpot} apiKey={apiKey}/>
+                                  foodSpot={foodSpot}/>
                     </>
                     :
                     <>
                         <h1>{foodSpot.name}</h1>
-                        <GoogleMaps address={foodSpot.address} apiKey={apiKey}/>
-                        <DetailCard foodSpot={foodSpot} apiKey={apiKey} onEditMode={handleEditMode}/>
+                        <GoogleMaps address={foodSpot.address}/>
+                        <DetailCard foodSpot={foodSpot} onEditMode={handleEditMode}/>
                         <section className={"foodspot-detail-category"}>
                             <h3>{foodSpot.category === "DOENER" ? "DÖNER" : foodSpot.category}</h3>
                         </section>

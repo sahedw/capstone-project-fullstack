@@ -7,12 +7,11 @@ import ListView from "./ListView.tsx";
 import MapView from "./MapView.tsx";
 
 type Props = {
-    apiKey: string,
     foodSpots: FoodSpot[]
 }
 
 
-function FoodSpotCard({foodSpots, apiKey}: Props) {
+function FoodSpotCard({foodSpots}: Props) {
     const [showMap, setShowMap] = useState(false)
     const location: Location = useLocation();
     const filteredFoodSpots: FoodSpot[] = foodSpots
@@ -40,7 +39,7 @@ function FoodSpotCard({foodSpots, apiKey}: Props) {
                     </section>
                 </section>
                 {showMap ?
-                    <MapView foodSpots={filteredFoodSpots} apiKey={apiKey}/>
+                    <MapView foodSpots={filteredFoodSpots}/>
                     :
                     <ListView foodSpots={filteredFoodSpots}/>
                 }

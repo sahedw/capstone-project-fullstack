@@ -1,16 +1,15 @@
 
 import {FoodSpot} from "../types/FoodSpot.ts";
-import {GoogleMap, MarkerF, useLoadScript} from "@react-google-maps/api";
+import {GoogleMap, MarkerF} from "@react-google-maps/api";
 import {FormEvent, useEffect, useState} from "react";
 import {Position} from "../types/Position.ts";
 import axios from "axios";
 import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
 
 type Props = {
-    apiKey: string,
     foodSpots: FoodSpot[]
 }
-function MapView({foodSpots, apiKey}: Props) {
+function MapView({foodSpots}: Props) {
     const [positions, setPositions] = useState<Position[]>()
     const [userCenter, setUserCenter] = useState<Position>()
     const [centerInput, setCenterInput] = useState<string>("")
@@ -65,9 +64,6 @@ function MapView({foodSpots, apiKey}: Props) {
 
    // const center = {lat: Number(position?[0].latitude), lng: Number(position?.longitude)};
 
-    const {isLoaded} = useLoadScript({googleMapsApiKey: apiKey})
-
-    if (!isLoaded) return <h1>Loading...</h1>
 
     if (!positions) return <h1>Loading...</h1>
 

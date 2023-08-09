@@ -5,7 +5,6 @@ import {useEffect, useState} from "react";
 import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
 
 type Props = {
-    apiKey: string,
     address: string
 }
 

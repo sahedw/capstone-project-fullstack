@@ -9,7 +9,6 @@ import AutocompleteInput from "./AutocompleteInput.tsx";
 
 type Props = {
     onAdd: (newFoodSpot: FoodSpotWithoutId) => void,
-    apiKey: string
 }
 
 function AddForm({onAdd}: Props) {

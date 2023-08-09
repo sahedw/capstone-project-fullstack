@@ -15,7 +15,6 @@ type Props = {
     foodSpot: FoodSpot,
     onUpdate: (id: string, updatedFoodSpot: FoodSpotWithoutId, editMode: EditMode) => void,
     onDelete: (id: string) => void,
-    apiKey: string
 }
 
 function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {

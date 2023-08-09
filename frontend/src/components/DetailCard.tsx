@@ -5,7 +5,6 @@ import Instagram from "../icons/Instagram.tsx";
 
 type Props = {
     foodSpot: FoodSpot,
-    apiKey: string,
     onEditMode: () => void
 }
 
