@@ -226,6 +226,7 @@
 }
 
 .homepage-container {
+    position: relative;
     width: 100vw;
     height: 100vh;
     background-color: #f3d935;
@@ -459,3 +460,30 @@
     display: flex;
     justify-content: space-between;
 }
+
+.hamburger-react {
+    position: absolute;
+    z-index: 2;
+    left: 315px;
+    top: 15px;
+}
+
+.off-canvas-menu {
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: 200px;
+    background-color: lightcoral;
+    z-index: 1;
+    right: 0;
+    transition: 0.2s ease-in-out;
+}
+
+.menu-open {
+    right: 0;
+}
+
+.menu-closed {
+    right: -200px;
+}
+

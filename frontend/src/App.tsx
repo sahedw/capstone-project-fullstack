@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 import HeaderJsLibraryApi from "./components/HeaderJSLibraryAPI.tsx";
 
 
+
 function App() {
     const [foodSpots, setFoodSpots] = useState<FoodSpot[]>([]);
     const [apiKey, setApiKey] = useState<string>("");
@@ -183,7 +184,6 @@ function App() {
     type EditMode = () => void;
 
 
-
     function handleUpdateFoodSpot(id: string, updatedFoodSpot: FoodSpotWithoutId, editMode: EditMode): void {
         axios.put(`/api/foodSpot/${id}`, updatedFoodSpot)
             .then(() => {
@@ -248,7 +248,8 @@ function App() {
                                 </Route>
                                 {filteredByCurrentCategory.map((foodSpot: FoodSpot) => {
                                     return (
-                                        <Route path={`/${foodSpot.category}/${foodSpot.id}`} key={category + foodSpot.id}
+                                        <Route path={`/${foodSpot.category}/${foodSpot.id}`}
+                                               key={category + foodSpot.id}
                                                element={<FoodSpotDetail onDelete={handleDeleteFoodSpot}
                                                                         onUpdate={handleUpdateFoodSpot}
                                                                         foodSpot={foodSpot}/>}>
