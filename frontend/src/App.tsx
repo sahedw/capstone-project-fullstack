@@ -16,6 +16,7 @@ import {FoodSpotUserWithoutId} from "./types/FoodSpotUserWithoutId.ts";
 import toast from "react-hot-toast";
 import HeaderJsLibraryApi from "./components/HeaderJSLibraryAPI.tsx";
 import MapOverview from "./components/MapOverview.tsx";
+import AccountPage from "./components/AccountPage.tsx";
 
 
 
@@ -262,6 +263,10 @@ function App() {
                     })}
                     <Route path={"/map"}
                            element={<MapOverview foodSpots={foodSpots}/>}>
+
+                    </Route>
+                    <Route path={"/account"}
+                           element={<AccountPage/>}>
 
                     </Route>
                 </Route>

@@ -5,6 +5,7 @@ import {Position} from "../types/Position.ts";
 import {GoogleMap, MarkerF} from "@react-google-maps/api";
 import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
 import BurgerMenu from "./BurgerMenu.tsx";
+import Swal from 'sweetalert2'
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -13,7 +14,6 @@ type Props = {
 function MapOverview({foodSpots}: Props) {
     const [userCenter, setUserCenter] = useState<Position>()
     const [positions, setPositions] = useState<Position[]>()
-    const [clickedMarker, setClickedMarker] = useState<FoodSpot>()
     const [centerInput, setCenterInput] = useState<string>("")
     const [userLocation, setUserLocation] = useState<Position>({
         latitude: "",
@@ -83,8 +83,7 @@ function MapOverview({foodSpots}: Props) {
     }
 
     function handleMarkerForFoodSpot(index: number) {
-        const foundFoodSpot: FoodSpot | undefined = foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.toLowerCase().replace(/,/g, "")) === allStreets[index])
-        setClickedMarker(foundFoodSpot)
+        return foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.toLowerCase().replace(/,/g, "")) === allStreets[index]);
     }
 
     const customMarkerIcon = {
@@ -97,10 +96,6 @@ function MapOverview({foodSpots}: Props) {
             <section className={"overflow-menu"}>
                 <BurgerMenu/>
                 <section className={"map-page-container"}>
-                    <section>
-                        <p>{clickedMarker?.name}</p>
-                        <p>{clickedMarker?.address}</p>
-                    </section>
                     <form onSubmit={handleUserViewInput} className={"form-map-view"}>
                         <input type="text" name={"input"} value={centerInput} onChange={(e) => {
                             setCenterInput(e.currentTarget.value)
@@ -114,8 +109,16 @@ function MapOverview({foodSpots}: Props) {
                         mapContainerClassName={"google-map map-overview"}
                     >
                         {positions.map((location: Position, index: number) => {
+                            const spot: FoodSpot | undefined = handleMarkerForFoodSpot(index)
                             return (
-                                <MarkerF onClick={() => handleMarkerForFoodSpot(index)}
+                                <MarkerF onClick={() => {
+                                    Swal.fire({
+                                        title: `${spot?.name}`,
+                                        html: `${spot?.address}<br><br>${spot?.priceLevel}`,
+
+
+                                    })
+                                }}
                                          position={{lat: Number(location.latitude), lng: Number(location.longitude)}}
                                          key={location.latitude + index}/>
                             )

@@ -400,6 +400,14 @@ body {
     border: 2px solid black;
 }
 
+.swal2-popup {
+    background-color: #f3d935;
+    -webkit-box-shadow: 7px 7px 0px -2px #000000;
+    box-shadow: 7px 7px 0px -2px #000000;
+    border-radius: 0;
+    width: 300px;
+}
+
 
 .map-view {
     height: 380px;

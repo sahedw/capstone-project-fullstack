@@ -1,7 +1,7 @@
 
 type Props = {
     size: string,
-    priceLevel: string
+    priceLevel: string | undefined
 }
 export default function ChoosePriceLevels({size, priceLevel}: Props) {
 
