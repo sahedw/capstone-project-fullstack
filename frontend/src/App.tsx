@@ -15,7 +15,6 @@ import SignUpPage from "./components/SignUpPage.tsx";
 import {FoodSpotUserWithoutId} from "./types/FoodSpotUserWithoutId.ts";
 import toast from "react-hot-toast";
 import HeaderJsLibraryApi from "./components/HeaderJSLibraryAPI.tsx";
-import BurgerMenu from "./components/BurgerMenu.tsx";
 import MapOverview from "./components/MapOverview.tsx";
 
 

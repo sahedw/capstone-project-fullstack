@@ -90,7 +90,7 @@ function MapView({foodSpots}: Props) {
             >
                 {positions.map((location: Position, index: number) => {
                     return (
-                        <MarkerF onClick={() => handleMarkerForFoodSpot(index)} position={{lat: Number(location.latitude), lng: Number(location.longitude)}} key={location.latitude}/>
+                        <MarkerF onClick={() => handleMarkerForFoodSpot(index)} position={{lat: Number(location.latitude), lng: Number(location.longitude)}} key={location.latitude+location.longitude}/>
                     )
                 })}
 

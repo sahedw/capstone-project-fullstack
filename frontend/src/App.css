@@ -405,6 +405,10 @@ body {
     height: 380px;
 }
 
+.map-overview {
+    height: 500px;
+}
+
 .form-map-view {
     display: flex;
     gap: 10px;
@@ -534,5 +538,15 @@ body {
     position: relative;
     overflow-x: hidden;
     overflow-y: hidden;
+}
+
+.map-page-container {
+    background-color: #f3d935;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
