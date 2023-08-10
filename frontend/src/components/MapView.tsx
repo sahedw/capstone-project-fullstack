@@ -1,10 +1,12 @@
-
 import {FoodSpot} from "../types/FoodSpot.ts";
 import {GoogleMap, MarkerF} from "@react-google-maps/api";
 import {FormEvent, useEffect, useState} from "react";
 import {Position} from "../types/Position.ts";
 import axios from "axios";
 import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
+import Swal from "sweetalert2";
+import {renderToString} from "react-dom/server";
+import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -13,10 +15,29 @@ function MapView({foodSpots}: Props) {
     const [positions, setPositions] = useState<Position[]>()
     const [userCenter, setUserCenter] = useState<Position>()
     const [centerInput, setCenterInput] = useState<string>("")
-    const [clickedMarker, setClickedMarker] = useState<FoodSpot>()
+    const [userLocation, setUserLocation] = useState<Position>({
+        latitude: "",
+        longitude: "",
+    });
     const allAddresses: string[] = [];
 
     foodSpots.forEach(foodSpot => allAddresses.push(convertGermanSpecialCharacters(foodSpot.address)))
+
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const {latitude, longitude} = position.coords;
+                    setUserLocation({latitude: latitude.toString(), longitude: longitude.toString()});
+                },
+                (error) => {
+                    console.error(error);
+                }
+            );
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    }, []);
 
     useEffect(() => {
         axios.post("/api/google/convert-address-multi", allAddresses)
@@ -56,11 +77,13 @@ function MapView({foodSpots}: Props) {
     }
 
     function handleMarkerForFoodSpot(index: number) {
-        const foundFoodSpot : FoodSpot | undefined = foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.toLowerCase().replace(/,/g, "")) === allAddresses[index])
-        setClickedMarker(foundFoodSpot)
+        return foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.toLowerCase().replace(/,/g, "")) === allAddresses[index])
     }
 
-
+    const customMarkerIcon = {
+        url: '/own-location.svg', // URL to your custom SVG marker
+        scaledSize: new window.google.maps.Size(40, 40), // Adjust the size here
+    };
 
    // const center = {lat: Number(position?[0].latitude), lng: Number(position?.longitude)};
 
@@ -79,21 +102,26 @@ function MapView({foodSpots}: Props) {
                 required={true}/>
                 <button>View Location</button>
             </form>
-            <section className={"marker-label-text"}>
-                <p>{clickedMarker?.name}</p>
-                <p>{clickedMarker?.address}</p>
-            </section>
             <GoogleMap
                 zoom={10}
                 center={{lat: Number(userCenter?.latitude), lng: Number(userCenter?.longitude)}}
                 mapContainerClassName={"google-map map-view"}
             >
                 {positions.map((location: Position, index: number) => {
+                    const spot: FoodSpot | undefined = handleMarkerForFoodSpot(index)
+                    const priceLevels = renderToString(<DisplayPriceLevels size={"1.5em"} priceLevel={spot?.priceLevel}/>)
                     return (
-                        <MarkerF onClick={() => handleMarkerForFoodSpot(index)} position={{lat: Number(location.latitude), lng: Number(location.longitude)}} key={location.latitude+location.longitude}/>
+                        <MarkerF onClick={() => {
+                            handleMarkerForFoodSpot(index)
+                            Swal.fire({
+                                title: `${spot?.name}`,
+                                html: `${spot?.address}<br><br>${priceLevels}`,
+                            })
+                        }} position={{lat: Number(location.latitude), lng: Number(location.longitude)}} key={location.latitude+index}/>
                     )
                 })}
-
+                <MarkerF position={{lat: Number(userLocation?.latitude), lng: Number(userLocation?.longitude)}}
+                         icon={customMarkerIcon}/>
             </GoogleMap>
         </>
     );

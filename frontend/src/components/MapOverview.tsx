@@ -6,6 +6,8 @@ import {GoogleMap, MarkerF} from "@react-google-maps/api";
 import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
 import BurgerMenu from "./BurgerMenu.tsx";
 import Swal from 'sweetalert2'
+import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
+import {renderToString} from "react-dom/server";
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -91,6 +93,7 @@ function MapOverview({foodSpots}: Props) {
         scaledSize: new window.google.maps.Size(40, 40), // Adjust the size here
     };
 
+
     return (
         <>
             <section className={"overflow-menu"}>
@@ -110,13 +113,13 @@ function MapOverview({foodSpots}: Props) {
                     >
                         {positions.map((location: Position, index: number) => {
                             const spot: FoodSpot | undefined = handleMarkerForFoodSpot(index)
+                            const priceLevels = renderToString(<DisplayPriceLevels size={"1.5em"} priceLevel={spot?.priceLevel}/>)
+
                             return (
                                 <MarkerF onClick={() => {
                                     Swal.fire({
                                         title: `${spot?.name}`,
-                                        html: `${spot?.address}<br><br>${spot?.priceLevel}`,
-
-
+                                        html: `${spot?.address}<br><br>${priceLevels}`,
                                     })
                                 }}
                                          position={{lat: Number(location.latitude), lng: Number(location.longitude)}}
