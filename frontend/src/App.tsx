@@ -266,7 +266,7 @@ function App() {
 
                     </Route>
                     <Route path={"/account"}
-                           element={<AccountPage/>}>
+                           element={<AccountPage user={user} foodSpots={foodSpots}/>}>
 
                     </Route>
                 </Route>

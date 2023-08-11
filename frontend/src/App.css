@@ -117,12 +117,12 @@ body {
 
 .button-add {
     background-color: white;
-    border: 2px solid black;
     position: fixed;
     bottom: 30px;
     right: 30px;
     width: 60px;
     height: 55px;
+    border: 2px solid black;
     -webkit-box-shadow: 7px 7px 0px -2px #000000;
     box-shadow: 7px 7px 0px -2px #000000;
 }
@@ -460,7 +460,7 @@ body {
 }
 
 .category-foodspots-container {
-    height: 100vh;
+    height: 100%;
     width: 100vw;
     background-color: rgba(215, 31, 244, 0.53);
     display: flex;
@@ -491,7 +491,7 @@ body {
 }
 
 .off-canvas-menu {
-    position: absolute;
+    position: fixed;
     top: 0;
     height: 100vh;
     width: 200px;
@@ -545,7 +545,6 @@ body {
 .overflow-menu {
     position: relative;
     overflow-x: hidden;
-    overflow-y: hidden;
 }
 
 .map-page-container {
@@ -557,4 +556,72 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.account-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f3d935;
+    height: 100vh;
+    width: 100vw;
+}
+
+.account-card-container {
+    position: relative;
+    background-color: white;
+    height: 400px;
+    width: 300px;
+    border-radius: 25px;
+    -webkit-box-shadow: 9px 9px 0px -2px #000000;
+    box-shadow: 9px 9px 0px -2px #000000;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='300' height='400' preserveAspectRatio='none' viewBox='0 0 300 400'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1130%26quot%3b)' fill='none'%3e%3crect width='300' height='400' x='0' y='0' fill='url(%26quot%3b%23SvgjsLinearGradient1131%26quot%3b)'%3e%3c/rect%3e%3cpath d='M-1.65 155.71 a18.93 18.93 0 1 0 37.86 0 a18.93 18.93 0 1 0 -37.86 0z' fill='rgba(18%2c 244%2c 154%2c 1)'%3e%3c/path%3e%3cpath d='M170.54 177.68L182.8 177.68L182.8 198.58L170.54 198.58z' stroke='rgba(215%2c 31%2c 244%2c 0.53)'%3e%3c/path%3e%3cpath d='M284.03 274.98 a5.33 5.33 0 1 0 10.66 0 a5.33 5.33 0 1 0 -10.66 0z' stroke='rgba(215%2c 31%2c 244%2c 0.53)'%3e%3c/path%3e%3cpath d='M138.49 19.31L157.45 19.31L157.45 38.27L138.49 38.27z' stroke='rgba(215%2c 31%2c 244%2c 0.53)'%3e%3c/path%3e%3cpath d='M30 252.9 a29.32 29.32 0 1 0 58.64 0 a29.32 29.32 0 1 0 -58.64 0z' stroke='rgba(243%2c 217%2c 53%2c 1)'%3e%3c/path%3e%3cpath d='M58.59 281.08 a3.55 3.55 0 1 0 7.1 0 a3.55 3.55 0 1 0 -7.1 0z' stroke='rgba(215%2c 31%2c 244%2c 0.53)'%3e%3c/path%3e%3cpath d='M100.52 146.28a11.89 11.89 0 1 0 14.19 19.08z' fill='rgba(243%2c 217%2c 53%2c 1)'%3e%3c/path%3e%3cpath d='M145.96 52.99 a24.67 24.67 0 1 0 49.34 0 a24.67 24.67 0 1 0 -49.34 0z' fill='rgba(18%2c 244%2c 154%2c 1)'%3e%3c/path%3e%3cpath d='M227.1 41.09a13.71 13.71 0 1 0 17.2-21.35z' stroke='rgba(243%2c 217%2c 53%2c 1)'%3e%3c/path%3e%3cpath d='M252.1 167.33L281.53 167.33L281.53 194.18L252.1 194.18z' fill='rgba(243%2c 217%2c 53%2c 1)'%3e%3c/path%3e%3cpath d='M54.4 29.46L60.42 29.46L60.42 35.27L54.4 35.27z' stroke='rgba(243%2c 217%2c 53%2c 1)'%3e%3c/path%3e%3cpath d='M227.17 336.12a26.91 26.91 0 1 0-15.71-51.47z' fill='rgba(18%2c 244%2c 154%2c 1)'%3e%3c/path%3e%3cpath d='M79.82 340.92 a6.58 6.58 0 1 0 13.16 0 a6.58 6.58 0 1 0 -13.16 0z' fill='rgba(215%2c 31%2c 244%2c 0.53)'%3e%3c/path%3e%3cpath d='M133.03 111.04 a21.88 21.88 0 1 0 43.76 0 a21.88 21.88 0 1 0 -43.76 0z' fill='rgba(18%2c 244%2c 154%2c 1)'%3e%3c/path%3e%3cpath d='M136.06 267.68L146.91 267.68L146.91 278.53L136.06 278.53z' fill='rgba(243%2c 217%2c 53%2c 1)'%3e%3c/path%3e%3cpath d='M128.61 337.26a4.44 4.44 0 1 0 8.88-0.08z' fill='rgba(18%2c 244%2c 154%2c 1)'%3e%3c/path%3e%3cpath d='M89.37 251.04a18.67 18.67 0 1 0 20.32-31.33z' fill='rgba(243%2c 217%2c 53%2c 1)'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1130'%3e%3crect width='300' height='400' fill='white'%3e%3c/rect%3e%3c/mask%3e%3clinearGradient x1='-8.33%25' y1='6.25%25' x2='108.33%25' y2='93.75%25' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1131'%3e%3cstop stop-color='%230e2a47' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(31%2c 108%2c 207%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e");
+}
+
+.account-info-container {
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+    border-radius: 15px;
+    height: 250px;
+    width: 100%;
+}
+
+.account-profile-picture {
+    position: absolute;
+    right: 85px;
+    top: -55px;
+    width: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+}
+
+.account-info-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 25px;
+    gap: 15px;
+}
+.account-info-text > p {
+    color: lightslategray;
+}
+
+.account-info-text > button {
+    background-color: white;
+    height: 35px;
+    width: 100px;
+    border: 2px solid black;
+    -webkit-box-shadow: 7px 7px 0px -2px #000000;
+    box-shadow: 7px 7px 0px -2px #000000;
+}
+
+.account-info-text > button:active {
+    -webkit-box-shadow: 0px 0px 0px 0px #000000;
+    box-shadow: 0px 0px 0px 0px #000000;
+    transform: translate(5px, 7px);
+}
+
 
