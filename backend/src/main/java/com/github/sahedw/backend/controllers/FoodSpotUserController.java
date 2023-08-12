@@ -4,6 +4,7 @@ package com.github.sahedw.backend.controllers;
 import com.github.sahedw.backend.exceptions.ErrorMessage;
 import com.github.sahedw.backend.exceptions.UsernameAlreadyExistsException;
 import com.github.sahedw.backend.security.FoodSpotUserForSignUp;
+import com.github.sahedw.backend.security.FoodSpotUserOnlyUsernameAndSeed;
 import com.github.sahedw.backend.security.FoodSpotUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -37,6 +38,11 @@ public class FoodSpotUserController {
        return foodSpotUserService.getUserCity();
     }
 
+    @GetMapping("/picture-seed")
+    public String getUserSeed() {
+        return foodSpotUserService.getUserSeed();
+    }
+
     @PostMapping("/login")
     public String login(HttpServletRequest request) {
         return SecurityContextHolder
@@ -48,6 +54,11 @@ public class FoodSpotUserController {
     @PostMapping("/sign-up")
     public String signUp(@Valid @RequestBody FoodSpotUserForSignUp dtoUser) {
         return foodSpotUserService.signUp(dtoUser);
+    }
+
+    @PostMapping("/picture-seed")
+    public String updateSeed(@RequestBody FoodSpotUserOnlyUsernameAndSeed dtoUser) {
+        return foodSpotUserService.setSeed(dtoUser);
     }
 
     @ExceptionHandler({UsernameAlreadyExistsException.class})

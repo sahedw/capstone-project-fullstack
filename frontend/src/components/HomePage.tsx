@@ -7,11 +7,10 @@ import BurgerMenu from "./BurgerMenu.tsx";
 
 type Props = {
     onSignedIn: () => void,
-    onLogout: () => void,
     user?: string
 }
 
-function HomePage({onSignedIn, onLogout, user}: Props) {
+function HomePage({onSignedIn, user}: Props) {
     useEffect(onSignedIn, [])
     return (
         <section className={"homepage-container"}>

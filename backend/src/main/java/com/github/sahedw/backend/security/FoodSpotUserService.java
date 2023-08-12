@@ -31,7 +31,8 @@ public class FoodSpotUserService {
                     dtoUser.username(),
                     hashedPassword,
                     dtoUser.city(),
-                    List.of());
+                    List.of(),
+                    dtoUser.seed());
             foodSpotUserRepo.insert(newFoodSpotUser);
             return newFoodSpotUser.username();
         } else {
@@ -47,6 +48,41 @@ public class FoodSpotUserService {
                         .getName());
         if (requestingUser.isPresent()) {
             return requestingUser.get().city();
+        } else {
+            throw new NoSuchElementException("No user logged in.");
+        }
+    }
+
+    public String setSeed(FoodSpotUserOnlyUsernameAndSeed dtoUser) {
+        Optional<FoodSpotUser> toUpdateUser = foodSpotUserRepo.findByUsername(
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+                        .getName());
+        if (toUpdateUser.isPresent()) {
+            FoodSpotUser updatedUser = new FoodSpotUser(
+                    toUpdateUser.get().id(),
+                    toUpdateUser.get().username(),
+                    toUpdateUser.get().password(),
+                    toUpdateUser.get().city(),
+                    toUpdateUser.get().ownFoodSpots(),
+                    dtoUser.seed()
+            );
+            foodSpotUserRepo.save(updatedUser);
+            return updatedUser.seed();
+        } else {
+            throw new NoSuchElementException("No user logged in.");
+        }
+    }
+
+    public String getUserSeed() {
+        Optional<FoodSpotUser> requiredUser = foodSpotUserRepo.findByUsername(
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+                        .getName());
+        if (requiredUser.isPresent()) {
+            return requiredUser.get().seed();
         } else {
             throw new NoSuchElementException("No user logged in.");
         }

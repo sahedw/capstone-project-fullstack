@@ -47,7 +47,7 @@ class FoodSpotControllerTest {
         FoodSpot firstTestFS = new FoodSpot("123", "Sencha Sushi", "Fuhlsbüttler Str. 110", "SUSHI", "sencha_barmbek",PriceLevel.LOW);
         FoodSpot secondTestFS = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER", "batman",PriceLevel.LOW);
 
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",List.of(firstTestFS, secondTestFS));
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",List.of(firstTestFS, secondTestFS), "");
 
         Mockito.when(foodSpotUserRepo.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
 
@@ -84,7 +84,7 @@ class FoodSpotControllerTest {
     @DirtiesContext
     @WithMockUser(username = "sahed")
     void expectNewFoodSpot_whenPostRequestAddFoodSpot() throws Exception {
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>());
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(), "");
 
         Mockito.when(foodSpotUserRepo.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
 
@@ -140,7 +140,7 @@ class FoodSpotControllerTest {
     @WithMockUser(username = "sahed")
     void expectUpdatedFoodSpot_whenPutRequestWithFoodSpot() throws Exception {
         FoodSpot toUpdate = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER", "batman",PriceLevel.LOW);
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of(toUpdate)));
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of(toUpdate)), "");
 
         Mockito.when(foodSpotUserRepo.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
         String expectedFoodSpot = """
@@ -176,7 +176,7 @@ class FoodSpotControllerTest {
     @WithMockUser(username = "sahed")
     void expectDeletedFoodSpot_whenDeleteRequestIsCalled() throws Exception {
         FoodSpot toDelete = new FoodSpot("456", "Batman Restaurant", "Steindamm 58", "DOENER", "batman",PriceLevel.LOW);
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of(toDelete)));
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of(toDelete)), "");
 
         Mockito.when(foodSpotUserRepo.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
         String expectedFoodSpotsList = """

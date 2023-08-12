@@ -149,7 +149,7 @@ body {
     align-items: center;
     gap: 15px;
     margin: 20px;
-    height: 500px;
+    height: 80%;
     width: 350px;
     border: 1px solid black;
     -webkit-box-shadow: 9px 9px 0px -2px #000000;
@@ -161,6 +161,7 @@ body {
 .form-center {
     justify-content: center;
 }
+
 
 .input-instagram {
     width: 52%;
@@ -486,7 +487,7 @@ body {
 .hamburger-react {
     position: absolute;
     z-index: 2;
-    left: 315px;
+    left: 85vw;
     top: 15px;
 }
 
@@ -596,14 +597,27 @@ body {
     border: 4px solid white;
 }
 
+.account-picture-buttons-container {
+    position: absolute;
+    display: flex;
+    gap: 15px;
+    top: 65px;
+    left: 120px;
+}
+
+.account-picture-button {
+    background-color: white;
+    border: none;
+}
+
 .account-info-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
-    margin-top: 25px;
-    gap: 15px;
+    margin-top: 40px;
+    gap: 10px;
 }
 .account-info-text > p {
     color: lightslategray;

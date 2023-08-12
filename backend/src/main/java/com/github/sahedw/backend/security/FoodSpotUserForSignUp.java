@@ -15,6 +15,9 @@ public record FoodSpotUserForSignUp(
 
         @NotBlank
         @Size(min=2, max=50)
-        String city
+        String city,
+
+        @NotBlank
+        String seed
 ) {
 }

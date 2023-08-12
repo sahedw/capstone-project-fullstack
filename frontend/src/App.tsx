@@ -266,7 +266,7 @@ function App() {
 
                     </Route>
                     <Route path={"/account"}
-                           element={<AccountPage user={user} foodSpots={foodSpots}/>}>
+                           element={<AccountPage user={user} foodSpots={foodSpots} onLogout={handleLogout}/>}>
 
                     </Route>
                 </Route>
