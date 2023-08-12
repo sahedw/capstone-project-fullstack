@@ -15,7 +15,10 @@ function ProtectedPaths(props: Props) {
         return () => clearTimeout(timeoutId);
     }, []);
 
-    if (isLoading) return <BounceLoader color="#36d7b7" />
+    if (isLoading) return (<section className={"fallback-loading-container"}>
+        <BounceLoader color="#36d7b7" />
+        <h2>Loading...</h2>
+    </section>)
 
     const isAuthenticated = props.user !== undefined && props.user!== "anonymousUser"
     return (
