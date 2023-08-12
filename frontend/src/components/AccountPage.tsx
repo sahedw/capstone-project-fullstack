@@ -107,7 +107,7 @@ function AccountPage({user, foodSpots, onLogout}: Props) {
                             <section className={"account-info-text"}>
                                 <h3>{user}</h3>
                                 <p>{city}</p>
-                                <p>Currently {foodSpots.length} FoodSpots saved</p>
+                                <p>Currently {foodSpots.length} Spots saved</p>
                                 <button onClick={handleLogout}>Logout</button>
                             </section>
                         </section>

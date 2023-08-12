@@ -30,7 +30,7 @@ function FoodSpotCard({foodSpots}: Props) {
                 <BackButton setClass={"normal"}/>
                 <section className={"category-foodspots-container"}>
                     <h1 className={"category-foodspots-header"}>All
-                        your {convertCategoryToHeaderFormat(filteredFoodSpots[0].category) === "Doener" ? "Döner" : convertCategoryToHeaderFormat(filteredFoodSpots[0].category)} FoodSpots:</h1>
+                        your {convertCategoryToHeaderFormat(filteredFoodSpots[0].category) === "Doener" ? "Döner" : convertCategoryToHeaderFormat(filteredFoodSpots[0].category)} Spots:</h1>
                     <section className={"category-tabs-container"}>
                         <section className={"category-tab-container"}>
                             <button className={`category-tab ${showMap ? "tab-inactive" : ""}`}

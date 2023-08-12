@@ -8,6 +8,7 @@ import BurgerMenu from "./BurgerMenu.tsx";
 import Swal from 'sweetalert2'
 import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
 import {renderToString} from "react-dom/server";
+import {BounceLoader} from "react-spinners";
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -69,9 +70,14 @@ function MapOverview({foodSpots}: Props) {
             });
     }, [])
 
-    if (!positions) return <h1>Loading...</h1>
+    if (!positions) return (<section className={"fallback-loading-container"}>
+        <BounceLoader color="#36d7b7" />
+        <h2>Loading your Spots...</h2>
+    </section>)
 
-    if (!userCenter) return <h1>Loading...</h1>
+    if (!userCenter) return (<section className={"fallback-loading-container"}>
+
+    </section>)
 
     function handleUserViewInput(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
@@ -100,11 +106,11 @@ function MapOverview({foodSpots}: Props) {
                 <BurgerMenu/>
                 <section className={"map-page-container"}>
                     <form onSubmit={handleUserViewInput} className={"form-map-view"}>
-                        <input type="text" name={"input"} value={centerInput} onChange={(e) => {
+                        <input className={"input-change-location"} type="text" name={"input"} value={centerInput} onChange={(e) => {
                             setCenterInput(e.currentTarget.value)
                         }}
                                required={true}/>
-                        <button>View Location</button>
+                        <button className={"button-change-location"}>View Location</button>
                     </form>
                     <GoogleMap
                         zoom={10}

@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 function BurgerMenu() {
     const [isOpen, setOpen] = useState<boolean>(false)
     return (<>
-            <section className={"fixed-burger-menu"}>
+            <section className={`fixed-burger-menu ${isOpen ? "menu-active" : ""}`}>
                 <Hamburger toggled={isOpen}
                            toggle={setOpen}
                            direction={"right"}
