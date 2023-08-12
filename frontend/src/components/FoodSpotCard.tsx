@@ -6,6 +6,7 @@ import {useState} from "react";
 import ListView from "./ListView.tsx";
 import MapView from "./MapView.tsx";
 import BurgerMenu from "./BurgerMenu.tsx";
+import toast, {Toaster} from "react-hot-toast";
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -22,9 +23,29 @@ function FoodSpotCard({foodSpots}: Props) {
 
     if (filteredFoodSpots.length == 0) return <h1>No saved FoodSpots</h1>
 
+    if (showMap) {
+        setTimeout(() => {
+            toast("You're current position is set", {
+                duration: 2000,
+                icon: '📍',
+                style: {
+                    border: '2px solid #713200',
+                    padding: '10px',
+                    color: 'black',
+                    boxShadow: "8px 8px 0px -2px #000000",
+                    backgroundColor: "#f3d935"
+
+                }
+            })
+        }, 3000);
+
+    }
+
+
 
     return (
         <>
+            <div><Toaster/></div>
             <section className={"overflow-menu"}>
                 <BurgerMenu/>
                 <BackButton setClass={"normal"}/>

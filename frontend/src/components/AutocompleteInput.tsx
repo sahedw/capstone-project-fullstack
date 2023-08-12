@@ -4,11 +4,13 @@ import {ActionMeta, SingleValue} from "react-select";
 
 type Props = {
     onSelectPlace: (newValue: SingleValue<Option>, actionMeta: ActionMeta<Option>) => void
+    placeholder: string
 }
-function AutocompleteInput({onSelectPlace}: Props) {
+function AutocompleteInput({onSelectPlace, placeholder}: Props) {
     return (
         <GooglePlacesAutocomplete
             selectProps={{
+                placeholder: placeholder,
                 onChange: onSelectPlace,
                 styles: {
                     container: (provided) => ({

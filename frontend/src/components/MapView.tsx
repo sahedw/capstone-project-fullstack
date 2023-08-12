@@ -7,6 +7,7 @@ import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharact
 import Swal from "sweetalert2";
 import {renderToString} from "react-dom/server";
 import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
+import WaitingAnimation from "../animations/WaitingAnimation/WaitingAnimation.tsx";
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -40,14 +41,18 @@ function MapView({foodSpots}: Props) {
     }, []);
 
     useEffect(() => {
-        axios.post("/api/google/convert-address-multi", allAddresses)
-            .then((response) => {
-                setPositions(response.data)
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
+        setTimeout(() => {
+            axios.post("/api/google/convert-address-multi", allAddresses)
+                .then((response) => {
+                    setPositions(response.data)
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        }, 1000);
     }, [])
+
+
 
     useEffect(() => {
         axios.get("/api/user/city")
@@ -88,7 +93,10 @@ function MapView({foodSpots}: Props) {
    // const center = {lat: Number(position?[0].latitude), lng: Number(position?.longitude)};
 
 
-    if (!positions) return <h1>Loading...</h1>
+    if (!positions) return (<section className={"fallback-loading-container transparent-background"}>
+        <WaitingAnimation/>
+        <h2>Loading your Spots...</h2>
+    </section>)
 
     if (!userCenter) return <h1>Loading...</h1>
 
@@ -96,11 +104,11 @@ function MapView({foodSpots}: Props) {
     return (
         <>
             <form onSubmit={handleUserViewInput} className={"form-map-view"}>
-                <input type="text" name={"input"} value={centerInput} onChange={(e) => {
+                <input className={"input-change-location"} type="text" name={"input"} value={centerInput} onChange={(e) => {
                     setCenterInput(e.currentTarget.value)
                 }}
                 required={true}/>
-                <button>View Location</button>
+                <button className={"button-change-location"}>View Location</button>
             </form>
             <GoogleMap
                 zoom={10}

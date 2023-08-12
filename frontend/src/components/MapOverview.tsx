@@ -70,7 +70,7 @@ function MapOverview({foodSpots}: Props) {
             });
     }, [])
 
-    if (!positions) return (<section className={"fallback-loading-container"}>
+    if (!positions) return (<section className={"fallback-loading-container yellow-background"}>
         <BounceLoader color="#36d7b7" />
         <h2>Loading your Spots...</h2>
     </section>)

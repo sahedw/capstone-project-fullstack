@@ -209,13 +209,14 @@ body {
 
 .form-update {
     display: flex;
+    height: 80%;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     gap: 15px;
     margin: 20px;
     margin-bottom: 0;
-    width: 350px;
+    width: 400px;
     position: relative;
 }
 
@@ -306,7 +307,7 @@ body {
 .form-main-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 30px;
 }
 
 .add-button {
@@ -440,7 +441,7 @@ body {
 
 
 .map-view {
-    height: 380px;
+    height: 70%;
 }
 
 .map-overview {
@@ -488,6 +489,10 @@ body {
 .sign-up-form {
     top: 0;
 
+}
+
+.purple {
+    background-color: transparent;
 }
 
 .category-foodspots-container {
@@ -598,9 +603,20 @@ body {
     justify-content: center;
     align-items: center;
     gap: 15px;
-    background-color: #f3d935;
     height: 100vh;
     width: 100vw;
+}
+
+.green-background {
+    background-color: #12f49a;
+}
+
+.transparent-background {
+    background-color: transparent;
+}
+
+.yellow-background {
+    background-color: #f3d935;
 }
 
 .account-container {
