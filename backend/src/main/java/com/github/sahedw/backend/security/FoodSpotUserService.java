@@ -22,7 +22,7 @@ public class FoodSpotUserService {
 
     private final PasswordEncoder encoder = Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
 
-    private final String noUserException = "No user logged in.";
+    private static final String noUserException = "No user logged in.";
 
     public String signUp(FoodSpotUserForSignUp dtoUser) {
         Optional<FoodSpotUser> alreadyExistingUser = foodSpotUserRepo.findByUsername(dtoUser.username());
