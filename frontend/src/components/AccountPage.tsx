@@ -52,7 +52,7 @@ function AccountPage({user, foodSpots, onLogout}: Props) {
 
     function handleSaveSeed() {
         const currentUser = {
-            username: `${user != undefined ? user : ""}`,
+            username: `${user ?? ""}`,
             seed: seed
         }
         axios.post("/api/user/picture-seed", currentUser)

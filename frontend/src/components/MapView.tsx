@@ -123,7 +123,7 @@ function MapView({foodSpots}: Props) {
                                 title: `${spot?.name}`,
                                 html: `${spot?.address}<br><br>${priceLevels}`,
                             })
-                        }} position={{lat: Number(location.latitude), lng: Number(location.longitude)}} key={location.latitude+index}/>
+                        }} position={{lat: Number(location.latitude), lng: Number(location.longitude)}} key={location.latitude+spot?.id}/>
                     )
                 })}
                 <MarkerF position={{lat: Number(userLocation?.latitude), lng: Number(userLocation?.longitude)}}

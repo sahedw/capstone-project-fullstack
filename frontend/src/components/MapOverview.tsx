@@ -145,7 +145,7 @@ function MapOverview({foodSpots}: Props) {
                                     })
                                 }}
                                          position={{lat: Number(location.latitude), lng: Number(location.longitude)}}
-                                         key={location.latitude + index}/>
+                                         key={location.latitude + spot?.id}/>
                             )
                         })}
                         <MarkerF position={{lat: Number(userLocation?.latitude), lng: Number(userLocation?.longitude)}}
