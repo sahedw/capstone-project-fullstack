@@ -206,4 +206,37 @@ class FoodSpotUserControllerTest {
                                 }
                                         """));
     }
+
+    @Test
+    @WithMockUser(username = "sahed")
+        void getSeed_whenGetSeedIsCalled() throws Exception {
+        FoodSpotUser existingUser = new FoodSpotUser("123", "sahed", "franz1234", "Hamburg", List.of(), "abcde");
+        foodSpotUserRepo.insert(existingUser);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/picture-seed")
+                        .with(csrf()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(
+                        "abcde"));
+    }
+
+    @Test
+    @WithMockUser(username = "sahed")
+    void postSeed_whenUpdateSeedIsCalled() throws Exception {
+        FoodSpotUser existingUser = new FoodSpotUser("123", "sahed", "franz1234", "Hamburg", List.of(), "abcde");
+        foodSpotUserRepo.insert(existingUser);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/user/picture-seed")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "username": "sahed",
+                                "seed": "fghij"
+                                }
+                                """)
+                        .with(csrf()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(
+                        "fghij"));
+    }
 }
