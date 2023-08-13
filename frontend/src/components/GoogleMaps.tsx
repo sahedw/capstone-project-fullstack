@@ -3,6 +3,7 @@ import {Position} from "../types/Position.ts";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
+import MapLoadingAnimation from "../animations/MapLoadingAnimation/MapLoadingAnimation.tsx";
 
 type Props = {
     address: string
@@ -28,11 +29,10 @@ function GoogleMaps({address}: Props) {
     const center = {lat: Number(position?.latitude), lng: Number(position?.longitude)};
 
 
-    if (!position) return (
-        <section className={"placeholder-detail-map"}>
-            <p>Loading...</p>
-        </section>
-    )
+    if (!position) return (<section className={"fallback-loading-container transparent-background"}>
+        <MapLoadingAnimation/>
+        <h2>Loading the spot position...</h2>
+    </section>)
 
     if (!position || isNaN(Number(position.latitude)) || isNaN(Number(position.longitude))) {
         return <h1>Invalid address. Please check the address and update it.</h1>;

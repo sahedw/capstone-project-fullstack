@@ -8,7 +8,8 @@ import BurgerMenu from "./BurgerMenu.tsx";
 import Swal from 'sweetalert2'
 import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
 import {renderToString} from "react-dom/server";
-import {BounceLoader} from "react-spinners";
+import MapLoadingAnimation from "../animations/MapLoadingAnimation/MapLoadingAnimation.tsx";
+import toast, {Toaster} from "react-hot-toast";
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -34,6 +35,20 @@ function MapOverview({foodSpots}: Props) {
                     console.error(error);
                 }
             );
+            setTimeout(() => {
+                toast("You're current position is set", {
+                    duration: 2000,
+                    icon: '📍',
+                    style: {
+                        border: '2px solid #713200',
+                        padding: '10px',
+                        color: 'black',
+                        boxShadow: "8px 8px 0px -2px #000000",
+                        backgroundColor: "#f3d935"
+
+                    }
+                })
+            }, 2000);
         } else {
             console.error('Geolocation is not supported by this browser.');
         }
@@ -71,7 +86,7 @@ function MapOverview({foodSpots}: Props) {
     }, [])
 
     if (!positions) return (<section className={"fallback-loading-container yellow-background"}>
-        <BounceLoader color="#36d7b7" />
+        <MapLoadingAnimation/>
         <h2>Loading your Spots...</h2>
     </section>)
 
@@ -95,13 +110,14 @@ function MapOverview({foodSpots}: Props) {
     }
 
     const customMarkerIcon = {
-        url: '/own-location.svg', // URL to your custom SVG marker
+        url: '/own-location.png', // URL to your custom SVG marker
         scaledSize: new window.google.maps.Size(40, 40), // Adjust the size here
     };
 
 
     return (
         <>
+            <div><Toaster/></div>
             <section className={"overflow-menu"}>
                 <BurgerMenu/>
                 <section className={"map-page-container"}>

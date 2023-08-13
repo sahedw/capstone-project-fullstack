@@ -86,11 +86,9 @@ function MapView({foodSpots}: Props) {
     }
 
     const customMarkerIcon = {
-        url: '/own-location.svg', // URL to your custom SVG marker
-        scaledSize: new window.google.maps.Size(40, 40), // Adjust the size here
+        url: '/own-location.png',
+        scaledSize: new window.google.maps.Size(40, 40),
     };
-
-   // const center = {lat: Number(position?[0].latitude), lng: Number(position?.longitude)};
 
 
     if (!positions) return (<section className={"fallback-loading-container transparent-background"}>

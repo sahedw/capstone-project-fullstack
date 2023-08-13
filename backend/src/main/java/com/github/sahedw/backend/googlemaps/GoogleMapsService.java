@@ -7,6 +7,7 @@ import com.google.maps.model.LatLng;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,4 +49,5 @@ public class GoogleMapsService {
         }
         return allPositions;
     }
+
 }

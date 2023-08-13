@@ -2,7 +2,7 @@ import {FoodSpot} from "../types/FoodSpot.ts";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import BurgerMenu from "./BurgerMenu.tsx";
-import toast from "react-hot-toast";
+import toast, {Toaster} from "react-hot-toast";
 import returnRandomString from "../utils/returnRandomString.ts";
 import Refresh from "../icons/Refresh.tsx";
 import SaveDisk from "../icons/SaveDisk.tsx";
@@ -62,7 +62,18 @@ function AccountPage({user, foodSpots, onLogout}: Props) {
             .catch(function (error) {
                 console.error(error);
             });
+        toast("Saved!", {
+            duration: 1500,
+            icon: '🎉',
+            style: {
+                border: '2px solid #713200',
+                padding: '10px',
+                color: 'black',
+                boxShadow: "8px 8px 0px -2px #000000",
+                backgroundColor: "lightgreen"
 
+            }
+        })
     }
 
     useEffect(() => {
@@ -79,6 +90,7 @@ function AccountPage({user, foodSpots, onLogout}: Props) {
 
     return (
         <>
+            <div><Toaster/></div>
             <section className={"overflow-menu"}>
                 <BurgerMenu/>
                 <section className={"account-container"}>
