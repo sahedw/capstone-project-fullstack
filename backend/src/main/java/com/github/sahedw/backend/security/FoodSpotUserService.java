@@ -22,7 +22,7 @@ public class FoodSpotUserService {
 
     private final PasswordEncoder encoder = Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
 
-    private static final String NO_USER_EXCEPTION = "No user logged in.";
+    private static final String noUserException = "No user logged in.";
 
     public String signUp(FoodSpotUserForSignUp dtoUser) {
         Optional<FoodSpotUser> alreadyExistingUser = foodSpotUserRepo.findByUsername(dtoUser.username());
@@ -51,7 +51,7 @@ public class FoodSpotUserService {
         if (requestingUser.isPresent()) {
             return requestingUser.get().city();
         } else {
-            throw new NoSuchElementException(NO_USER_EXCEPTION);
+            throw new NoSuchElementException(noUserException);
         }
     }
 
@@ -73,7 +73,7 @@ public class FoodSpotUserService {
             foodSpotUserRepo.save(updatedUser);
             return updatedUser.seed();
         } else {
-            throw new NoSuchElementException(NO_USER_EXCEPTION);
+            throw new NoSuchElementException(noUserException);
         }
     }
 
@@ -86,7 +86,7 @@ public class FoodSpotUserService {
         if (requiredUser.isPresent()) {
             return requiredUser.get().seed();
         } else {
-            throw new NoSuchElementException(NO_USER_EXCEPTION);
+            throw new NoSuchElementException(noUserException);
         }
     }
 }
