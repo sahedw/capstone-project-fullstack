@@ -15,6 +15,9 @@ import SignUpPage from "./components/SignUpPage.tsx";
 import {FoodSpotUserWithoutId} from "./types/FoodSpotUserWithoutId.ts";
 import toast from "react-hot-toast";
 import HeaderJsLibraryApi from "./components/HeaderJSLibraryAPI.tsx";
+import MapOverview from "./components/MapOverview.tsx";
+import AccountPage from "./components/AccountPage.tsx";
+
 
 
 function App() {
@@ -183,7 +186,6 @@ function App() {
     type EditMode = () => void;
 
 
-
     function handleUpdateFoodSpot(id: string, updatedFoodSpot: FoodSpotWithoutId, editMode: EditMode): void {
         axios.put(`/api/foodSpot/${id}`, updatedFoodSpot)
             .then(() => {
@@ -235,7 +237,7 @@ function App() {
             <Routes>
                 <Route element={<ProtectedPaths user={user}/>}>
                     <Route path={"/"}
-                           element={<HomePage onSignedIn={handleSignedIn} user={user} onLogout={handleLogout}/>}>
+                           element={<HomePage onSignedIn={handleSignedIn} user={user}/>}>
                     </Route>
                     <Route path={"/addFoodSpot"}
                            element={<AddForm onAdd={handleAddFoodSpot}/>}>
@@ -248,7 +250,8 @@ function App() {
                                 </Route>
                                 {filteredByCurrentCategory.map((foodSpot: FoodSpot) => {
                                     return (
-                                        <Route path={`/${foodSpot.category}/${foodSpot.id}`} key={category + foodSpot.id}
+                                        <Route path={`/${foodSpot.category}/${foodSpot.id}`}
+                                               key={category + foodSpot.id}
                                                element={<FoodSpotDetail onDelete={handleDeleteFoodSpot}
                                                                         onUpdate={handleUpdateFoodSpot}
                                                                         foodSpot={foodSpot}/>}>
@@ -258,6 +261,14 @@ function App() {
                             </Fragment>
                         )
                     })}
+                    <Route path={"/map"}
+                           element={<MapOverview foodSpots={foodSpots}/>}>
+
+                    </Route>
+                    <Route path={"/account"}
+                           element={<AccountPage user={user} foodSpots={foodSpots} onLogout={handleLogout}/>}>
+
+                    </Route>
                 </Route>
                 <Route path={"/login"} element={<LoginPage onLogin={handleLogin}/>}>
                 </Route>

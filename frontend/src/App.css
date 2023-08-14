@@ -4,6 +4,13 @@
     margin: 0;
 }
 
+body {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+
 .link {
     color: black;
     text-decoration: none;
@@ -67,8 +74,9 @@
     position: relative;
     height: 90px;
     width: 150px;
-    background-color: #12f49a;
+    background-image: linear-gradient(to left top, #12f49a, #4cf380, #6ff264, #8cef43, #a8eb12);
     border: 3px solid black;
+    border-radius: 15px;
     overflow: hidden;
     -webkit-box-shadow: 8px 8px 0px -2px #000000;
     box-shadow: 8px 8px 0px -2px #000000;
@@ -110,12 +118,12 @@
 
 .button-add {
     background-color: white;
-    border: 2px solid black;
     position: fixed;
     bottom: 30px;
     right: 30px;
     width: 60px;
     height: 55px;
+    border: 2px solid black;
     -webkit-box-shadow: 7px 7px 0px -2px #000000;
     box-shadow: 7px 7px 0px -2px #000000;
 }
@@ -132,6 +140,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    overflow-x: hidden;
 }
 
 .form {
@@ -141,7 +150,7 @@
     align-items: center;
     gap: 15px;
     margin: 20px;
-    height: 500px;
+    height: 60%;
     width: 350px;
     border: 1px solid black;
     -webkit-box-shadow: 9px 9px 0px -2px #000000;
@@ -153,6 +162,7 @@
 .form-center {
     justify-content: center;
 }
+
 
 .input-instagram {
     width: 52%;
@@ -199,13 +209,14 @@
 
 .form-update {
     display: flex;
+    height: 80%;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     gap: 15px;
     margin: 20px;
     margin-bottom: 0;
-    width: 350px;
+    width: 400px;
     position: relative;
 }
 
@@ -225,10 +236,21 @@
     font-size: 16px;
 }
 
+.input-change-location {
+    padding-left: 10px;
+    font-size: 17px;
+    border: 2px solid black;
+    -webkit-box-shadow: 7px 7px 0px -2px #000000;
+    box-shadow: 7px 7px 0px -2px #000000;
+}
+
 .homepage-container {
+    position: relative;
     width: 100vw;
     height: 100vh;
     background-color: #f3d935;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .homepage-header-container {
@@ -285,7 +307,7 @@
 .form-main-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 30px;
 }
 
 .add-button {
@@ -295,6 +317,21 @@
     border: 2px solid black;
     -webkit-box-shadow: 7px 7px 0px -2px #000000;
     box-shadow: 7px 7px 0px -2px #000000;
+}
+
+.button-change-location {
+    background-color: white;
+    font-size: 15px;
+    padding: 10px;
+    border: 2px solid black;
+    -webkit-box-shadow: 7px 7px 0px -2px #000000;
+    box-shadow: 7px 7px 0px -2px #000000;
+}
+
+.button-change-location:active {
+    -webkit-box-shadow: 0px 0px 0px 0px #000000;
+    box-shadow: 0px 0px 0px 0px #000000;
+    transform: translate(5px, 7px);
 }
 
 .add-button-container {
@@ -308,13 +345,18 @@
 }
 
 .back-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     width: 50px;
+    height: 50px;
     background-color: white;
     border: 2px solid black;
     -webkit-box-shadow: 7px 7px 0px -2px #000000;
     box-shadow: 7px 7px 0px -2px #000000;
 }
+
 
 .edit-button {
     background-color: #ffffff;
@@ -389,9 +431,21 @@
     border: 2px solid black;
 }
 
+.swal2-popup {
+    background-color: #f3d935;
+    -webkit-box-shadow: 7px 7px 0px -2px #000000;
+    box-shadow: 7px 7px 0px -2px #000000;
+    border-radius: 0;
+    width: 300px;
+}
+
 
 .map-view {
-    height: 380px;
+    height: 70%;
+}
+
+.map-overview {
+    height: 80%;
 }
 
 .form-map-view {
@@ -429,11 +483,16 @@
 .normal {
     left: 15px;
     top: 15px;
+    z-index: 1;
 }
 
 .sign-up-form {
     top: 0;
 
+}
+
+.purple {
+    background-color: transparent;
 }
 
 .category-foodspots-container {
@@ -459,3 +518,185 @@
     display: flex;
     justify-content: space-between;
 }
+
+.hamburger-react {
+    position: absolute;
+    z-index: 2;
+    left: 85vw;
+    top: 15px;
+}
+
+.off-canvas-menu {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 200px;
+    background-color: #FF7A5C;
+    z-index: 1;
+    right: 0;
+    transition: 0.2s ease-in-out;
+}
+
+.menu-open {
+    right: 0;
+}
+
+.menu-closed {
+    right: -200px;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.navbar-list {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    font-size: 20px;
+}
+
+.active-link {
+    color: black;
+    text-decoration: #12f49a wavy underline;
+    text-decoration-skip-ink: none;
+    height: 1.5em;
+}
+
+.inactive-link {
+    color: black;
+    text-decoration: none;
+}
+
+.fixed-burger-menu {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+
+.menu-active {
+    z-index: 2;
+}
+
+.overflow-menu {
+    position: relative;
+    overflow-x: hidden;
+}
+
+.map-page-container {
+    background-color: #f3d935;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fallback-loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    height: 100vh;
+    width: 100vw;
+}
+
+.green-background {
+    background-color: #12f49a;
+}
+
+.transparent-background {
+    background-color: transparent;
+}
+
+.yellow-background {
+    background-color: #f3d935;
+}
+
+.account-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f3d935;
+    height: 100vh;
+    width: 100vw;
+}
+
+.account-card-container {
+    position: relative;
+    background-color: white;
+    height: 500px;
+    width: 300px;
+    border-radius: 25px;
+    -webkit-box-shadow: 9px 9px 0px -2px #000000;
+    box-shadow: 9px 9px 0px -2px #000000;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='300' height='400' preserveAspectRatio='none' viewBox='0 0 300 400'%3e%3cg clip-path='url(%26quot%3b%23SvgjsClipPath1240%26quot%3b)' fill='none'%3e%3crect width='300' height='400' x='0' y='0' fill='%2332325d'%3e%3c/rect%3e%3ccircle r='19.095' cx='20.17' cy='271.89' fill='%2343468b'%3e%3c/circle%3e%3ccircle r='14.075' cx='277.11' cy='26.73' fill='url(%26quot%3b%23SvgjsLinearGradient1241%26quot%3b)'%3e%3c/circle%3e%3ccircle r='9.895' cx='86.1' cy='126.71' fill='url(%26quot%3b%23SvgjsLinearGradient1242%26quot%3b)'%3e%3c/circle%3e%3ccircle r='24.205' cx='253.89' cy='80.01' fill='url(%26quot%3b%23SvgjsLinearGradient1243%26quot%3b)'%3e%3c/circle%3e%3ccircle r='21.955' cx='161.78' cy='187.32' fill='url(%26quot%3b%23SvgjsLinearGradient1244%26quot%3b)'%3e%3c/circle%3e%3ccircle r='17.99' cx='102.16' cy='23.96' fill='url(%26quot%3b%23SvgjsLinearGradient1245%26quot%3b)'%3e%3c/circle%3e%3ccircle r='18.985' cx='87.1' cy='36.25' fill='url(%26quot%3b%23SvgjsLinearGradient1246%26quot%3b)'%3e%3c/circle%3e%3ccircle r='27.22' cx='209.17' cy='262.61' fill='url(%26quot%3b%23SvgjsLinearGradient1247%26quot%3b)'%3e%3c/circle%3e%3c/g%3e%3cdefs%3e%3cclipPath id='SvgjsClipPath1240'%3e%3crect width='300' height='400' x='0' y='0'%3e%3c/rect%3e%3c/clipPath%3e%3clinearGradient x1='248.96' y1='26.73' x2='305.26' y2='26.73' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1241'%3e%3cstop stop-color='%2384b6e0' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23464a8f' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='66.31' y1='126.70999999999998' x2='105.89' y2='126.70999999999998' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1242'%3e%3cstop stop-color='%23f29b7c' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%237e6286' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='205.48' y1='80.01' x2='302.29999999999995' y2='80.01' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1243'%3e%3cstop stop-color='%23e298de' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23484687' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='117.87' y1='187.32' x2='205.69' y2='187.32' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1244'%3e%3cstop stop-color='%23e298de' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23484687' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='66.18' y1='23.96' x2='138.14' y2='23.96' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1245'%3e%3cstop stop-color='%23e298de' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23484687' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='49.129999999999995' y1='36.25' x2='125.07' y2='36.25' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1246'%3e%3cstop stop-color='%2332325d' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23424488' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='154.73' y1='262.61' x2='263.61' y2='262.61' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1247'%3e%3cstop stop-color='%23ab3c51' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%234f4484' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e");
+}
+
+.account-info-container {
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+    border-radius: 15px;
+    height: 350px;
+    width: 100%;
+}
+
+.account-profile-picture {
+    position: absolute;
+    right: 90px;
+    top: -55px;
+    width: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+}
+
+.account-picture-buttons-container {
+    position: absolute;
+    display: flex;
+    gap: 15px;
+    top: 65px;
+    left: 120px;
+}
+
+.account-picture-button {
+    background-color: white;
+    border: none;
+}
+
+.account-info-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 40px;
+    gap: 20px;
+}
+.account-info-text > p {
+    color: lightslategray;
+}
+
+.account-info-text > button {
+    background-color: white;
+    height: 35px;
+    width: 100px;
+    border: 2px solid black;
+    -webkit-box-shadow: 7px 7px 0px -2px #000000;
+    box-shadow: 7px 7px 0px -2px #000000;
+}
+
+.account-info-text > button:active {
+    -webkit-box-shadow: 0px 0px 0px 0px #000000;
+    box-shadow: 0px 0px 0px 0px #000000;
+    transform: translate(5px, 7px);
+}
+
+

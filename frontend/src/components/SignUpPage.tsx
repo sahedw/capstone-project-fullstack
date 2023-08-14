@@ -141,11 +141,14 @@ function SignUpPage({onRegistration}: Props) {
                                    required
                             />
                             <ul className={"requirement-list-container"}>
-                                <li className={repeatedPassword !== password
-                                && repeatedPassword.trim().length === 0
-                                    ? "invalid" : "valid"}>
-                                    Must be identical
-                                </li>
+                                {repeatedPassword.length > 0 ?
+                                    <li className={repeatedPassword !== password
+                                        ? "invalid" : "valid"}>
+                                        Must be identical
+                                    </li>
+                                    :
+                                    <></>
+                                }
                             </ul>
                             <SeePassword className={"password-icon"} size={"1.5em"}
                                          onShowPassword={handleShowRepeatedPassword}

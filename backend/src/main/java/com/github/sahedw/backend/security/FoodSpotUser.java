@@ -26,6 +26,9 @@ public record FoodSpotUser(
         String city,
 
         @NotBlank
-        List<FoodSpot> ownFoodSpots
+        List<FoodSpot> ownFoodSpots,
+
+        @NotBlank
+        String seed
 ) {
 }

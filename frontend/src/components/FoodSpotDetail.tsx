@@ -6,6 +6,7 @@ import GoogleMaps from "./GoogleMaps.tsx";
 import BackButton from "./BackButton.tsx";
 import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
 import {Toaster} from "react-hot-toast";
+import BurgerMenu from "./BurgerMenu.tsx";
 
 type EditMode = () => void;
 
@@ -24,24 +25,26 @@ function FoodSpotDetail({foodSpot, onUpdate, onDelete}: Props) {
     }
 
     return (<>
-            <div><Toaster/></div>
-            <section className={"foodspot-detail-container"}>
-                <BackButton setClass={"normal"}/>
-                {editMode ?
-                    <>
-                        <EditForm onDelete={onDelete} onEditMode={handleEditMode} onUpdate={onUpdate}
-                                  foodSpot={foodSpot}/>
-                    </>
-                    :
-                    <>
-                        <h1>{foodSpot.name}</h1>
-                        <GoogleMaps address={foodSpot.address}/>
-                        <DetailCard foodSpot={foodSpot} onEditMode={handleEditMode}/>
-                        <section className={"foodspot-detail-category"}>
-                            <h3>{foodSpot.category === "DOENER" ? "DÖNER" : foodSpot.category}</h3>
-                        </section>
-                    </>}
-
+            <section className={"overflow-menu"}>
+                <BurgerMenu/>
+                <div><Toaster/></div>
+                <section className={"foodspot-detail-container"}>
+                    <BackButton setClass={"normal"}/>
+                    {editMode ?
+                        <>
+                            <EditForm onDelete={onDelete} onEditMode={handleEditMode} onUpdate={onUpdate}
+                                      foodSpot={foodSpot}/>
+                        </>
+                        :
+                        <>
+                            <h1>{foodSpot.name}</h1>
+                            <GoogleMaps address={foodSpot.address}/>
+                            <DetailCard foodSpot={foodSpot} onEditMode={handleEditMode}/>
+                            <section className={"foodspot-detail-category"}>
+                                <h3>{foodSpot.category === "DOENER" ? "DÖNER" : foodSpot.category}</h3>
+                            </section>
+                        </>}
+                </section>
             </section>
         </>
     );

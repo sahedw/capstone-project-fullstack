@@ -1,25 +1,29 @@
 import {Navigate, Outlet} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {BounceLoader} from "react-spinners";
+import LoginSVG from "../animations/LoginAnimation/LoginAnimation.tsx";
 
 type Props = {
     user?: string
 }
+
 function ProtectedPaths(props: Props) {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             setIsLoading(false);
-        }, 500);
+        }, 2000);
 
         return () => clearTimeout(timeoutId);
     }, []);
 
-    if (isLoading) return <BounceLoader color="#36d7b7" />
+    if (isLoading) return (
+        <section className={"fallback-loading-container green-background"}>
+            <LoginSVG/>
+        </section>)
 
-    const isAuthenticated = props.user !== undefined && props.user!== "anonymousUser"
+    const isAuthenticated = props.user !== undefined && props.user !== "anonymousUser"
     return (
-        isAuthenticated ? <Outlet/> : <Navigate to={"/login"} />
+        isAuthenticated ? <Outlet/> : <Navigate to={"/login"}/>
     );
 }
 

@@ -1,10 +1,13 @@
-
 import {FoodSpot} from "../types/FoodSpot.ts";
 import {GoogleMap, MarkerF} from "@react-google-maps/api";
 import {FormEvent, useEffect, useState} from "react";
 import {Position} from "../types/Position.ts";
 import axios from "axios";
 import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
+import Swal from "sweetalert2";
+import {renderToString} from "react-dom/server";
+import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
+import WaitingAnimation from "../animations/WaitingAnimation/WaitingAnimation.tsx";
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -13,20 +16,43 @@ function MapView({foodSpots}: Props) {
     const [positions, setPositions] = useState<Position[]>()
     const [userCenter, setUserCenter] = useState<Position>()
     const [centerInput, setCenterInput] = useState<string>("")
-    const [clickedMarker, setClickedMarker] = useState<FoodSpot>()
+    const [userLocation, setUserLocation] = useState<Position>({
+        latitude: "",
+        longitude: "",
+    });
     const allAddresses: string[] = [];
 
     foodSpots.forEach(foodSpot => allAddresses.push(convertGermanSpecialCharacters(foodSpot.address)))
 
     useEffect(() => {
-        axios.post("/api/google/convert-address-multi", allAddresses)
-            .then((response) => {
-                setPositions(response.data)
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const {latitude, longitude} = position.coords;
+                    setUserLocation({latitude: latitude.toString(), longitude: longitude.toString()});
+                },
+                (error) => {
+                    console.error(error);
+                }
+            );
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    }, []);
+
+    useEffect(() => {
+        setTimeout(() => {
+            axios.post("/api/google/convert-address-multi", allAddresses)
+                .then((response) => {
+                    setPositions(response.data)
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        }, 1000);
     }, [])
+
+
 
     useEffect(() => {
         axios.get("/api/user/city")
@@ -56,16 +82,19 @@ function MapView({foodSpots}: Props) {
     }
 
     function handleMarkerForFoodSpot(index: number) {
-        const foundFoodSpot : FoodSpot | undefined = foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.toLowerCase().replace(/,/g, "")) === allAddresses[index])
-        setClickedMarker(foundFoodSpot)
+        return foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.toLowerCase().replace(/,/g, "")) === allAddresses[index])
     }
 
+    const customMarkerIcon = {
+        url: '/own-location.png',
+        scaledSize: new window.google.maps.Size(40, 40),
+    };
 
 
-   // const center = {lat: Number(position?[0].latitude), lng: Number(position?.longitude)};
-
-
-    if (!positions) return <h1>Loading...</h1>
+    if (!positions) return (<section className={"fallback-loading-container transparent-background"}>
+        <WaitingAnimation/>
+        <h2>Loading your Spots...</h2>
+    </section>)
 
     if (!userCenter) return <h1>Loading...</h1>
 
@@ -73,27 +102,32 @@ function MapView({foodSpots}: Props) {
     return (
         <>
             <form onSubmit={handleUserViewInput} className={"form-map-view"}>
-                <input type="text" name={"input"} value={centerInput} onChange={(e) => {
+                <input className={"input-change-location"} type="text" name={"input"} value={centerInput} onChange={(e) => {
                     setCenterInput(e.currentTarget.value)
                 }}
                 required={true}/>
-                <button>View Location</button>
+                <button className={"button-change-location"}>View Location</button>
             </form>
-            <section className={"marker-label-text"}>
-                <p>{clickedMarker?.name}</p>
-                <p>{clickedMarker?.address}</p>
-            </section>
             <GoogleMap
                 zoom={10}
                 center={{lat: Number(userCenter?.latitude), lng: Number(userCenter?.longitude)}}
                 mapContainerClassName={"google-map map-view"}
             >
                 {positions.map((location: Position, index: number) => {
+                    const spot: FoodSpot | undefined = handleMarkerForFoodSpot(index)
+                    const priceLevels = renderToString(<DisplayPriceLevels size={"1.5em"} priceLevel={spot?.priceLevel}/>)
                     return (
-                        <MarkerF onClick={() => handleMarkerForFoodSpot(index)} position={{lat: Number(location.latitude), lng: Number(location.longitude)}} key={location.latitude}/>
+                        <MarkerF onClick={() => {
+                            handleMarkerForFoodSpot(index)
+                            Swal.fire({
+                                title: `${spot?.name}`,
+                                html: `${spot?.address}<br><br>${priceLevels}`,
+                            })
+                        }} position={{lat: Number(location.latitude), lng: Number(location.longitude)}} key={location.latitude+spot?.id}/>
                     )
                 })}
-
+                <MarkerF position={{lat: Number(userLocation?.latitude), lng: Number(userLocation?.longitude)}}
+                         icon={customMarkerIcon}/>
             </GoogleMap>
         </>
     );
