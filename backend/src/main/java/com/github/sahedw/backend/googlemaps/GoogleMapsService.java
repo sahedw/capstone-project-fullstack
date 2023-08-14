@@ -5,12 +5,15 @@ import com.google.maps.errors.NotFoundException;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -50,4 +53,16 @@ public class GoogleMapsService {
         return allPositions;
     }
 
+    public String getAddress(Position position) {
+        WebClient webClient = WebClient.create("https://maps.googleapis.com/maps/api");
+
+        ResponseEntity<ReverseGeolocationResult> requestEntity = webClient.get()
+                .uri("/geocode/json?latlng=" + position.getLatitude() + "," + position.getLongitude() + "&key=" + googleMapsConfig.getKey())
+                .retrieve()
+                .toEntity(ReverseGeolocationResult.class)
+                .block();
+
+        assert requestEntity != null;
+        return Objects.requireNonNull(Objects.requireNonNull(requestEntity.getBody()).results().get(0).formatted_address());
+    }
 }

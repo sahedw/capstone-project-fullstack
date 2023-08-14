@@ -32,4 +32,9 @@ public class GoogleMapsController {
     public List<Position> getGeocode(@RequestBody List<String> address) throws IOException, InterruptedException, ApiException {
         return googleMapsService.getGeocodeMulti(address);
     }
+
+    @PostMapping("/convert-latlng")
+    public String getAddress(@RequestBody Position position) {
+        return googleMapsService.getAddress(position);
+    }
 }
