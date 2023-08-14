@@ -99,7 +99,7 @@ function AddForm({onAdd}: Props) {
                             </ul>
                         </section>
                         <section className={"form-section-container"}>
-                             <AutocompleteInput onSelectPlace={handleSelectPlace}/>
+                             <AutocompleteInput onSelectPlace={handleSelectPlace} placeholder={""}/>
                             <ul className={"requirement-list-container"}>
                                 <li className={address.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
                                 <li className={address.length < 5 ? "invalid" : "valid"}>Must contain at least 5
