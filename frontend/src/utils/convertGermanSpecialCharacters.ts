@@ -1,5 +1,7 @@
-export default function convertGermanSpecialCharacters(value: string): string{
-    value = value.toLowerCase();
+export default function convertGermanSpecialCharacters(value: string, makeLowercase: boolean): string{
+    if (makeLowercase) {
+        value = value.toLowerCase();
+    }
     value = value.replace(/ä/g, 'ae');
     value = value.replace(/ö/g, 'oe');
     value = value.replace(/ü/g, 'ue');

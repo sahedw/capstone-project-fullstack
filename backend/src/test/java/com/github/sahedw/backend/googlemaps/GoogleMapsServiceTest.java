@@ -9,12 +9,14 @@ import com.google.maps.errors.NotFoundException;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.Geometry;
 import com.google.maps.model.LatLng;
+import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ class GoogleMapsServiceTest {
     GoogleMapsConfig googleMapsConfig = mock(GoogleMapsConfig.class);
     GeocodeApiService geocodeApiService = mock(GeocodeApiService.class);
     GoogleMapsService googleMapsService = new GoogleMapsService(googleMapsConfig, geocodeApiService);
-
+    private static MockWebServer mockWebServer;
 
     @Test
     void expectKeyString_whenGetApiKeyGetsCalled() {
@@ -122,7 +124,7 @@ class GoogleMapsServiceTest {
         when(geocodeApiService.geocode(addresses.get(1))).thenThrow(NotFoundException.class);
 
         //THEN
-        assertThrows(NotFoundException.class, () ->  googleMapsService.getGeocodeMulti(addresses));
+        assertThrows(NotFoundException.class, () -> googleMapsService.getGeocodeMulti(addresses));
     }
 
     @Test
@@ -151,8 +153,22 @@ class GoogleMapsServiceTest {
         when(geocodeApiService.geocode(addresses.get(1))).thenThrow(NotFoundException.class);
 
         //THEN
-        assertThrows(NotFoundException.class, () ->  googleMapsService.getGeocodeMulti(addresses));
+        assertThrows(NotFoundException.class, () -> googleMapsService.getGeocodeMulti(addresses));
     }
+
+ /*   @Test
+    void expectRightAddress_whenGetAddressIsCalled() throws IOException {
+        List<String> expected = new ArrayList<>(List.of("Fuhlsbütteler Straße 110"));
+
+        Position positionOfAddress = new Position("53.5889494", "10.0460201");
+
+        when(googleMapsConfig.getKey()).thenReturn("Test");
+        List<String> actual = googleMapsService.getAddress(positionOfAddress);
+
+
+        verify(googleMapsConfig).getKey();
+        assertEquals(expected, actual);
+    }*/
 }
 
 

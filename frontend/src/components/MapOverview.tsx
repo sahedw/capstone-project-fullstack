@@ -56,7 +56,7 @@ function MapOverview({foodSpots}: Props) {
 
     const allStreets: string[] = [];
 
-    foodSpots.forEach(foodSpot => allStreets.push(convertGermanSpecialCharacters(foodSpot.address)))
+    foodSpots.forEach(foodSpot => allStreets.push(convertGermanSpecialCharacters(foodSpot.address, true)))
 
     useEffect(() => {
         axios.post("/api/google/convert-address-multi", allStreets)
@@ -106,7 +106,7 @@ function MapOverview({foodSpots}: Props) {
     }
 
     function handleMarkerForFoodSpot(index: number) {
-        return foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.toLowerCase().replace(/,/g, "")) === allStreets[index]);
+        return foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.replace(/,/g, ""), true) === allStreets[index]);
     }
 
     const customMarkerIcon = {
@@ -145,7 +145,7 @@ function MapOverview({foodSpots}: Props) {
                                     })
                                 }}
                                          position={{lat: Number(location.latitude), lng: Number(location.longitude)}}
-                                         key={location.latitude + spot?.id}/>
+                                         key={spot?.id}/>
                             )
                         })}
                         <MarkerF position={{lat: Number(userLocation?.latitude), lng: Number(userLocation?.longitude)}}

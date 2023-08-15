@@ -221,9 +221,22 @@ body {
 }
 
 .form-section-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.current-location-icon {
+    position: absolute;
+    top: 5px;
+    right: -40px;
+}
+
+.insert-current-location {
+    position: absolute;
+    top: 5px;
+    right: 40px;
 }
 
 .add-form-input {

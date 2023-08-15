@@ -22,7 +22,7 @@ function MapView({foodSpots}: Props) {
     });
     const allAddresses: string[] = [];
 
-    foodSpots.forEach(foodSpot => allAddresses.push(convertGermanSpecialCharacters(foodSpot.address)))
+    foodSpots.forEach(foodSpot => allAddresses.push(convertGermanSpecialCharacters(foodSpot.address, true)))
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -82,7 +82,7 @@ function MapView({foodSpots}: Props) {
     }
 
     function handleMarkerForFoodSpot(index: number) {
-        return foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.toLowerCase().replace(/,/g, "")) === allAddresses[index])
+        return foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.replace(/,/g, ""), true) === allAddresses[index])
     }
 
     const customMarkerIcon = {

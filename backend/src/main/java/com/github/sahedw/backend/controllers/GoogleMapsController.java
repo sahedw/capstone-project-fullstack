@@ -34,7 +34,7 @@ public class GoogleMapsController {
     }
 
     @PostMapping("/convert-latlng")
-    public String getAddress(@RequestBody Position position) {
+    public List<String> getAddress(@RequestBody Position position) {
         return googleMapsService.getAddress(position);
     }
 }

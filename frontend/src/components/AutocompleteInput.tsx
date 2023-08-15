@@ -4,13 +4,12 @@ import {ActionMeta, SingleValue} from "react-select";
 
 type Props = {
     onSelectPlace: (newValue: SingleValue<Option>, actionMeta: ActionMeta<Option>) => void
-    placeholder: string
+    shadowPixel: string,
 }
-function AutocompleteInput({onSelectPlace, placeholder}: Props) {
+function AutocompleteInput({onSelectPlace, shadowPixel}: Props) {
     return (
         <GooglePlacesAutocomplete
             selectProps={{
-                placeholder: placeholder,
                 onChange: onSelectPlace,
                 styles: {
                     container: (provided) => ({
@@ -18,7 +17,7 @@ function AutocompleteInput({onSelectPlace, placeholder}: Props) {
                         height: "40px",
                         width: "250px",
                         border: "1px solid black",
-                        boxShadow: "7px 7px 0px -2px #000000",
+                        boxShadow: `7px ${shadowPixel}px 0px -2px #000000`,
                         backgroundColor: "white"
                         // Add container styles here
                     }),
@@ -32,8 +31,12 @@ function AutocompleteInput({onSelectPlace, placeholder}: Props) {
                     input: (provided) => ({
                         ...provided,
                         color: 'black',
-                        fontSize: "16px",
+                        fontSize: "16px"
 
+                    }),
+                    loadingIndicator: (provided) => ({
+                        ...provided,
+                        display: "none"
                     })
                 }
             }}

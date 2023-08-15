@@ -43,7 +43,7 @@ public class GoogleMapsService {
         for (String address : addressList) {
             GeocodingResult[] results = geocodeApiService.geocode(address);
 
-            if (results != null)  {
+            if (results != null) {
                 LatLng location = results[0].geometry.location;
                 allPositions.add(new Position(String.valueOf(location.lat), String.valueOf(location.lng)));
             } else {
@@ -53,7 +53,8 @@ public class GoogleMapsService {
         return allPositions;
     }
 
-    public String getAddress(Position position) {
+    public List<String> getAddress(Position position) {
+        List<String> allAddressResults = new ArrayList<>();
         WebClient webClient = WebClient.create("https://maps.googleapis.com/maps/api");
 
         ResponseEntity<ReverseGeolocationResult> requestEntity = webClient.get()
@@ -63,6 +64,12 @@ public class GoogleMapsService {
                 .block();
 
         assert requestEntity != null;
-        return Objects.requireNonNull(Objects.requireNonNull(requestEntity.getBody()).results().get(0).formatted_address());
+
+        for (int i = 0; i < Objects.requireNonNull(requestEntity.getBody()).results().size(); i++) {
+            if (!requestEntity.getBody().results().get(i).formatted_address().contains("+") && !allAddressResults.contains(requestEntity.getBody().results().get(i).formatted_address()) && !(allAddressResults.size() == 5)) {
+                allAddressResults.add(requestEntity.getBody().results().get(i).formatted_address());
+            }
+        }
+        return allAddressResults;
     }
 }

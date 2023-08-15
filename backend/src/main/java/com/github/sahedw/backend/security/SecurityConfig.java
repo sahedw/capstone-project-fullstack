@@ -32,6 +32,8 @@ public class SecurityConfig {
                                 .requestMatchers("/api/foodSpot").authenticated()
                                 .requestMatchers("/api/foodSpot/**").authenticated()
                                 .requestMatchers("/api/user/*").permitAll()
+                                .requestMatchers("/api/google/key").permitAll()
+                                .requestMatchers("/api/google/*").authenticated()
                                 .anyRequest().permitAll()
                 )
                 .logout(logout->logout.logoutUrl("/api/user/logout").logoutSuccessUrl("/api/user/account"))
