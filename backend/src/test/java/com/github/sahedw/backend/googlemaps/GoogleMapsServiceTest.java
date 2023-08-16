@@ -156,7 +156,7 @@ class GoogleMapsServiceTest {
         assertThrows(NotFoundException.class, () -> googleMapsService.getGeocodeMulti(addresses));
     }
 
- /*   @Test
+    @Test
     void expectRightAddress_whenGetAddressIsCalled() throws IOException {
         List<String> expected = new ArrayList<>(List.of("Fuhlsbütteler Straße 110"));
 
@@ -168,7 +168,7 @@ class GoogleMapsServiceTest {
 
         verify(googleMapsConfig).getKey();
         assertEquals(expected, actual);
-    }*/
+    }
 }
 
 
