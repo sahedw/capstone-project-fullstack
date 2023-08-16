@@ -8,10 +8,9 @@ import {Fade, Slide} from "react-awesome-reveal";
 
 type Props = {
     onSignedIn: () => void,
-    user?: string
 }
 
-function HomePage({onSignedIn, user}: Props) {
+function HomePage({onSignedIn}: Props) {
     useEffect(onSignedIn, [])
     return (
         <section className={"homepage-container"}>
@@ -24,7 +23,6 @@ function HomePage({onSignedIn, user}: Props) {
                     <p>Take a look at your saved Spots!</p>
                 </Fade>
             </section>
-            {/*<button className={"logout-button"} onClick={onLogout}>{user !== undefined && "Logout"}</button>*/}
             <section className={"category-grid-container"}>
                 {allCategories.map((category: string) => {
                     return (

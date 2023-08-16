@@ -611,7 +611,7 @@ body {
     top: 0;
     height: 100vh;
     width: 200px;
-    background-color: #FF7A5C;
+    background-color: rgb(210, 119, 231);
     z-index: 1;
     right: 0;
     transition: 0.2s ease-in-out;
@@ -641,8 +641,7 @@ body {
 }
 
 .active-link {
-    color: black;
-    text-decoration: #12f49a wavy underline;
+    color: #f3d935;
     text-decoration-skip-ink: none;
     height: 1.5em;
 }

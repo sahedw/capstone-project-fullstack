@@ -240,7 +240,7 @@ function App() {
             <Routes>
                 <Route element={<ProtectedPaths user={user}/>}>
                     <Route path={"/"}
-                           element={<HomePage onSignedIn={handleSignedIn} user={user}/>}>
+                           element={<HomePage onSignedIn={handleSignedIn}/>}>
                     </Route>
                     <Route path={"/addFoodSpot"}
                            element={<AddForm onAdd={handleAddFoodSpot}/>}>
