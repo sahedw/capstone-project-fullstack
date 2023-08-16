@@ -3,7 +3,8 @@ import {Position} from "../types/Position.ts";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
-import MapLoadingAnimation from "../animations/MapLoadingAnimation/MapLoadingAnimation.tsx";
+import {ReactComponent as MapLoadingAnimation} from "../animations/LoadingMapAnimation/loadingMapAnimation.svg";
+
 
 type Props = {
     address: string

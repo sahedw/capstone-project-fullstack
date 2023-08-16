@@ -8,7 +8,11 @@ import BurgerMenu from "./BurgerMenu.tsx";
 import Swal from 'sweetalert2'
 import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
 import {renderToString} from "react-dom/server";
-import MapLoadingAnimation from "../animations/MapLoadingAnimation/MapLoadingAnimation.tsx";
+import {ReactComponent as MapLoadingAnimation} from "../animations/LoadingMapAnimation/loadingMapAnimation.svg";
+
+
+
+
 import toast, {Toaster} from "react-hot-toast";
 
 type Props = {
@@ -148,7 +152,12 @@ function MapOverview({foodSpots}: Props) {
                                          key={spot?.id}/>
                             )
                         })}
-                        <MarkerF position={{lat: Number(userLocation?.latitude), lng: Number(userLocation?.longitude)}}
+                        <MarkerF onClick={() => {
+                            Swal.fire({
+                                title: `Hm?`,
+                                html: "That's your position"
+                            })
+                        }} position={{lat: Number(userLocation?.latitude), lng: Number(userLocation?.longitude)}}
                                  icon={customMarkerIcon}/>
                     </GoogleMap>
                 </section>

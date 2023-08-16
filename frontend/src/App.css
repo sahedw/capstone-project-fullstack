@@ -82,6 +82,20 @@ body {
     box-shadow: 8px 8px 0px -2px #000000;
 }
 
+.for-add-category {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #dadada;
+    border: 3px solid black;
+    border-radius: 15px;
+    -webkit-box-shadow: 8px 8px 0px -2px #000000;
+    box-shadow: 8px 8px 0px -2px #000000;
+    position: relative;
+    height: 90px;
+    width: 150px;
+}
+
 .category-header {
     position: absolute;
     top: 5px;

@@ -7,7 +7,7 @@ import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharact
 import Swal from "sweetalert2";
 import {renderToString} from "react-dom/server";
 import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
-import {ReactComponent as MapLoadingAnimation} from "../animations/LoadingMapAnimation/mapLoadingAnimation.svg";
+import {ReactComponent as MapLoadingAnimation} from "../animations/LoadingMapAnimation/loadingMapAnimation.svg";
 
 
 type Props = {
