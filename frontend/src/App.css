@@ -63,6 +63,23 @@ body {
     width: 120px;
 }
 
+.icecream {
+    width:50px;
+}
+
+.ramen {
+    width: 85px;
+}
+
+.shawarma {
+    width: 80px;
+}
+
+.turkish {
+    height: 70px;
+    width: 70px;
+}
+
 .category-grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -127,6 +144,42 @@ body {
 .BURGER {
     right: -30px;
     top: 17px;
+    width: 100px;
+}
+
+.ICECREAM {
+    right: -60px;
+    top: 7px;
+    width: 120px;
+}
+
+.RAMEN {
+    right: -45px;
+    top: 0;
+    width: 120px;
+}
+
+.CAFE {
+    right: -70px;
+    top: 17px;
+    width: 150px;
+}
+
+.SHAWARMA {
+    right: -50px;
+    top: -10px;
+    width: 140px;
+}
+
+.TURKISH {
+    right: -40px;
+    top: 15px;
+    width: 100px;
+}
+
+.PERSIAN {
+    right: -40px;
+    top: 15px;
     width: 100px;
 }
 
