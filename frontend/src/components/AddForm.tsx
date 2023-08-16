@@ -34,7 +34,6 @@ function AddForm({onAdd}: Props) {
 
     function handleAddFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        console.log(instagramUsername)
         const newDtoFoodSpot: FoodSpotWithoutId = {
             name: name,
             address: address,

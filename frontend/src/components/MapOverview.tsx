@@ -145,7 +145,7 @@ function MapOverview({foodSpots}: Props) {
                                 <MarkerF onClick={() => {
                                     Swal.fire({
                                         title: `${spot?.name}`,
-                                        html: `${spot?.address}<br><br>${priceLevels}`,
+                                        html: `${spot?.address}<br><br>${spot?.category}<br><br>${priceLevels}`,
                                     })
                                 }}
                                          position={{lat: Number(location.latitude), lng: Number(location.longitude)}}
