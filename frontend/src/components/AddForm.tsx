@@ -129,11 +129,13 @@ function AddForm({onAdd}: Props) {
         }
     }, [])
 
+    const suggestions: string[] = currentAddressSuggestions.slice(0,3)
+
 function handleShowPositionSuggetions() {
     MySwal.fire({
         title: "Click to copy:",
         html: <>
-            {currentAddressSuggestions.slice(0, 3).map((address: string, index: number) => {
+            {suggestions.map((address: string, index: number) => {
                 return (
                     <Fragment key={address}>
                         <SweetAlert2Option onClick={() => {
@@ -142,7 +144,9 @@ function handleShowPositionSuggetions() {
                                            text={convertGermanSpecialCharacters(address, false).replace(/,/g, "")}/>
                     </Fragment>
                 )
-            })}
+                })
+
+            }
         </>
     })
 }

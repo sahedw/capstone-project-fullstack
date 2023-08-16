@@ -7,7 +7,8 @@ import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharact
 import Swal from "sweetalert2";
 import {renderToString} from "react-dom/server";
 import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
-import WaitingAnimation from "../animations/WaitingAnimation/WaitingAnimation.tsx";
+import {ReactComponent as MapLoadingAnimation} from "../animations/LoadingMapAnimation/mapLoadingAnimation.svg";
+
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -92,7 +93,7 @@ function MapView({foodSpots}: Props) {
 
 
     if (!positions) return (<section className={"fallback-loading-container transparent-background"}>
-        <WaitingAnimation/>
+        <MapLoadingAnimation/>
         <h2>Loading your Spots...</h2>
     </section>)
 
