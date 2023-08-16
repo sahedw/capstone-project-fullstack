@@ -1,7 +1,6 @@
 import {Navigate, Outlet} from "react-router-dom";
 import {useEffect, useState} from "react";
-import LoginSVG from "../animations/LoginAnimation/LoginAnimation.tsx";
-import NewWaitingAnimation from "../animations/NewWaitingAnimation/newWaitingAnimation.svg";
+import {ReactComponent as NewWaitingAnimation} from "../animations/NewWaitingAnimation/newWaitingAnimation.svg";
 
 type Props = {
     user?: string

@@ -4,7 +4,7 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.errors.NotFoundException;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,12 +16,23 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-@RequiredArgsConstructor
 public class GoogleMapsService {
 
     private final GoogleMapsConfig googleMapsConfig;
 
     private final GeocodeApiService geocodeApiService;
+
+    private final WebClient webClient;
+
+    public GoogleMapsService(
+            @Value("${google.maps.api.url}") String url,
+            GoogleMapsConfig googleMapsConfig,
+            GeocodeApiService geocodeApiService1) {
+
+        this.webClient = WebClient.create(url);
+        this.googleMapsConfig = googleMapsConfig;
+        this.geocodeApiService = geocodeApiService1;
+    }
 
     public String getKey() {
         return googleMapsConfig.getKey();
@@ -55,7 +66,6 @@ public class GoogleMapsService {
 
     public List<String> getAddress(Position position) {
         List<String> allAddressResults = new ArrayList<>();
-        WebClient webClient = WebClient.create("https://maps.googleapis.com/maps/api");
 
         ResponseEntity<ReverseGeolocationResult> requestEntity = webClient.get()
                 .uri("/geocode/json?latlng=" + position.getLatitude() + "," + position.getLongitude() + "&key=" + googleMapsConfig.getKey())
