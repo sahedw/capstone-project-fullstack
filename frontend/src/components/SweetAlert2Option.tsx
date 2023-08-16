@@ -14,3 +14,4 @@ function SweetAlert2Option({text, onClick}: Props) {
 }
 
 export default SweetAlert2Option;
+

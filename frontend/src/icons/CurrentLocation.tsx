@@ -11,3 +11,4 @@ export default function CurrentLocation({size, nameOfClass, onClick}: Props) {
         </svg>
     )
 }
+
