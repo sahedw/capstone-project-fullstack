@@ -76,8 +76,8 @@ public class GoogleMapsService {
         assert requestEntity != null;
 
         for (int i = 0; i < Objects.requireNonNull(requestEntity.getBody()).results().size(); i++) {
-            if (!requestEntity.getBody().results().get(i).formatted_address().contains("+") && !allAddressResults.contains(requestEntity.getBody().results().get(i).formatted_address()) && !(allAddressResults.size() == 5)) {
-                allAddressResults.add(requestEntity.getBody().results().get(i).formatted_address());
+            if (!Objects.requireNonNull(requestEntity.getBody()).results().get(i).formatted_address().contains("+") && !allAddressResults.contains(Objects.requireNonNull(requestEntity.getBody()).results().get(i).formatted_address()) && allAddressResults.size() != 5) {
+                allAddressResults.add(Objects.requireNonNull(requestEntity.getBody()).results().get(i).formatted_address());
             }
         }
         return allAddressResults;
