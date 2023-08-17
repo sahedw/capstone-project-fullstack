@@ -1,5 +1,7 @@
 # Welcome to Spots: Discover and Remember Your Favorite Places!
 
+<img src="frontend/public/readme-files/Mockup-Hero.png" width="2000" alt="image"/>
+
 Spots is your ultimate companion for curating and remembering your favorite spots, whether it's your go-to cafe around the corner or a hidden gem you stumbled upon during your travels, your culinary adventures are just a tap away. With an intuitive interface and powerful features, Spots makes it easy to organize and access your preferred spots anytime, anywhere.
 
 ## Features:
@@ -51,7 +53,8 @@ Join us in curating a world full of memorable spots with Spots! We can't wait to
 - Docker
 - Axios
 - SweetAlert2
-- 
+- CI/CD with GitHub Actions
+
 ---
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=sahedw_capstone-project-fullstack-backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=sahedw_capstone-project-fullstack-backend)
