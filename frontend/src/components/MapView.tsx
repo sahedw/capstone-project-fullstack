@@ -1,12 +1,12 @@
-import {FoodSpot} from "../types/FoodSpot.ts";
+import {FoodSpot} from "../types/FoodSpot";
 import {GoogleMap, MarkerF} from "@react-google-maps/api";
 import {FormEvent, useEffect, useState} from "react";
-import {Position} from "../types/Position.ts";
+import {Position} from "../types/Position";
 import axios from "axios";
-import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
+import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters";
 import Swal from "sweetalert2";
 import {renderToString} from "react-dom/server";
-import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
+import DisplayPriceLevels from "../icons/DisplayPriceLevels";
 import {ReactComponent as MapLoadingAnimation} from "../animations/LoadingMapAnimation/loadingMapAnimation.svg";
 
 
