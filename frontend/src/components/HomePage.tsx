@@ -1,8 +1,8 @@
-import {allCategories} from "../utils/allCategories.ts";
-import Category from "./Category.tsx";
+import {allCategories} from "../utils/allCategories";
+import Category from "./Category";
 import {Link} from "react-router-dom";
 import {useEffect} from "react";
-import BurgerMenu from "./BurgerMenu.tsx";
+import BurgerMenu from "./BurgerMenu";
 import {Fade, Slide} from "react-awesome-reveal";
 
 

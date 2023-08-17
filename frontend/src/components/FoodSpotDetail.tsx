@@ -1,12 +1,12 @@
-import {FoodSpot} from "../types/FoodSpot.ts";
-import EditForm from "./EditForm.tsx";
-import DetailCard from "./DetailCard.tsx";
+import {FoodSpot} from "../types/FoodSpot";
+import EditForm from "./EditForm";
+import DetailCard from "./DetailCard";
 import {useState} from "react";
-import GoogleMaps from "./GoogleMaps.tsx";
-import BackButton from "./BackButton.tsx";
-import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
+import GoogleMaps from "./GoogleMaps";
+import BackButton from "./BackButton";
+import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId";
 import {Toaster} from "react-hot-toast";
-import BurgerMenu from "./BurgerMenu.tsx";
+import BurgerMenu from "./BurgerMenu";
 
 type EditMode = () => void;
 

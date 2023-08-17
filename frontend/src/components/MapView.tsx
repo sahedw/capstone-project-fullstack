@@ -1,12 +1,12 @@
-import {FoodSpot} from "../types/FoodSpot.ts";
+import {FoodSpot} from "../types/FoodSpot";
 import {GoogleMap, MarkerF} from "@react-google-maps/api";
 import {FormEvent, useEffect, useState} from "react";
-import {Position} from "../types/Position.ts";
+import {Position} from "../types/Position";
 import axios from "axios";
-import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
+import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters";
 import Swal from "sweetalert2";
 import {renderToString} from "react-dom/server";
-import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
+import DisplayPriceLevels from "../icons/DisplayPriceLevels";
 import {ReactComponent as MapLoadingAnimation} from "../animations/LoadingMapAnimation/loadingMapAnimation.svg";
 
 
@@ -116,13 +116,16 @@ function MapView({foodSpots}: Props) {
             >
                 {positions.map((location: Position, index: number) => {
                     const spot: FoodSpot | undefined = handleMarkerForFoodSpot(index)
-                    const priceLevels = renderToString(<DisplayPriceLevels size={"1.5em"} priceLevel={spot?.priceLevel}/>)
+                    const priceLevels = renderToString(<DisplayPriceLevels size={"1.3em"} priceLevel={spot?.priceLevel}/>)
                     return (
                         <MarkerF onClick={() => {
                             handleMarkerForFoodSpot(index)
                             Swal.fire({
                                 title: `${spot?.name}`,
-                                html: `${spot?.address}<br><br>${priceLevels}`,
+                                html: `<p class="sweetalert2-text">${spot?.address}</p>
+                                        <br>
+                                        <br>
+                                        <p>${priceLevels}</p>`,
                             })
                         }} position={{lat: Number(location.latitude), lng: Number(location.longitude)}} key={location.latitude+spot?.id}/>
                     )

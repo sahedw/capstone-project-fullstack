@@ -1,11 +1,11 @@
-import {FoodSpot} from "../types/FoodSpot.ts";
+import {FoodSpot} from "../types/FoodSpot";
 import {Location, useLocation} from "react-router-dom";
-import BackButton from "./BackButton.tsx";
-import convertCategoryToHeaderFormat from "../utils/convertCategoryToHeaderFormat.ts";
+import BackButton from "./BackButton";
+import convertCategoryToHeaderFormat from "../utils/convertCategoryToHeaderFormat";
 import {useState} from "react";
-import ListView from "./ListView.tsx";
-import MapView from "./MapView.tsx";
-import BurgerMenu from "./BurgerMenu.tsx";
+import ListView from "./ListView";
+import MapView from "./MapView";
+import BurgerMenu from "./BurgerMenu";
 import toast, {Toaster} from "react-hot-toast";
 
 type Props = {

@@ -1,19 +1,19 @@
-import {allCategories} from "../utils/allCategories.ts";
+import {allCategories} from "../utils/allCategories";
 import {FormEvent, Fragment, useEffect, useState} from "react";
-import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
-import BackButton from "./BackButton.tsx";
+import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId";
+import BackButton from "./BackButton";
 import toast, {Toaster} from "react-hot-toast";
-import ChoosePriceLevels from "../icons/ChoosePriceLevels.tsx";
-import getPriceLevelEnum from "../utils/getPriceLevelEnum.ts";
-import AutocompleteInput from "./AutocompleteInput.tsx";
-import BurgerMenu from "./BurgerMenu.tsx";
-import CurrentLocation from "../icons/CurrentLocation.tsx";
+import ChoosePriceLevels from "../icons/ChoosePriceLevels";
+import getPriceLevelEnum from "../utils/getPriceLevelEnum";
+import AutocompleteInput from "./AutocompleteInput";
+import BurgerMenu from "./BurgerMenu";
+import CurrentLocation from "../icons/CurrentLocation";
 import axios from "axios";
-import {Position} from "../types/Position.ts"
+import {Position} from "../types/Position"
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
-import SweetAlert2Option from "./SweetAlert2Option.tsx";
+import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters";
+import SweetAlert2Option from "./SweetAlert2Option";
 
 
 type Props = {
@@ -132,8 +132,9 @@ function AddForm({onAdd}: Props) {
 
 function handleShowPositionSuggetions() {
     MySwal.fire({
-        title: "Click to copy:",
         html: <>
+            <p className={"sweetalert2-title"} >Click to copy your current position:</p>
+            <br/>
             {suggestions.map((address: string, index: number) => {
                 return (
                     <Fragment key={address}>
@@ -207,6 +208,7 @@ function handleShowPositionSuggetions() {
                                 name="category"
                                 id="category"
                                 defaultValue={"default"}
+                                className={"category-select"}
                                 required>
                                 <option value="default" disabled={true} hidden>Choose the category</option>
                                 {allCategories.map((category: string) => {
@@ -230,7 +232,7 @@ function handleShowPositionSuggetions() {
                                            setInstagramUsername(e.currentTarget.value)
                                        }}/>
                                 <section>
-                                    <ChoosePriceLevels size={"1.5em"} onPriceLevel={handlePriceLevel}
+                                    <ChoosePriceLevels size={"2em"} onPriceLevel={handlePriceLevel}
                                                        priceLevel={priceLevel}/>
                                 </section>
                             </section>

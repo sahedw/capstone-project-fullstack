@@ -1,6 +1,6 @@
-import {FoodSpot} from "../types/FoodSpot.ts";
+import {FoodSpot} from "../types/FoodSpot";
 import {Link} from "react-router-dom";
-import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
+import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters";
 
 type Props = {
     foodSpots: FoodSpot[]

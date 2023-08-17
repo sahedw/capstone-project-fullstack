@@ -1,8 +1,8 @@
 import {FormEvent, useState} from "react";
-import {FoodSpotUserWithoutId} from "../types/FoodSpotUserWithoutId.ts";
-import SeePassword from "../icons/SeePassword.tsx";
+import {FoodSpotUserWithoutId} from "../types/FoodSpotUserWithoutId";
+import SeePassword from "../icons/SeePassword";
 import toast, {Toaster} from "react-hot-toast";
-import BackButton from "./BackButton.tsx";
+import BackButton from "./BackButton";
 
 type Props = {
     onRegistration: (newUser: FoodSpotUserWithoutId) => void
@@ -127,7 +127,7 @@ function SignUpPage({onRegistration}: Props) {
                                     characters
                                 </li>
                             </ul>
-                            <SeePassword className={"password-icon"} size={"1.5em"} onShowPassword={handleShowPassword}
+                            <SeePassword className={"password-icon"} size={"2em"} onShowPassword={handleShowPassword}
                                          currentShowValue={showPassword}/>
                         </section>
                         <section className={"form-section-container password"}>
@@ -150,7 +150,7 @@ function SignUpPage({onRegistration}: Props) {
                                     <></>
                                 }
                             </ul>
-                            <SeePassword className={"password-icon"} size={"1.5em"}
+                            <SeePassword className={"password-icon"} size={"2em"}
                                          onShowPassword={handleShowRepeatedPassword}
                                          currentShowValue={showRepeatedPassword}/>
                         </section>

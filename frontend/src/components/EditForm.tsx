@@ -1,12 +1,12 @@
 import {FormEvent, useState} from 'react';
-import {FoodSpot} from "../types/FoodSpot.ts";
-import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId.ts";
+import {FoodSpot} from "../types/FoodSpot";
+import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId";
 import {useNavigate} from "react-router-dom";
-import ChoosePriceLevels from "../icons/ChoosePriceLevels.tsx";
-import getPriceLevelEnum from "../utils/getPriceLevelEnum.ts";
-import {allCategories} from "../utils/allCategories.ts";
+import ChoosePriceLevels from "../icons/ChoosePriceLevels";
+import getPriceLevelEnum from "../utils/getPriceLevelEnum";
+import {allCategories} from "../utils/allCategories";
 import toast, {Toaster} from "react-hot-toast";
-import AutocompleteInput from "./AutocompleteInput.tsx";
+import AutocompleteInput from "./AutocompleteInput";
 
 
 type EditMode = () => void;
@@ -152,7 +152,7 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
                                        setInstagramUsername(e.currentTarget.value)
                                    }}/>
                             <section>
-                                <ChoosePriceLevels size={"1.5em"} onPriceLevel={handlePriceLevel}
+                                <ChoosePriceLevels size={"2em"} onPriceLevel={handlePriceLevel}
                                                    priceLevel={priceLevel}/>
                             </section>
                         </section>

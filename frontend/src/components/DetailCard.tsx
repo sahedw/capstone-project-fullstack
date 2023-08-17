@@ -1,6 +1,6 @@
-import {FoodSpot} from "../types/FoodSpot.ts";
-import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
-import Instagram from "../icons/Instagram.tsx";
+import {FoodSpot} from "../types/FoodSpot";
+import DisplayPriceLevels from "../icons/DisplayPriceLevels";
+import Instagram from "../icons/Instagram";
 
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 function DetailCard({foodSpot, onEditMode}: Props) {
     return (
         <>
-            <p>{foodSpot.address}</p>
+            <p className={"detail-card-address"}>{foodSpot.address}</p>
             <section className={"detail-card-bottom"}>
                 {foodSpot.instagramUsername !== "" ?
                     <a className={"link"} href={`https://www.instagram.com/${foodSpot.instagramUsername}/?hl=de`}>
@@ -25,7 +25,7 @@ function DetailCard({foodSpot, onEditMode}: Props) {
                     </>
                 }
                 <section>
-                    <DisplayPriceLevels priceLevel={foodSpot.priceLevel} size={"1.5em"}/>
+                    <DisplayPriceLevels priceLevel={foodSpot.priceLevel} size={"2em"}/>
                 </section>
             </section>
             <section>
