@@ -132,7 +132,7 @@ function AddForm({onAdd}: Props) {
 
 function handleShowPositionSuggetions() {
     MySwal.fire({
-        title: "Click to copy:",
+        title: "Click to copy your current position:",
         html: <>
             {suggestions.map((address: string, index: number) => {
                 return (
