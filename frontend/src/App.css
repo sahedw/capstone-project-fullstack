@@ -4,10 +4,29 @@
     margin: 0;
 }
 
+@font-face {
+    font-family: 'Bagnard';
+    src: url("./fonts/bagnard-webfont.woff2") format('woff2'),
+    url("./fonts/bagnard-webfont.woff") format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lexend Mega';
+    src: url("./fonts/LexendMega-Regular.woff2") format('woff2'),
+    url("./fonts/LexendMega-Regular.woff") format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 body {
     height: 100%;
     width: 100%;
     position: relative;
+    font-family: "Lexend Mega", serif;
+    font-size: 12px;
 }
 
 
@@ -638,7 +657,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .active-link {
