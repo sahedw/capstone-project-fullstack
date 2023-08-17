@@ -6,8 +6,9 @@ type Props = {
 function SweetAlert2Option({text, onClick}: Props) {
     return (
         <>
-        <p onClick={onClick}>{text}</p>
             <br/>
+
+        <p className={"sweetalert2-text"} onClick={onClick}>{text}</p>
             <br/>
         </>
     );

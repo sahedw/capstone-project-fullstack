@@ -731,6 +731,14 @@ body {
     width: 100vw;
 }
 
+.sweetalert2-title {
+    font-size: 18px;
+}
+
+.sweetalert2-text {
+    font-size: 12px;
+}
+
 .fallback-loading-container-map-view {
     display: flex;
     flex-direction: column;

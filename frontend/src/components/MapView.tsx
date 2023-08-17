@@ -116,13 +116,16 @@ function MapView({foodSpots}: Props) {
             >
                 {positions.map((location: Position, index: number) => {
                     const spot: FoodSpot | undefined = handleMarkerForFoodSpot(index)
-                    const priceLevels = renderToString(<DisplayPriceLevels size={"1.5em"} priceLevel={spot?.priceLevel}/>)
+                    const priceLevels = renderToString(<DisplayPriceLevels size={"1.3em"} priceLevel={spot?.priceLevel}/>)
                     return (
                         <MarkerF onClick={() => {
                             handleMarkerForFoodSpot(index)
                             Swal.fire({
                                 title: `${spot?.name}`,
-                                html: `${spot?.address}<br><br>${priceLevels}`,
+                                html: `<p class="sweetalert2-text">${spot?.address}</p>
+                                        <br>
+                                        <br>
+                                        <p>${priceLevels}</p>`,
                             })
                         }} position={{lat: Number(location.latitude), lng: Number(location.longitude)}} key={location.latitude+spot?.id}/>
                     )

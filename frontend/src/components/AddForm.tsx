@@ -132,8 +132,9 @@ function AddForm({onAdd}: Props) {
 
 function handleShowPositionSuggetions() {
     MySwal.fire({
-        title: "Click to copy your current position:",
         html: <>
+            <p className={"sweetalert2-title"} >Click to copy your current position:</p>
+            <br/>
             {suggestions.map((address: string, index: number) => {
                 return (
                     <Fragment key={address}>
