@@ -8,6 +8,7 @@ import {allCategories} from "../utils/allCategories.ts";
 import toast, {Toaster} from "react-hot-toast";
 import AutocompleteInput from "./AutocompleteInput.tsx";
 
+
 type EditMode = () => void;
 
 type Props = {
@@ -113,7 +114,7 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
                         </ul>
                     </section>
                     <section className={"form-section-container"}>
-                        <AutocompleteInput onSelectPlace={handleSelectPlace} placeholder={foodSpot.address}/>
+                        <AutocompleteInput onSelectPlace={handleSelectPlace} shadowPixel={"12"}/>
                     <ul className={"requirement-list-container"}>
                             <li className={address.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
                             <li className={address.length < 5 ? "invalid" : "valid"}>Must contain at least 5

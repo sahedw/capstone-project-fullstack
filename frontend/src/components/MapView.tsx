@@ -7,7 +7,8 @@ import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharact
 import Swal from "sweetalert2";
 import {renderToString} from "react-dom/server";
 import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
-import WaitingAnimation from "../animations/WaitingAnimation/WaitingAnimation.tsx";
+import {ReactComponent as MapLoadingAnimation} from "../animations/LoadingMapAnimation/loadingMapAnimation.svg";
+
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -22,7 +23,7 @@ function MapView({foodSpots}: Props) {
     });
     const allAddresses: string[] = [];
 
-    foodSpots.forEach(foodSpot => allAddresses.push(convertGermanSpecialCharacters(foodSpot.address)))
+    foodSpots.forEach(foodSpot => allAddresses.push(convertGermanSpecialCharacters(foodSpot.address, true)))
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -82,7 +83,7 @@ function MapView({foodSpots}: Props) {
     }
 
     function handleMarkerForFoodSpot(index: number) {
-        return foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.toLowerCase().replace(/,/g, "")) === allAddresses[index])
+        return foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.replace(/,/g, ""), true) === allAddresses[index])
     }
 
     const customMarkerIcon = {
@@ -92,7 +93,7 @@ function MapView({foodSpots}: Props) {
 
 
     if (!positions) return (<section className={"fallback-loading-container transparent-background"}>
-        <WaitingAnimation/>
+        <MapLoadingAnimation/>
         <h2>Loading your Spots...</h2>
     </section>)
 

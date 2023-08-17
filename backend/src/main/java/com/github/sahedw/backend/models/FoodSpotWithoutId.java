@@ -16,7 +16,7 @@ public class FoodSpotWithoutId {
     private String address;
 
     @NotBlank
-    @Size(min=5, max=256)
+    @Size(min=1, max=256)
     private String category;
 
     private String instagramUsername;

@@ -1,6 +1,6 @@
 import {Navigate, Outlet} from "react-router-dom";
 import {useEffect, useState} from "react";
-import LoginSVG from "../animations/LoginAnimation/LoginAnimation.tsx";
+import {ReactComponent as NewWaitingAnimation} from "../animations/NewWaitingAnimation/newWaitingAnimation.svg";
 
 type Props = {
     user?: string
@@ -18,7 +18,7 @@ function ProtectedPaths(props: Props) {
 
     if (isLoading) return (
         <section className={"fallback-loading-container green-background"}>
-            <LoginSVG/>
+            <NewWaitingAnimation/>
         </section>)
 
     const isAuthenticated = props.user !== undefined && props.user !== "anonymousUser"

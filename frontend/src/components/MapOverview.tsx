@@ -8,7 +8,11 @@ import BurgerMenu from "./BurgerMenu.tsx";
 import Swal from 'sweetalert2'
 import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
 import {renderToString} from "react-dom/server";
-import MapLoadingAnimation from "../animations/MapLoadingAnimation/MapLoadingAnimation.tsx";
+import {ReactComponent as MapLoadingAnimation} from "../animations/LoadingMapAnimation/loadingMapAnimation.svg";
+
+
+
+
 import toast, {Toaster} from "react-hot-toast";
 
 type Props = {
@@ -56,7 +60,7 @@ function MapOverview({foodSpots}: Props) {
 
     const allStreets: string[] = [];
 
-    foodSpots.forEach(foodSpot => allStreets.push(convertGermanSpecialCharacters(foodSpot.address)))
+    foodSpots.forEach(foodSpot => allStreets.push(convertGermanSpecialCharacters(foodSpot.address, true)))
 
     useEffect(() => {
         axios.post("/api/google/convert-address-multi", allStreets)
@@ -106,7 +110,7 @@ function MapOverview({foodSpots}: Props) {
     }
 
     function handleMarkerForFoodSpot(index: number) {
-        return foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.toLowerCase().replace(/,/g, "")) === allStreets[index]);
+        return foodSpots.find((spot) => convertGermanSpecialCharacters(spot.address.replace(/,/g, ""), true) === allStreets[index]);
     }
 
     const customMarkerIcon = {
@@ -141,14 +145,19 @@ function MapOverview({foodSpots}: Props) {
                                 <MarkerF onClick={() => {
                                     Swal.fire({
                                         title: `${spot?.name}`,
-                                        html: `${spot?.address}<br><br>${priceLevels}`,
+                                        html: `${spot?.address}<br><br>${spot?.category}<br><br>${priceLevels}`,
                                     })
                                 }}
                                          position={{lat: Number(location.latitude), lng: Number(location.longitude)}}
-                                         key={location.latitude + spot?.id}/>
+                                         key={spot?.id}/>
                             )
                         })}
-                        <MarkerF position={{lat: Number(userLocation?.latitude), lng: Number(userLocation?.longitude)}}
+                        <MarkerF onClick={() => {
+                            Swal.fire({
+                                title: `Hm?`,
+                                html: "That's your position"
+                            })
+                        }} position={{lat: Number(userLocation?.latitude), lng: Number(userLocation?.longitude)}}
                                  icon={customMarkerIcon}/>
                     </GoogleMap>
                 </section>

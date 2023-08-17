@@ -115,6 +115,7 @@ function App() {
             })
     }
 
+
     useEffect(handleSignedIn, [user])
 
     useEffect(() => {
@@ -125,7 +126,7 @@ function App() {
             .catch(function (error) {
                 console.error(error);
             });
-    }, [])
+    }, [user])
 
     useEffect((): void => {
         if (user !== undefined && user !== "anonymousUser") {
@@ -233,11 +234,13 @@ function App() {
 
     return (
         <>
-            <HeaderJsLibraryApi apiKey={apiKey}/>
+            {user !== undefined &&
+                <HeaderJsLibraryApi apiKey={apiKey}/>
+            }
             <Routes>
                 <Route element={<ProtectedPaths user={user}/>}>
                     <Route path={"/"}
-                           element={<HomePage onSignedIn={handleSignedIn} user={user}/>}>
+                           element={<HomePage onSignedIn={handleSignedIn}/>}>
                     </Route>
                     <Route path={"/addFoodSpot"}
                            element={<AddForm onAdd={handleAddFoodSpot}/>}>

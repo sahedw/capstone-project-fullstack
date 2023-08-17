@@ -3,7 +3,8 @@ import {Position} from "../types/Position.ts";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
-import MapLoadingAnimation from "../animations/MapLoadingAnimation/MapLoadingAnimation.tsx";
+import {ReactComponent as MapLoadingAnimation} from "../animations/LoadingMapAnimation/loadingMapAnimation.svg";
+
 
 type Props = {
     address: string
@@ -15,7 +16,7 @@ function GoogleMaps({address}: Props) {
     useEffect(() => {
         const delay = 1000;
         const timeoutId = setTimeout(() => {
-            axios.post("/api/google/convert-address", `${convertGermanSpecialCharacters(address)}`)
+            axios.post("/api/google/convert-address", `${convertGermanSpecialCharacters(address, true)}`)
                 .then((response) => {
                     setPosition(response.data);
                 })

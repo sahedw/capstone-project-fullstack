@@ -31,6 +31,7 @@ body {
 }
 
 .foodspot-card-container {
+    text-align: center;
     height: 170px;
     width: 120px;
     border: 3px solid black;
@@ -63,6 +64,23 @@ body {
     width: 120px;
 }
 
+.icecream {
+    width:50px;
+}
+
+.ramen {
+    width: 85px;
+}
+
+.shawarma {
+    width: 80px;
+}
+
+.turkish {
+    height: 70px;
+    width: 70px;
+}
+
 .category-grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -80,6 +98,20 @@ body {
     overflow: hidden;
     -webkit-box-shadow: 8px 8px 0px -2px #000000;
     box-shadow: 8px 8px 0px -2px #000000;
+}
+
+.for-add-category {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #dadada;
+    border: 3px solid black;
+    border-radius: 15px;
+    -webkit-box-shadow: 8px 8px 0px -2px #000000;
+    box-shadow: 8px 8px 0px -2px #000000;
+    position: relative;
+    height: 90px;
+    width: 150px;
 }
 
 .category-header {
@@ -113,6 +145,42 @@ body {
 .BURGER {
     right: -30px;
     top: 17px;
+    width: 100px;
+}
+
+.ICECREAM {
+    right: -60px;
+    top: 7px;
+    width: 120px;
+}
+
+.RAMEN {
+    right: -45px;
+    top: 0;
+    width: 120px;
+}
+
+.CAFE {
+    right: -70px;
+    top: 17px;
+    width: 150px;
+}
+
+.SHAWARMA {
+    right: -50px;
+    top: -10px;
+    width: 140px;
+}
+
+.TURKISH {
+    right: -40px;
+    top: 15px;
+    width: 100px;
+}
+
+.PERSIAN {
+    right: -40px;
+    top: 15px;
     width: 100px;
 }
 
@@ -221,9 +289,22 @@ body {
 }
 
 .form-section-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.current-location-icon {
+    position: absolute;
+    top: 5px;
+    right: -40px;
+}
+
+.insert-current-location {
+    position: absolute;
+    top: 5px;
+    right: 40px;
 }
 
 .add-form-input {
@@ -531,7 +612,7 @@ body {
     top: 0;
     height: 100vh;
     width: 200px;
-    background-color: #FF7A5C;
+    background-color: rgb(210, 119, 231);
     z-index: 1;
     right: 0;
     transition: 0.2s ease-in-out;
@@ -561,8 +642,7 @@ body {
 }
 
 .active-link {
-    color: black;
-    text-decoration: #12f49a wavy underline;
+    color: #f3d935;
     text-decoration-skip-ink: none;
     height: 1.5em;
 }

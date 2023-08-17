@@ -1,24 +1,20 @@
 package com.github.sahedw.backend.googlemaps;
 
-import com.google.maps.GeoApiContext;
-import com.google.maps.GeocodingApi;
-import com.google.maps.GeocodingApiRequest;
-import com.google.maps.PendingResult;
 import com.google.maps.errors.ApiException;
 import com.google.maps.errors.NotFoundException;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.Geometry;
 import com.google.maps.model.LatLng;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedConstruction;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,10 +22,18 @@ import static org.mockito.Mockito.*;
 
 class GoogleMapsServiceTest {
 
-    GoogleMapsConfig googleMapsConfig = mock(GoogleMapsConfig.class);
-    GeocodeApiService geocodeApiService = mock(GeocodeApiService.class);
-    GoogleMapsService googleMapsService = new GoogleMapsService(googleMapsConfig, geocodeApiService);
+    static GoogleMapsConfig googleMapsConfig = mock(GoogleMapsConfig.class);
+    static GeocodeApiService geocodeApiService = mock(GeocodeApiService.class);
+    static GoogleMapsService googleMapsService;
 
+    private static MockWebServer mockWebServer;
+
+    @BeforeAll
+    static void beforeAll() throws Exception {
+        mockWebServer = new MockWebServer();
+        mockWebServer.start();
+        googleMapsService = new GoogleMapsService(mockWebServer.url("/").toString(), googleMapsConfig, geocodeApiService);
+    }
 
     @Test
     void expectKeyString_whenGetApiKeyGetsCalled() {
@@ -39,7 +43,7 @@ class GoogleMapsServiceTest {
         when(googleMapsConfig.getKey()).thenReturn(expect);
         String actual = googleMapsService.getKey();
         //THEN
-        verify(googleMapsConfig).getKey();
+        verify(googleMapsConfig, times(2)).getKey();
         assertEquals(expect, actual);
     }
 
@@ -97,6 +101,7 @@ class GoogleMapsServiceTest {
     }
 
     @Test
+    @DirtiesContext
     void expectNotFoundException_whenGetGeocodeMultiIsCalledWithBadAddress() throws IOException, InterruptedException, ApiException {
         //GIVEN
         List<String> addresses = new ArrayList<>();
@@ -122,7 +127,7 @@ class GoogleMapsServiceTest {
         when(geocodeApiService.geocode(addresses.get(1))).thenThrow(NotFoundException.class);
 
         //THEN
-        assertThrows(NotFoundException.class, () ->  googleMapsService.getGeocodeMulti(addresses));
+        assertThrows(NotFoundException.class, () -> googleMapsService.getGeocodeMulti(addresses));
     }
 
     @Test
@@ -131,7 +136,7 @@ class GoogleMapsServiceTest {
         List<String> addresses = new ArrayList<>();
         addresses.add("dsd");
         addresses.add("sdsd");
-        Position expectedFirst = new Position("53.56147", "9.91507");
+        Position expectedFirst = new Position("53.", "9.91507");
         //FIRST POSITION
         GeocodingResult geocodingResult = new GeocodingResult();
         Geometry geometry = new Geometry();
@@ -147,11 +152,39 @@ class GoogleMapsServiceTest {
 
         //WHEN
         when(googleMapsConfig.getKey()).thenReturn("Test");
-        when(geocodeApiService.geocode(addresses.get(0))).thenReturn(null);
-        when(geocodeApiService.geocode(addresses.get(1))).thenThrow(NotFoundException.class);
+        when(geocodeApiService.geocode(addresses.get(0))).thenThrow(NotFoundException.class);
 
         //THEN
-        assertThrows(NotFoundException.class, () ->  googleMapsService.getGeocodeMulti(addresses));
+        assertThrows(NotFoundException.class, () -> googleMapsService.getGeocodeMulti(addresses));
+    }
+
+    @Test
+    void expectRightAddress_whenGetAddressIsCalled() throws IOException {
+        List<String> expected = new ArrayList<>(List.of("Fuhlsbütteler Straße 110"));
+        Position positionOfAddress = new Position("53.5889494", "10.0460201");
+
+        mockWebServer.enqueue(new MockResponse()
+                .setHeader("Content-Type", "application/json")
+                .setBody("""
+                        {
+                            "results": [
+                                {
+                                    "formatted_address": "Fuhlsbütteler Straße 110"
+                                }
+                            ]
+                        }
+                        """));
+
+        when(googleMapsConfig.getKey()).thenReturn("Test");
+        List<String> actual = googleMapsService.getAddress(positionOfAddress);
+
+        verify(googleMapsConfig).getKey();
+        assertEquals(expected, actual);
+    }
+
+    @AfterAll
+    static void afterAll() throws IOException {
+        mockWebServer.shutdown();
     }
 }
 
