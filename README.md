@@ -1,4 +1,4 @@
-# Welcome to Spots: Discover and Remember Your Favorite Places!
+# Capstone Project: Spots!
 
 <img src="frontend/public/readme-files/Mockup-Hero.png" width="2000" alt="image"/>
 
