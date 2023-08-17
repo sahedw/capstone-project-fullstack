@@ -1,8 +1,8 @@
 import {GoogleMap, MarkerF} from "@react-google-maps/api";
-import {Position} from "../types/Position.ts";
+import {Position} from "../types/Position";
 import axios from "axios";
 import {useEffect, useState} from "react";
-import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
+import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters";
 import {ReactComponent as MapLoadingAnimation} from "../animations/LoadingMapAnimation/loadingMapAnimation.svg";
 
 
@@ -30,7 +30,7 @@ function GoogleMaps({address}: Props) {
     const center = {lat: Number(position?.latitude), lng: Number(position?.longitude)};
 
 
-    if (!position) return (<section className={"fallback-loading-container transparent-background"}>
+    if (!position) return (<section className={"fallback-loading-container-map-view transparent-background"}>
         <MapLoadingAnimation/>
         <h2>Loading the spot position...</h2>
     </section>)

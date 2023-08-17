@@ -1,6 +1,6 @@
 import {FormEvent, useState} from "react";
 import {Link} from "react-router-dom";
-import SeePassword from "../icons/SeePassword.tsx";
+import SeePassword from "../icons/SeePassword";
 import toast, {Toaster} from "react-hot-toast";
 
 type Props = {
@@ -63,13 +63,14 @@ function LoginPage({onLogin}: Props) {
                                }}
                                required
                         />
-                        <SeePassword className={"password-icon"} size={"1.5em"} onShowPassword={handleShowPassword}
+                        <SeePassword className={"password-icon-login"} size={"2em"} onShowPassword={handleShowPassword}
                                      currentShowValue={showPassword}/>
                     </section>
                 </section>
-                <section>
+                <section className={"login-sign-up-container"}>
+                    <p>You don't have an account?</p>
                     <Link to={"/sign-up"} className={"link sign-up"}>
-                        <strong>You don't have an account? Signup here!</strong>
+                        <strong>Sign up here!</strong>
                     </Link>
                 </section>
                 <section className={"add-button-container"}>

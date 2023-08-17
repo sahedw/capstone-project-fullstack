@@ -45,8 +45,14 @@ body {
 
 .password-icon {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 6px;
+    right: 45px;
+}
+
+.password-icon-login {
+    position: absolute;
+    top: 6px;
+    right: 15px;
 }
 
 .foodspot-card-container {
@@ -317,7 +323,16 @@ body {
 .current-location-icon {
     position: absolute;
     top: 5px;
-    right: -40px;
+    right: -10px;
+}
+
+.category-select {
+    width: 250px;
+}
+
+.detail-card-address {
+    width: 350px;
+    text-align: center;
 }
 
 .insert-current-location {
@@ -333,7 +348,15 @@ body {
     -webkit-box-shadow: 7px 7px 0px -2px #000000;
     box-shadow: 7px 7px 0px -2px #000000;
     padding-left: 5px;
+    padding-right: 40px;
     font-size: 16px;
+}
+
+.login-sign-up-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 .input-change-location {
@@ -345,6 +368,7 @@ body {
 }
 
 .homepage-container {
+    padding-top: 30px;
     position: relative;
     width: 100vw;
     height: 100vh;
@@ -402,6 +426,7 @@ body {
     flex-direction: column;
     gap: 20px;
     width: 250px;
+    margin-bottom: 15px;
 }
 
 .form-main-container {
@@ -704,6 +729,14 @@ body {
     gap: 15px;
     height: 100vh;
     width: 100vw;
+}
+
+.fallback-loading-container-map-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
 }
 
 .green-background {
