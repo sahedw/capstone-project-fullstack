@@ -51,7 +51,14 @@ Join us in curating a world full of memorable spots with Spots! We can't wait to
 - Docker
 - Axios
 - SweetAlert2
+- 
+---
 
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=sahedw_capstone-project-fullstack-backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=sahedw_capstone-project-fullstack-backend)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=sahedw_capstone-project-fullstack-backend&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=sahedw_capstone-project-fullstack-backend)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=sahedw_capstone-project-fullstack-backend&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=sahedw_capstone-project-fullstack-backend)
+<br>
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=sahedw_capstone-project-fullstack-backend)
 
 ---
 
