@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -59,6 +60,11 @@ public class FoodSpotUserController {
     @PostMapping("/picture-seed")
     public String updateSeed(@RequestBody FoodSpotUserOnlyUsernameAndSeed dtoUser) {
         return foodSpotUserService.setSeed(dtoUser);
+    }
+
+    @GetMapping("/categories")
+    public List<String> getCategories() {
+        return foodSpotUserService.getUserCategories();
     }
 
     @ExceptionHandler({UsernameAlreadyExistsException.class})

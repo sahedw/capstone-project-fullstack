@@ -91,4 +91,17 @@ public class FoodSpotUserService {
             throw new NoSuchElementException(NO_USER_EXCEPTION);
         }
     }
+
+    public List<String> getUserCategories() {
+        Optional<FoodSpotUser> requiredUser = foodSpotUserRepo.findByUsername(
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+                        .getName());
+        if (requiredUser.isPresent()) {
+            return requiredUser.get().ownCategories();
+        } else {
+            throw new NoSuchElementException(NO_USER_EXCEPTION);
+        }
+    }
 }
