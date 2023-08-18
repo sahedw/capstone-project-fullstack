@@ -67,6 +67,11 @@ public class FoodSpotUserController {
         return foodSpotUserService.getUserCategories();
     }
 
+    @PostMapping("/categories")
+    public List<String> addCategories(@RequestBody String category) {
+        return foodSpotUserService.addUserCategories(category);
+    }
+
     @ExceptionHandler({UsernameAlreadyExistsException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorMessage handleUsernameAlreadyExistsExceptions(UsernameAlreadyExistsException exception) {

@@ -104,4 +104,28 @@ public class FoodSpotUserService {
             throw new NoSuchElementException(NO_USER_EXCEPTION);
         }
     }
+
+    public List<String> addUserCategories(String category) {
+        Optional<FoodSpotUser> toUpdateCategoryUser = foodSpotUserRepo.findByUsername(
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+                        .getName());
+        if (toUpdateCategoryUser.isPresent()) {
+            toUpdateCategoryUser.get().ownCategories().add(category);
+            FoodSpotUser updatedUser = new FoodSpotUser(
+                    toUpdateCategoryUser.get().id(),
+                    toUpdateCategoryUser.get().username(),
+                    toUpdateCategoryUser.get().password(),
+                    toUpdateCategoryUser.get().city(),
+                    toUpdateCategoryUser.get().ownFoodSpots(),
+                    toUpdateCategoryUser.get().ownCategories(),
+                    toUpdateCategoryUser.get().seed()
+            );
+            foodSpotUserRepo.save(updatedUser);
+            return updatedUser.ownCategories();
+        } else {
+            throw new NoSuchElementException(NO_USER_EXCEPTION);
+        }
+    }
 }
