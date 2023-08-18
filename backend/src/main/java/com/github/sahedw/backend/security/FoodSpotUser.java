@@ -29,6 +29,9 @@ public record FoodSpotUser(
         List<FoodSpot> ownFoodSpots,
 
         @NotBlank
+        List<String> ownCategories,
+
+        @NotBlank
         String seed
 ) {
 }

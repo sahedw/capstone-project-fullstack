@@ -83,7 +83,7 @@ class FoodSpotUserControllerTest {
     @DirtiesContext
     @WithMockUser(username = "sahed")
     void getUserCity_whenGetUserCity() throws Exception {
-        FoodSpotUser existingUser = new FoodSpotUser("123", "sahed", "franz1234", "Hamburg", List.of(), "");
+        FoodSpotUser existingUser = new FoodSpotUser("123", "sahed", "franz1234", "Hamburg", List.of(), List.of(),"");
         foodSpotUserRepo.insert(existingUser);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/city")
@@ -96,7 +96,7 @@ class FoodSpotUserControllerTest {
     @Test
     @DirtiesContext
     void getUsernameAlreadyExistsException_whenSigningUpWithAlreadyExistingUsername() throws Exception {
-        FoodSpotUser existingUser = new FoodSpotUser("123", "franz", "franz1234", "Hamburg", List.of(), "");
+        FoodSpotUser existingUser = new FoodSpotUser("123", "franz", "franz1234", "Hamburg", List.of(), List.of(),"");
         foodSpotUserRepo.insert(existingUser);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/user/sign-up")
@@ -210,7 +210,7 @@ class FoodSpotUserControllerTest {
     @Test
     @WithMockUser(username = "sahed")
         void getSeed_whenGetSeedIsCalled() throws Exception {
-        FoodSpotUser existingUser = new FoodSpotUser("123", "sahed", "franz1234", "Hamburg", List.of(), "abcde");
+        FoodSpotUser existingUser = new FoodSpotUser("123", "sahed", "franz1234", "Hamburg", List.of(), List.of(),"abcde");
         foodSpotUserRepo.insert(existingUser);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/picture-seed")
@@ -223,7 +223,7 @@ class FoodSpotUserControllerTest {
     @Test
     @WithMockUser(username = "sahed")
     void postSeed_whenUpdateSeedIsCalled() throws Exception {
-        FoodSpotUser existingUser = new FoodSpotUser("123", "sahed", "franz1234", "Hamburg", List.of(), "abcde");
+        FoodSpotUser existingUser = new FoodSpotUser("123", "sahed", "franz1234", "Hamburg", List.of(), List.of(),"abcde");
         foodSpotUserRepo.insert(existingUser);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/user/picture-seed")

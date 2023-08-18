@@ -50,7 +50,7 @@ class FoodSpotUserServiceTest {
         //WHEN
         when(idServiceMocked.randomId()).thenReturn("123");
         when(encoder.encode("hans1")).thenReturn("123456789");
-        FoodSpotUser newUser = new FoodSpotUser(idServiceMocked.randomId(), incomingUser.username(), encoder.encode(incomingUser.password()), "Hamburg", List.of(), "");
+        FoodSpotUser newUser = new FoodSpotUser(idServiceMocked.randomId(), incomingUser.username(), encoder.encode(incomingUser.password()), "Hamburg", List.of(), List.of(),  "");
         when(foodSpotUserRepoMocked.insert(ArgumentMatchers.any(FoodSpotUser.class))).thenReturn(null);
 
         String actual = foodSpotUserServiceMocked.signUp(incomingUser);
@@ -65,7 +65,7 @@ class FoodSpotUserServiceTest {
     @Test
     void expectUsernameAlreadyExistsException_whenUsernameAlreadyExists() {
         // GIVEN
-        FoodSpotUser newUser = new FoodSpotUser("123" ,"franz", "franz1","Hamburg", List.of(), "");
+        FoodSpotUser newUser = new FoodSpotUser("123" ,"franz", "franz1","Hamburg", List.of(), List.of(),"");
         FoodSpotUserForSignUp newUserSignUp = new FoodSpotUserForSignUp("franz", "franz1" , "Hamburg", "");
         foodSpotUserServiceReal.signUp(newUserSignUp);
         // WHEN
@@ -78,7 +78,7 @@ class FoodSpotUserServiceTest {
 
     @Test
     void expectUserCity_whenGetUserCityIsCalled() {
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), "");
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), List.of(),"");
         String expected = "Hamburg";
         when(foodSpotUserRepoMocked.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
         when(foodSpotUserRepoMocked.save(currentUser)).thenReturn(currentUser);
@@ -95,7 +95,7 @@ class FoodSpotUserServiceTest {
 
     @Test
     void expectNoSuchElementException_whenGetUserCityIsCalled() {
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), "");
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), List.of(),"");
 
         when(foodSpotUserRepoMocked.findByUsername("sahed")).thenReturn(Optional.empty());
         when(foodSpotUserRepoMocked.save(currentUser)).thenReturn(currentUser);
@@ -111,7 +111,7 @@ class FoodSpotUserServiceTest {
     @Test
     void expectSeed_whenSetUserSeedIsCalled() {
         String expected = "abcdefg";
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), expected);
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), List.of(), expected);
 
         when(foodSpotUserRepoMocked.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
         when(foodSpotUserRepoMocked.save(currentUser)).thenReturn(currentUser);
@@ -130,7 +130,7 @@ class FoodSpotUserServiceTest {
     @Test
     void expectNoSuchElementException_whenSetUserSeedIsCalled() {
         String expected = "abcdefg";
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), expected);
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), List.of(), expected);
 
         when(foodSpotUserRepoMocked.findByUsername("sahed")).thenReturn(Optional.empty());
         when(foodSpotUserRepoMocked.save(currentUser)).thenReturn(currentUser);
@@ -148,7 +148,7 @@ class FoodSpotUserServiceTest {
     @Test
     void expectSeed_whenGetUserSeedIsCalled() {
         String expected = "abcdefg";
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), expected);
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), List.of(), expected);
 
         when(foodSpotUserRepoMocked.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
         when(foodSpotUserRepoMocked.save(currentUser)).thenReturn(currentUser);
@@ -166,7 +166,7 @@ class FoodSpotUserServiceTest {
     @Test
     void expectNoSuchElementException_whenGetUserSeedIsCalled() {
         String expected = "abcdefg";
-        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), expected);
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), List.of(), expected);
 
         when(foodSpotUserRepoMocked.findByUsername("sahed")).thenReturn(Optional.empty());
         when(foodSpotUserRepoMocked.save(currentUser)).thenReturn(currentUser);

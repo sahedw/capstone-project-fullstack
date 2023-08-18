@@ -34,6 +34,7 @@ public class FoodSpotUserService {
                     hashedPassword,
                     dtoUser.city(),
                     List.of(),
+                    List.of(),
                     dtoUser.seed());
             foodSpotUserRepo.insert(newFoodSpotUser);
             return newFoodSpotUser.username();
@@ -68,6 +69,7 @@ public class FoodSpotUserService {
                     toUpdateUser.get().password(),
                     toUpdateUser.get().city(),
                     toUpdateUser.get().ownFoodSpots(),
+                    toUpdateUser.get().ownCategories(),
                     dtoUser.seed()
             );
             foodSpotUserRepo.save(updatedUser);
