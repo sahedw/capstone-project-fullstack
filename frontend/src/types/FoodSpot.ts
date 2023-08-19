@@ -1,4 +1,4 @@
-import {PriceLevel} from "./PriceLevel.ts";
+import {PriceLevel} from "./PriceLevel";
 
 export type FoodSpot = {
     id: string,

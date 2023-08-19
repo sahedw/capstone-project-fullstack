@@ -3,6 +3,7 @@ package com.github.sahedw.backend.controllers;
 
 import com.github.sahedw.backend.exceptions.ErrorMessage;
 import com.github.sahedw.backend.exceptions.UsernameAlreadyExistsException;
+import com.github.sahedw.backend.models.Category;
 import com.github.sahedw.backend.security.FoodSpotUserForSignUp;
 import com.github.sahedw.backend.security.FoodSpotUserOnlyUsernameAndSeed;
 import com.github.sahedw.backend.security.FoodSpotUserService;
@@ -63,12 +64,12 @@ public class FoodSpotUserController {
     }
 
     @GetMapping("/categories")
-    public List<String> getCategories() {
+    public List<Category> getCategories() {
         return foodSpotUserService.getUserCategories();
     }
 
     @PostMapping("/categories")
-    public List<String> addCategories(@RequestBody String category) {
+    public List<Category> addCategories(@RequestBody Category category) {
         return foodSpotUserService.addUserCategories(category);
     }
 

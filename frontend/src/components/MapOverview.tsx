@@ -3,16 +3,12 @@ import {FormEvent, useEffect, useState} from "react";
 import axios from "axios";
 import {Position} from "../types/Position.ts";
 import {GoogleMap, MarkerF} from "@react-google-maps/api";
-import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters.ts";
-import BurgerMenu from "./BurgerMenu.tsx";
+import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters";
+import BurgerMenu from "./BurgerMenu";
 import Swal from 'sweetalert2'
-import DisplayPriceLevels from "../icons/DisplayPriceLevels.tsx";
+import DisplayPriceLevels from "../icons/DisplayPriceLevels";
 import {renderToString} from "react-dom/server";
 import {ReactComponent as MapLoadingAnimation} from "../animations/LoadingMapAnimation/loadingMapAnimation.svg";
-
-
-
-
 import toast, {Toaster} from "react-hot-toast";
 
 type Props = {

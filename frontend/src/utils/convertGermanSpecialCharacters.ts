@@ -10,5 +10,6 @@ export default function convertGermanSpecialCharacters(value: string, makeLowerc
     value = value.replace(/,/g, '');
     value = value.replace(/\(/g, '');
     value = value.replace(/\)/g, '');
+    value = value.replace(/=/g, '');
     return value;
 }

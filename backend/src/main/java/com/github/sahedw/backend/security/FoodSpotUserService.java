@@ -1,6 +1,7 @@
 package com.github.sahedw.backend.security;
 
 import com.github.sahedw.backend.exceptions.UsernameAlreadyExistsException;
+import com.github.sahedw.backend.models.Category;
 import com.github.sahedw.backend.models.IdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -92,7 +93,7 @@ public class FoodSpotUserService {
         }
     }
 
-    public List<String> getUserCategories() {
+    public List<Category> getUserCategories() {
         Optional<FoodSpotUser> requiredUser = foodSpotUserRepo.findByUsername(
                 SecurityContextHolder
                         .getContext()
@@ -105,14 +106,13 @@ public class FoodSpotUserService {
         }
     }
 
-    public List<String> addUserCategories(String category) {
+    public List<Category> addUserCategories(Category category) {
         Optional<FoodSpotUser> toUpdateCategoryUser = foodSpotUserRepo.findByUsername(
                 SecurityContextHolder
                         .getContext()
                         .getAuthentication()
                         .getName());
         if (toUpdateCategoryUser.isPresent()) {
-            toUpdateCategoryUser.get().ownCategories().add(category);
             FoodSpotUser updatedUser = new FoodSpotUser(
                     toUpdateCategoryUser.get().id(),
                     toUpdateCategoryUser.get().username(),
@@ -122,6 +122,7 @@ public class FoodSpotUserService {
                     toUpdateCategoryUser.get().ownCategories(),
                     toUpdateCategoryUser.get().seed()
             );
+            updatedUser.ownCategories().add(category);
             foodSpotUserRepo.save(updatedUser);
             return updatedUser.ownCategories();
         } else {

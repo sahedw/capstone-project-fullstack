@@ -1,7 +1,7 @@
 type Props = {
     category: string
 }
-function Category({category}: Props) {
+function CategoryCard({category}: Props) {
     return (
         <section className={"category-container"}>
             <h4 className={"category-header"}>{category == "DOENER" ? "DÖNER" : category}</h4>
@@ -10,4 +10,4 @@ function Category({category}: Props) {
     );
 }
 
-export default Category;
+export default CategoryCard;

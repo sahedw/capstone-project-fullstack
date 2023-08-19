@@ -20,7 +20,7 @@ type Props = {
     onAdd: (newFoodSpot: FoodSpotWithoutId) => void,
 }
 
-function AddForm({onAdd}: Props) {
+function AddFoodSpotForm({onAdd}: Props) {
 
     const [name, setName] = useState<string>("")
     const [category, setCategory] = useState<string>("")
@@ -247,4 +247,4 @@ function handleShowPositionSuggetions() {
     );
 }
 
-export default AddForm;
+export default AddFoodSpotForm;
