@@ -1,3 +1,4 @@
 export type FoodSpotCSSDetails = {
-    imageWidth: number
+    imageWidth: number,
+    cloudinaryUrl: string
 }

@@ -13,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -69,8 +71,8 @@ public class FoodSpotUserController {
     }
 
     @PostMapping("/categories")
-    public List<Category> addCategories(@RequestBody Category category) {
-        return foodSpotUserService.addUserCategories(category);
+    public List<Category> addCategories(@RequestPart(name = "data") Category category, @RequestPart(name = "BGImage") MultipartFile bgImage, @RequestPart(name = "NormalImage") MultipartFile normalImage) throws IOException {
+        return foodSpotUserService.addUserCategories(category, bgImage, normalImage);
     }
 
     @ExceptionHandler({UsernameAlreadyExistsException.class})

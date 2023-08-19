@@ -2,13 +2,16 @@ package com.github.sahedw.backend.security;
 
 import com.github.sahedw.backend.exceptions.UsernameAlreadyExistsException;
 import com.github.sahedw.backend.models.Category;
+import com.github.sahedw.backend.models.CloudinaryService;
 import com.github.sahedw.backend.models.IdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -22,6 +25,8 @@ public class FoodSpotUserService {
     private final IdService idService;
 
     private final PasswordEncoder encoder = Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
+
+    private final CloudinaryService cloudinaryService;
 
     private static final String NO_USER_EXCEPTION = "No user logged in.";
 
@@ -106,7 +111,14 @@ public class FoodSpotUserService {
         }
     }
 
-    public List<Category> addUserCategories(Category category) {
+    public List<Category> addUserCategories(Category category, MultipartFile bgImage, MultipartFile normalImage) throws IOException {
+
+        String urlBGImage = cloudinaryService.uploadImage(bgImage);
+        String urlNormalImage = cloudinaryService.uploadImage(normalImage);
+
+        category.getImageCSSDetails().getCategoryCard().setCloudinaryUrl(urlBGImage);
+        category.getImageCSSDetails().getFoodSpotCard().setCloudinaryUrl(urlNormalImage);
+
         Optional<FoodSpotUser> toUpdateCategoryUser = foodSpotUserRepo.findByUsername(
                 SecurityContextHolder
                         .getContext()

@@ -22,8 +22,6 @@ function AddCategoryForm({categories, onCategories}: Props) {
     const [selectedNormalImage, setSelectedNormalImage] = useState<File | null>(null)
 
 
-    const MySwal = withReactContent(Swal)
-
     function handleUpPositioning() {
         setTopPixelBG(topPixelBG - 5)
     }
@@ -74,7 +72,7 @@ function AddCategoryForm({categories, onCategories}: Props) {
 
         let isDuplicate = false;
         for (const category of categories) {
-            if (category.name === categoryName) {
+            if (category.name === categoryName?.toUpperCase()) {
                 isDuplicate = true;
             }
         }
@@ -100,19 +98,32 @@ function AddCategoryForm({categories, onCategories}: Props) {
     function handleSubmitCategoryDetails(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
+        const data = new FormData()
+        if (selectedBGImage && selectedNormalImage) {
+            data.append("BGImage", selectedBGImage)
+            data.append("NormalImage", selectedNormalImage)
+        }
+
         const categoryWithDetails: Category = {
             name: categoryName?.toUpperCase(),
             imageCSSDetails: {
                 categoryCard: {
                     leftPixel: leftPixelBG,
-                    imageWidth: imageWidthBG
+                    topPixel: topPixelBG,
+                    imageWidth: imageWidthBG,
+                    urlCloudinary: ""
                 },
                 foodSpotCard: {
-                    imageWidth: imageWidthNormal
+                    imageWidth: imageWidthNormal,
+                    urlCloudinary: ""
                 }
             }
         }
-        axios.post("/api/user/categories", categoryWithDetails)
+
+        data.append("data", new Blob([JSON.stringify(categoryWithDetails)], {type: "application/json"}))
+
+
+        axios.post("/api/user/categories", data, {headers: { "Content-Type": "multipart/form-data"}})
             .then(() => {
                 onCategories()
             })

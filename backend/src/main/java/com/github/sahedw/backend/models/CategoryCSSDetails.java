@@ -7,6 +7,10 @@ public class CategoryCSSDetails {
 
     int leftPixel;
 
+    int topPixel;
+
     int imageWidth;
+
+    String cloudinaryUrl;
 
 }

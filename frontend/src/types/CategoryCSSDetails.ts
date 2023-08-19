@@ -1,4 +1,6 @@
 export type CategoryCSSDetails = {
     leftPixel: number,
-    imageWidth: number
+    topPixel: number,
+    imageWidth: number,
+    cloudinaryUrl: string
 }

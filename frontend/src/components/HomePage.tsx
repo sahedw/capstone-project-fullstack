@@ -30,7 +30,7 @@ function HomePage({onSignedIn, categories}: Props) {
                 {categories?.map((category: Category) => {
                     return (
                         <Link className={"link"} to={`${category.name}`} key={category.name}>
-                            <CategoryCard category={category.name}/>
+                            <CategoryCard category={category}/>
                         </Link>
                     )
                 })}

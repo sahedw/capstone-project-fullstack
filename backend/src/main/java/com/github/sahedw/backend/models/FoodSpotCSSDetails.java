@@ -7,4 +7,6 @@ public class FoodSpotCSSDetails {
 
     int imageWidth;
 
+    String cloudinaryUrl;
+
 }
