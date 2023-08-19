@@ -256,6 +256,10 @@ body {
     justify-content: center;
 }
 
+.form-add-category {
+    height: 80%;
+}
+
 
 .input-instagram {
     width: 52%;

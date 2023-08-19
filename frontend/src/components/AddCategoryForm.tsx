@@ -1,4 +1,4 @@
-import {FormEvent, Fragment, useState} from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
 import toast, {Toaster} from "react-hot-toast";
 import axios from "axios";
 import {Category} from "../types/Category";
@@ -14,71 +14,74 @@ type Props = {
 function AddCategoryForm({categories, onCategories}: Props) {
     const [categoryName, setCategoryName] = useState<string>()
     const [previewMode, setPreviewMode] = useState<boolean>(false)
-    const [leftPixel, setLeftPixel] = useState<number>(0)
-    const [topPixel, setTopPixel] = useState<number>(0)
-    const [imageWidth, setImageWidth] = useState<number>(100)
+    const [leftPixelBG, setLeftPixelBG] = useState<number>(0)
+    const [topPixelBG, setTopPixelBG] = useState<number>(0)
+    const [imageWidthBG, setImageWidthBG] = useState<number>(100)
+    const [imageWidthNormal, setImageWidthNormal] = useState<number>(100)
+    const [selectedBGImage, setSelectedBGImage] = useState<File | null>(null)
+    const [selectedNormalImage, setSelectedNormalImage] = useState<File | null>(null)
 
 
     const MySwal = withReactContent(Swal)
 
     function handleUpPositioning() {
-        setTopPixel(topPixel - 5)
+        setTopPixelBG(topPixelBG - 5)
     }
 
     function handleDownPositioning() {
-        setTopPixel(topPixel + 5)
+        setTopPixelBG(topPixelBG + 5)
     }
 
     function handleLeftPositioning() {
-        setLeftPixel(leftPixel - 5)
+        setLeftPixelBG(leftPixelBG - 5)
     }
 
     function handleRightPositioning() {
-        setLeftPixel(leftPixel + 5)
+        setLeftPixelBG(leftPixelBG + 5)
     }
 
-    function handleSmallerWidth() {
-        if (imageWidth > 10)
-            setImageWidth(imageWidth - 10)
+    function handleSmallerWidth(type: string) {
+        if (type === "BG") {
+            if (imageWidthBG > 10)
+                setImageWidthBG(imageWidthBG - 10)
+        } else {
+            setImageWidthNormal(imageWidthNormal - 10)
+        }
     }
 
-    function handleBiggerWidth() {
-        setImageWidth(imageWidth + 10)
+    function handleBiggerWidth(type: string) {
+        if (type === "BG") {
+            setImageWidthBG(imageWidthBG + 10)
+
+        } else {
+            setImageWidthNormal(imageWidthNormal + 10)
+        }
+
+    }
+
+    function handleBGFileChange(event: ChangeEvent<HTMLInputElement>) {
+        const file = event.target.files?.[0];
+        setSelectedBGImage(file);
+    }
+
+    function handleNormalFileChange(event: ChangeEvent<HTMLInputElement>) {
+        const file = event.target.files?.[0];
+        setSelectedNormalImage(file);
     }
 
     function handleSubmitForm(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        const newCategory: Category = {
-            name: categoryName?.toUpperCase()
-        }
+
         let isDuplicate = false;
         for (const category of categories) {
-            if (category.name === newCategory.name) {
+            if (category.name === categoryName) {
                 isDuplicate = true;
             }
         }
 
         if (!isDuplicate) {
-            axios.post("/api/user/categories", newCategory)
-                .then(() => {
-                    onCategories()
-                    toast("CategoryCard added!", {
-                        duration: 1000,
-                        icon: '🎉',
-                        style: {
-                            border: '2px solid #713200',
-                            padding: '10px',
-                            color: 'black',
-                            boxShadow: "8px 8px 0px -2px #000000",
-                            backgroundColor: "lightgreen"
-
-                        }
-                    })
-                })
-                .then(() => {
-                    // handlePreviewAndEdit()
-                    setPreviewMode(true)
-                })
+            // handlePreviewAndEdit()
+            setPreviewMode(true)
         } else {
             toast("CategoryCard already exists.", {
                 icon: '👀',
@@ -94,27 +97,42 @@ function AddCategoryForm({categories, onCategories}: Props) {
         }
     }
 
-    function handlePreviewAndEdit() {
-        MySwal.fire({
-            html: <>
-                <p className={"sweetalert2-title"}>Position your images:</p>
-                <br/>
-                <section className={"category-container"}>
-                    <h4 className={"category-header"}>{categoryName?.toUpperCase()}</h4>
-                    <img style={{
-                        left: `${leftPixel.toString()}px`,
-                        width: `${imageWidth.toString()}px`,
-                    }} className={`category-container-image`} src={`${categoryName?.toUpperCase()}-BG.png`}
-                         alt={categoryName}/>
-                </section>
-                <section>
-                    <button onClick={handleLeftPositioning}>Left</button>
-                    <button onClick={handleRightPositioning}>Right</button>
-                    <button onClick={handleSmallerWidth}>Smaller</button>
-                    <button onClick={handleBiggerWidth}>Bigger</button>
-                </section>
-            </>
-        })
+    function handleSubmitCategoryDetails(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+
+        const categoryWithDetails: Category = {
+            name: categoryName?.toUpperCase(),
+            imageCSSDetails: {
+                categoryCard: {
+                    leftPixel: leftPixelBG,
+                    imageWidth: imageWidthBG
+                },
+                foodSpotCard: {
+                    imageWidth: imageWidthNormal
+                }
+            }
+        }
+        axios.post("/api/user/categories", categoryWithDetails)
+            .then(() => {
+                onCategories()
+            })
+            .then(() => {
+                toast("Category was added!", {
+                    icon: '🎉',
+                    duration: 1500,
+                    style: {
+                        border: '2px solid #713200',
+                        padding: '10px',
+                        color: 'black',
+                        boxShadow: "8px 8px 0px -2px #000000",
+                        backgroundColor: "lightgreen"
+
+                    }
+                })
+            })
+        setTimeout(() => {
+            setPreviewMode(!previewMode)
+        }, 2000);
     }
 
     return (<>
@@ -163,33 +181,82 @@ function AddCategoryForm({categories, onCategories}: Props) {
                 <>
                     <div><Toaster/></div>
                     <section className={"form-add-container"}>
-                        <form className={"form form-center"}>
+                        <form onSubmit={handleSubmitCategoryDetails} className={"form form-center form-add-category"}>
                             <section className={"banner"}>
                                 <img width={80} src="/banner.png" alt="free banner"/>
+                            </section>
+                            <section className={"banner-text"}>
+                                <strong>FREE</strong>
                             </section>
                             <section className={"form-header-container"}>
                                 <h3>Position your images:</h3>
                             </section>
                             <section className={"category-container"}>
                                 <h4 className={"category-header"}>{categoryName?.toUpperCase()}</h4>
-                                <img style={{
-                                    left: `${leftPixel.toString()}px`,
-                                    top: `${topPixel.toString()}px`,
-                                    width: `${imageWidth.toString()}px`
-                                }} className={`category-container-image`} src={`${categoryName?.toUpperCase()}-BG.png`}
-                                     alt={categoryName}/>
+                                {selectedBGImage !== null &&
+                                    <img style={{
+                                        left: `${leftPixelBG.toString()}px`,
+                                        top: `${topPixelBG.toString()}px`,
+                                        width: `${imageWidthBG.toString()}px`
+                                    }} className={`category-container-image`}
+                                         src={URL?.createObjectURL(selectedBGImage)}
+                                         alt={categoryName}/>
+                                }
                             </section>
                             <section>
-                                <button type={"button"} onClick={handleLeftPositioning}>Left</button>
-                                <button type={"button"} onClick={handleRightPositioning}>Right</button>
-                                <button type={"button"} onClick={handleSmallerWidth}>Smaller</button>
-                                <button type={"button"} onClick={handleBiggerWidth}>Bigger</button>
-                                <button type={"button"} onClick={handleUpPositioning}>Up</button>
-                                <button type={"button"} onClick={handleDownPositioning}>Down</button>
+                                <section>
+                                    <button type={"button"} onClick={() => {
+                                        handleLeftPositioning()
+                                    }}>Left
+                                    </button>
+                                    <button type={"button"} onClick={() => {
+                                        handleRightPositioning()
+                                    }}>Right
+                                    </button>
+                                    <button type={"button"} onClick={() => {
+                                        handleSmallerWidth("BG")
+                                    }}>Smaller
+                                    </button>
+                                    <button type={"button"} onClick={() => {
+                                        handleBiggerWidth("BG")
+                                    }}>Bigger
+                                    </button>
+                                </section>
+                                <button type={"button"} onClick={() => {
+                                    handleUpPositioning()
+                                }}>Up
+                                </button>
+                                <button type={"button"} onClick={() => {
+                                    handleDownPositioning()
+                                }}>Down
+                                </button>
                             </section>
-                            <input type="file"/>
+                            <input type="file" onChange={handleBGFileChange}/>
+                            <br/>
+                            <div className={"foodspot-card-container"}>
+                                <h3>Spot-Name</h3>
+                                {selectedNormalImage !== null &&
+                                    <img style={{
+                                        width: `${imageWidthNormal.toString()}px`
+                                    }} className={`card-image`} src={URL?.createObjectURL(selectedNormalImage)}
+                                         alt="food image"/>
+                                }
+                            </div>
+                            <section>
+                                <section>
+                                    <button type={"button"} onClick={() => {
+                                        handleSmallerWidth("Normal")
+                                    }}>Smaller
+                                    </button>
+                                    <button type={"button"} onClick={() => {
+                                        handleBiggerWidth("Normal")
+                                    }}>Bigger
+                                    </button>
+                                </section>
+                            </section>
+                            <input type="file" onChange={handleNormalFileChange}/>
                             <section className={"add-button-container"}>
-                                <button className={"add-button"}>Preview your category!</button>
+                                <button className={"add-button"}>Submit your category!</button>
                             </section>
                         </form>
                     </section>
