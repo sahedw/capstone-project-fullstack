@@ -256,4 +256,24 @@ class FoodSpotUserServiceTest {
         verify(securityContext).getAuthentication();
         verify(authentication).getName();
     }
+
+    @Test
+    void expectDeletedCategory_whenDeleteCategoryIsCalled() throws IOException {
+        Category category = new Category("2", "BURGER", new ImageDetails(new CategoryCSSDetails(0, 0, 0, "test1"), new FoodSpotCSSDetails(0, "test1.de")));
+        List<Category> expected = new ArrayList<>();
+        expected.add(category);
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), expected, "abcdefg");
+
+        when(foodSpotUserRepoMocked.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
+        when(foodSpotUserRepoMocked.save(currentUser)).thenReturn(currentUser);
+        when(authentication.getName()).thenReturn("sahed");
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        List<Category> actual = foodSpotUserServiceReal.deleteCategory("2");
+
+        verify(securityContext).getAuthentication();
+        verify(authentication).getName();
+        assertEquals(expected, actual);
+    }
 }

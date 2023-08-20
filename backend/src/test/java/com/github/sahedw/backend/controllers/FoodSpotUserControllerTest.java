@@ -415,4 +415,43 @@ class FoodSpotUserControllerTest {
                         """));
 
     }
+
+    @Test
+    @WithMockUser(username = "sahed")
+    @DirtiesContext
+    void deleteCategory_whenDeleteCategoryIsCalled() throws Exception {
+        Category category1 = new Category("1", "BURGER", new ImageDetails(new CategoryCSSDetails(70, 15, 100, "test1BG.de"), new FoodSpotCSSDetails(100, "test1Normal.de")));
+        Category category2 = new Category("2", "PIZZA", new ImageDetails(new CategoryCSSDetails(60, 25, 120, "test2BG.de"), new FoodSpotCSSDetails(110, "test2Normal.de")));
+        List<Category> beforeUpdateList = new ArrayList<>();
+        beforeUpdateList.add(category1);
+        beforeUpdateList.add(category2);
+        FoodSpotUser existingUser = new FoodSpotUser("123", "sahed", "franz1234", "Hamburg", List.of(), beforeUpdateList,"abcde");
+        foodSpotUserRepo.insert(existingUser);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/user/categories/1")
+                        .with(csrf()))
+
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                        [
+                            {
+                                "id": "2",
+                                "name": "PIZZA",
+                                "imageCSSDetails": {
+                                    "categoryCard": {
+                                        "leftPixel": 60,
+                                        "topPixel": 25,
+                                        "imageWidth": 120,
+                                        "cloudinaryUrl": "test2BG.de"
+                                    },
+                                    "foodSpotCard": {
+                                        "imageWidth": 110,
+                                        "cloudinaryUrl": "test2Normal.de"
+                                    }
+                                }
+                            }
+                        ]
+                        """));
+
+    }
 }
