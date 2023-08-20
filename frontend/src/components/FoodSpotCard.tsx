@@ -1,5 +1,5 @@
 import {FoodSpot} from "../types/FoodSpot";
-import {Location, useLocation} from "react-router-dom";
+import {Link, Location, useLocation} from "react-router-dom";
 import BackButton from "./BackButton";
 import convertCategoryToHeaderFormat from "../utils/convertCategoryToHeaderFormat";
 import {useState} from "react";
@@ -7,6 +7,7 @@ import ListView from "./ListView";
 import MapView from "./MapView";
 import BurgerMenu from "./BurgerMenu";
 import toast, {Toaster} from "react-hot-toast";
+import {ReactComponent as NotFoundAnimation} from "../animations/NotFoundAnimation/notFoundAnimation.svg";
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -21,7 +22,14 @@ function FoodSpotCard({foodSpots}: Props) {
             foodSpot.category === location.pathname.slice(1))
 
 
-    if (filteredFoodSpots.length == 0) return <h1>No saved FoodSpots</h1>
+    if (filteredFoodSpots.length == 0) return (
+        <section className={"fallback-loading-container yellow-background"}>
+            <BackButton setClass={"normal"}/>
+            <NotFoundAnimation/>
+            <p>No spots saved.</p>
+            <p>Go and add one <Link to={"/addFoodSpot"}>here</Link>.</p>
+        </section>
+    )
 
     if (showMap) {
         setTimeout(() => {
@@ -40,7 +48,6 @@ function FoodSpotCard({foodSpots}: Props) {
         }, 3000);
 
     }
-
 
 
     return (

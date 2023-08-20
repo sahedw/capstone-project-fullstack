@@ -7,17 +7,19 @@ import BackButton from "./BackButton";
 import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId";
 import {Toaster} from "react-hot-toast";
 import BurgerMenu from "./BurgerMenu";
+import {Category} from "../types/Category";
 
 type EditMode = () => void;
 
 type Props = {
     foodSpot: FoodSpot,
     onUpdate: (id: string, updatedFoodSpot: FoodSpotWithoutId, editMode: EditMode) => void,
-    onDelete: (id: string) => void
+    onDelete: (id: string) => void,
+    categories: Category[]
 }
 
 
-function FoodSpotDetail({foodSpot, onUpdate, onDelete}: Props) {
+function FoodSpotDetail({foodSpot, onUpdate, onDelete, categories}: Props) {
     const [editMode, setEditMode] = useState<boolean>(false)
 
     function handleEditMode() {
@@ -32,8 +34,11 @@ function FoodSpotDetail({foodSpot, onUpdate, onDelete}: Props) {
                     <BackButton setClass={"normal"}/>
                     {editMode ?
                         <>
-                            <EditForm onDelete={onDelete} onEditMode={handleEditMode} onUpdate={onUpdate}
-                                      foodSpot={foodSpot}/>
+                            <EditForm onDelete={onDelete}
+                                      onEditMode={handleEditMode}
+                                      onUpdate={onUpdate}
+                                      foodSpot={foodSpot}
+                                      categories={categories}/>
                         </>
                         :
                         <>

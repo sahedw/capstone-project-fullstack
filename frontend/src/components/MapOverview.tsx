@@ -10,6 +10,7 @@ import DisplayPriceLevels from "../icons/DisplayPriceLevels";
 import {renderToString} from "react-dom/server";
 import {ReactComponent as MapLoadingAnimation} from "../animations/LoadingMapAnimation/loadingMapAnimation.svg";
 import toast, {Toaster} from "react-hot-toast";
+import BackButton from "./BackButton.tsx";
 
 type Props = {
     foodSpots: FoodSpot[]
@@ -120,6 +121,7 @@ function MapOverview({foodSpots}: Props) {
             <div><Toaster/></div>
             <section className={"overflow-menu"}>
                 <BurgerMenu/>
+                <BackButton setClass={"normal"}/>
                 <section className={"map-page-container"}>
                     <form onSubmit={handleUserViewInput} className={"form-map-view"}>
                         <input className={"input-change-location"} type="text" name={"input"} value={centerInput} onChange={(e) => {

@@ -2,7 +2,6 @@ import './App.css'
 import {Fragment, useEffect, useState} from "react";
 import {FoodSpot} from "./types/FoodSpot";
 import axios from "axios";
-import {allCategories} from "./utils/allCategories";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import HomePage from "./components/HomePage";
 import FoodSpotCard from "./components/FoodSpotCard";
@@ -257,15 +256,15 @@ function App() {
                            element={<HomePage onGetCategories={handleGetCategories} onSignedIn={handleSignedIn} categories={categories}/>}>
                     </Route>
                     <Route path={"/addFoodSpot"}
-                           element={<AddFoodSpotForm onAdd={handleAddFoodSpot}/>}>
+                           element={<AddFoodSpotForm categories={categories} onAdd={handleAddFoodSpot}/>}>
                     </Route>
                     <Route path={"/addCategory"}
                            element={<AddCategoryForm onCategories={handleGetCategories} categories={categories}/>}>
                     </Route>
-                    {allCategories.map((category: string) => {
-                        const filteredByCurrentCategory: FoodSpot[] = foodSpots.filter((spot: FoodSpot) => spot.category == category)
-                        return (<Fragment key={category}>
-                                <Route path={`/${category}`}
+                    {categories.map((category: Category) => {
+                        const filteredByCurrentCategory: FoodSpot[] = foodSpots.filter((spot: FoodSpot) => spot.category == category.name)
+                        return (<Fragment key={category.name}>
+                                <Route path={`/${category.name}`}
                                        element={<FoodSpotCard foodSpots={foodSpots}/>}>
                                 </Route>
                                 {filteredByCurrentCategory.map((foodSpot: FoodSpot) => {
@@ -274,7 +273,8 @@ function App() {
                                                key={category + foodSpot.id}
                                                element={<FoodSpotDetail onDelete={handleDeleteFoodSpot}
                                                                         onUpdate={handleUpdateFoodSpot}
-                                                                        foodSpot={foodSpot}/>}>
+                                                                        foodSpot={foodSpot}
+                                                                        categories={categories}/>}>
                                         </Route>
                                     )
                                 })}

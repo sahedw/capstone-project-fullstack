@@ -261,7 +261,8 @@ body {
 }
 
 .form-add-category {
-    height: 85%;
+    height: 80%;
+    gap: 5px;
 }
 
 .preview-buttons-container {
@@ -590,7 +591,7 @@ body {
 }
 
 .map-overview {
-    height: 80%;
+    height: 75%;
 }
 
 .form-map-view {
@@ -777,6 +778,10 @@ body {
 
 .yellow-background {
     background-color: #f3d935;
+}
+
+.form-add-category-small {
+    justify-content: center;
 }
 
 .account-container {

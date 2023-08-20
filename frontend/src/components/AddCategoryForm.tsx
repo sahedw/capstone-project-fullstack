@@ -3,6 +3,7 @@ import toast, {Toaster} from "react-hot-toast";
 import axios from "axios";
 import {Category} from "../types/Category";
 import BurgerMenu from "./BurgerMenu";
+import BackButton from "./BackButton";
 
 
 type Props = {
@@ -11,7 +12,7 @@ type Props = {
 }
 
 function AddCategoryForm({categories, onCategories}: Props) {
-    const [categoryName, setCategoryName] = useState<string>()
+    const [categoryName, setCategoryName] = useState<string>("")
     const [previewMode, setPreviewMode] = useState<boolean>(false)
     const [leftPixelBG, setLeftPixelBG] = useState<number>(0)
     const [topPixelBG, setTopPixelBG] = useState<number>(0)
@@ -58,12 +59,12 @@ function AddCategoryForm({categories, onCategories}: Props) {
 
     function handleBGFileChange(event: ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
-        setSelectedBGImage(file);
+        setSelectedBGImage(file as File);
     }
 
     function handleNormalFileChange(event: ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
-        setSelectedNormalImage(file);
+        setSelectedNormalImage(file as File);
     }
 
     function handleSubmitForm(event: FormEvent<HTMLFormElement>) {
@@ -77,7 +78,6 @@ function AddCategoryForm({categories, onCategories}: Props) {
         }
 
         if (!isDuplicate) {
-            // handlePreviewAndEdit()
             setPreviewMode(true)
         } else {
             toast("CategoryCard already exists.", {
@@ -96,6 +96,17 @@ function AddCategoryForm({categories, onCategories}: Props) {
 
     function handleSubmitCategoryDetails(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
+
+        const savingCategoryToast = toast.loading('Saving...', {
+            style: {
+                border: '2px solid #713200',
+                padding: '10px',
+                color: 'black',
+                boxShadow: "8px 8px 0px -2px #000000",
+                backgroundColor: "#f3d935"
+
+            }
+        });
 
         const data = new FormData()
         if (selectedBGImage && selectedNormalImage) {
@@ -121,9 +132,9 @@ function AddCategoryForm({categories, onCategories}: Props) {
 
         data.append("data", new Blob([JSON.stringify(categoryWithDetails)], {type: "application/json"}))
 
-
         axios.post("/api/user/categories", data, {headers: {"Content-Type": "multipart/form-data"}})
             .then(() => {
+                toast.dismiss(savingCategoryToast)
                 toast("Category was added!", {
                     icon: '🎉',
                     duration: 1500,
@@ -139,10 +150,25 @@ function AddCategoryForm({categories, onCategories}: Props) {
                 onCategories()
                 setSelectedBGImage(null)
                 setSelectedNormalImage(null)
+
+                setTimeout(() => {
+                    setPreviewMode(!previewMode)
+                }, 1500);
             })
-        setTimeout(() => {
-            setPreviewMode(!previewMode)
-        }, 2000);
+            .catch(() => {
+                toast("There was a issue...", {
+                    icon: '🎉',
+                    duration: 1500,
+                    style: {
+                        border: '2px solid #713200',
+                        padding: '10px',
+                        color: 'black',
+                        boxShadow: "8px 8px 0px -2px #000000",
+                        backgroundColor: "orangered"
+
+                    }
+                })
+            })
     }
 
     return (<>
@@ -150,9 +176,10 @@ function AddCategoryForm({categories, onCategories}: Props) {
                 <>
                     <section className={"overflow-menu"}>
                         <BurgerMenu/>
+                        <BackButton setClass={"normal"}/>
                         <div><Toaster/></div>
                         <section className={"form-add-container"}>
-                            <form onSubmit={handleSubmitForm} className={"form form-center"}>
+                            <form onSubmit={handleSubmitForm} className={"form form-add-category-small"}>
                                 <section className={"banner"}>
                                     <img width={80} src="/banner.png" alt="free banner"/>
                                 </section>
