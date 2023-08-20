@@ -70,6 +70,10 @@ body {
     margin: 20px;
 }
 
+.preview-mode {
+    margin: 0;
+}
+
 .card-image {
     float: left;
     width: 90px;
@@ -257,8 +261,20 @@ body {
 }
 
 .form-add-category {
-    height: 80%;
+    height: 85%;
 }
+
+.preview-buttons-container {
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+
+.preview-button {
+    width: 35px;
+}
+
+
 
 
 .input-instagram {

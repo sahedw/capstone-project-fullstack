@@ -2,8 +2,7 @@ import {ChangeEvent, FormEvent, useState} from "react";
 import toast, {Toaster} from "react-hot-toast";
 import axios from "axios";
 import {Category} from "../types/Category";
-import withReactContent from "sweetalert2-react-content";
-import Swal from "sweetalert2";
+import BurgerMenu from "./BurgerMenu";
 
 
 type Props = {
@@ -111,11 +110,11 @@ function AddCategoryForm({categories, onCategories}: Props) {
                     leftPixel: leftPixelBG,
                     topPixel: topPixelBG,
                     imageWidth: imageWidthBG,
-                    urlCloudinary: ""
+                    cloudinaryUrl: ""
                 },
                 foodSpotCard: {
                     imageWidth: imageWidthNormal,
-                    urlCloudinary: ""
+                    cloudinaryUrl: ""
                 }
             }
         }
@@ -123,10 +122,7 @@ function AddCategoryForm({categories, onCategories}: Props) {
         data.append("data", new Blob([JSON.stringify(categoryWithDetails)], {type: "application/json"}))
 
 
-        axios.post("/api/user/categories", data, {headers: { "Content-Type": "multipart/form-data"}})
-            .then(() => {
-                onCategories()
-            })
+        axios.post("/api/user/categories", data, {headers: {"Content-Type": "multipart/form-data"}})
             .then(() => {
                 toast("Category was added!", {
                     icon: '🎉',
@@ -140,6 +136,9 @@ function AddCategoryForm({categories, onCategories}: Props) {
 
                     }
                 })
+                onCategories()
+                setSelectedBGImage(null)
+                setSelectedNormalImage(null)
             })
         setTimeout(() => {
             setPreviewMode(!previewMode)
@@ -149,127 +148,150 @@ function AddCategoryForm({categories, onCategories}: Props) {
     return (<>
             {!previewMode ?
                 <>
-                    <div><Toaster/></div>
-                    <section className={"form-add-container"}>
-                        <form onSubmit={handleSubmitForm} className={"form form-center"}>
-                            <section className={"banner"}>
-                                <img width={80} src="/banner.png" alt="free banner"/>
-                            </section>
-                            <section className={"banner-text"}>
-                                <strong>FREE</strong>
-                            </section>
-                            <section className={"form-header-container"}>
-                                <h3>Some more categories? Good idea.</h3>
-                            </section>
-                            <section className={"form-main-container"}>
-                                <section className={"form-section-container"}>
-                                    <input className={"add-form-input"}
-                                           placeholder={"Name of the category"}
-                                           type="text"
-                                           name={"name"}
-                                           onChange={(e) => {
-                                               setCategoryName(e.currentTarget.value)
-                                           }}
-                                           required
-                                    />
-                                    {categoryName?.length > 0 &&
-                                        <ul className={"requirement-list-container"}>
-                                            <li className={categoryName.trim().length === 0 ? "invalid" : "valid"}>Can't
-                                                be
-                                                blank
-                                            </li>
-                                        </ul>
-                                    }
+                    <section className={"overflow-menu"}>
+                        <BurgerMenu/>
+                        <div><Toaster/></div>
+                        <section className={"form-add-container"}>
+                            <form onSubmit={handleSubmitForm} className={"form form-center"}>
+                                <section className={"banner"}>
+                                    <img width={80} src="/banner.png" alt="free banner"/>
                                 </section>
-                            </section>
-                            <section className={"add-button-container"}>
-                                <button className={"add-button"}>Preview your category!</button>
-                            </section>
-                        </form>
+                                <section className={"banner-text"}>
+                                    <strong>FREE</strong>
+                                </section>
+                                <section className={"form-header-container"}>
+                                    <h3>Some more categories? Good idea.</h3>
+                                </section>
+                                <section className={"form-main-container"}>
+                                    <section className={"form-section-container"}>
+                                        <input className={"add-form-input"}
+                                               placeholder={"Name of the category"}
+                                               type="text"
+                                               name={"name"}
+                                               onChange={(e) => {
+                                                   setCategoryName(e.currentTarget.value)
+                                               }}
+                                               required
+                                        />
+                                        {categoryName?.length > 0 &&
+                                            <ul className={"requirement-list-container"}>
+                                                <li className={categoryName.trim().length === 0 ? "invalid" : "valid"}>Can't
+                                                    be
+                                                    blank
+                                                </li>
+                                            </ul>
+                                        }
+                                    </section>
+                                </section>
+                                <section className={"add-button-container"}>
+                                    <button className={"add-button"}>Preview your category!</button>
+                                </section>
+                            </form>
+                        </section>
                     </section>
                 </>
                 :
                 <>
-                    <div><Toaster/></div>
-                    <section className={"form-add-container"}>
-                        <form onSubmit={handleSubmitCategoryDetails} className={"form form-center form-add-category"}>
-                            <section className={"banner"}>
-                                <img width={80} src="/banner.png" alt="free banner"/>
-                            </section>
-                            <section className={"banner-text"}>
-                                <strong>FREE</strong>
-                            </section>
-                            <section className={"form-header-container"}>
-                                <h3>Position your images:</h3>
-                            </section>
-                            <section className={"category-container"}>
-                                <h4 className={"category-header"}>{categoryName?.toUpperCase()}</h4>
-                                {selectedBGImage !== null &&
-                                    <img style={{
-                                        left: `${leftPixelBG.toString()}px`,
-                                        top: `${topPixelBG.toString()}px`,
-                                        width: `${imageWidthBG.toString()}px`
-                                    }} className={`category-container-image`}
-                                         src={URL?.createObjectURL(selectedBGImage)}
-                                         alt={categoryName}/>
-                                }
-                            </section>
-                            <section>
-                                <section>
-                                    <button type={"button"} onClick={() => {
+                    <section className={"overflow-menu"}>
+                        <BurgerMenu/>
+                        <div><Toaster/></div>
+                        <section className={"form-add-container"}>
+                            <form onSubmit={handleSubmitCategoryDetails}
+                                  className={"form form-center form-add-category"}>
+                                <section className={"banner"}>
+                                    <img width={80} src="/banner.png" alt="free banner"/>
+                                </section>
+                                <section className={"banner-text"}>
+                                    <strong>FREE</strong>
+                                </section>
+                                <section className={"form-header-container"}>
+                                    <h3>Position your images:</h3>
+                                    <p>Note: Use images with transparent backgrounds</p>
+                                </section>
+                                <section className={"category-container"}>
+                                    <h4 className={"category-header"}>{categoryName?.toUpperCase()}</h4>
+                                    {selectedBGImage !== null &&
+                                        <img style={{
+                                            left: `${leftPixelBG.toString()}px`,
+                                            top: `${topPixelBG.toString()}px`,
+                                            width: `${imageWidthBG.toString()}px`
+                                        }} className={`category-container-image`}
+                                             src={URL?.createObjectURL(selectedBGImage)}
+                                             alt={categoryName}/>
+                                    }
+                                </section>
+                                <section className={"preview-buttons-container"}>
+                                    <img onClick={() => {
                                         handleLeftPositioning()
-                                    }}>Left
-                                    </button>
-                                    <button type={"button"} onClick={() => {
+                                    }}
+                                         className={"preview-button"}
+                                         src="../../public/arrow-left.png"
+                                         alt="left"/>
+                                    <img onClick={() => {
                                         handleRightPositioning()
-                                    }}>Right
-                                    </button>
-                                    <button type={"button"} onClick={() => {
+                                    }}
+                                         className={"preview-button"}
+                                         src="../../public/arrow-right.png"
+                                         alt="right"/>
+                                    <img onClick={() => {
+                                        handleUpPositioning()
+                                    }}
+                                         className={"preview-button"}
+                                         src="../../public/arrow-up.png"
+                                         alt="up"/>
+
+                                    <img onClick={() => {
+                                        handleDownPositioning()
+                                    }}
+                                         className={"preview-button"}
+                                         src="../../public/arrow-down.png"
+                                         alt="down"/>
+                                    <img onClick={() => {
                                         handleSmallerWidth("BG")
-                                    }}>Smaller
-                                    </button>
-                                    <button type={"button"} onClick={() => {
+                                    }}
+                                         className={"preview-button"}
+                                         src="../../public/smaller.png"
+                                         alt="smaller"/>
+                                    <img onClick={() => {
                                         handleBiggerWidth("BG")
-                                    }}>Bigger
-                                    </button>
+                                    }}
+                                         className={"preview-button"}
+                                         src="../../public/bigger.png"
+                                         alt="bigger"/>
                                 </section>
-                                <button type={"button"} onClick={() => {
-                                    handleUpPositioning()
-                                }}>Up
-                                </button>
-                                <button type={"button"} onClick={() => {
-                                    handleDownPositioning()
-                                }}>Down
-                                </button>
-                            </section>
-                            <input type="file" onChange={handleBGFileChange}/>
-                            <br/>
-                            <div className={"foodspot-card-container"}>
-                                <h3>Spot-Name</h3>
-                                {selectedNormalImage !== null &&
-                                    <img style={{
-                                        width: `${imageWidthNormal.toString()}px`
-                                    }} className={`card-image`} src={URL?.createObjectURL(selectedNormalImage)}
-                                         alt="food image"/>
-                                }
-                            </div>
-                            <section>
+                                <input type="file" onChange={handleBGFileChange}/>
+                                <br/>
+                                <div className={"foodspot-card-container preview-mode"}>
+                                    <h3>Spot-Name</h3>
+                                    {selectedNormalImage !== null &&
+                                        <img style={{
+                                            width: `${imageWidthNormal.toString()}px`
+                                        }} className={`card-image`} src={URL?.createObjectURL(selectedNormalImage)}
+                                             alt="food image"/>
+                                    }
+                                </div>
                                 <section>
-                                    <button type={"button"} onClick={() => {
-                                        handleSmallerWidth("Normal")
-                                    }}>Smaller
-                                    </button>
-                                    <button type={"button"} onClick={() => {
-                                        handleBiggerWidth("Normal")
-                                    }}>Bigger
-                                    </button>
+                                    <section className={"preview-buttons-container"}>
+                                        <img onClick={() => {
+                                            handleSmallerWidth("Normal")
+                                        }}
+                                             className={"preview-button"}
+                                             src="../../public/smaller.png"
+                                             alt="smaller"/>
+                                        <img onClick={() => {
+                                            handleBiggerWidth("Normal")
+                                        }}
+                                             className={"preview-button"}
+                                             src="../../public/bigger.png"
+                                             alt="bigger"/>
+                                    </section>
                                 </section>
-                            </section>
-                            <input type="file" onChange={handleNormalFileChange}/>
-                            <section className={"add-button-container"}>
-                                <button className={"add-button"}>Submit your category!</button>
-                            </section>
-                        </form>
+                                <input type="file" onChange={handleNormalFileChange}/>
+                                <section className={"add-button-container"}>
+                                    <button className={"add-button"}>Submit your category!</button>
+                                </section>
+                            </form>
+                        </section>
                     </section>
                 </>
             }

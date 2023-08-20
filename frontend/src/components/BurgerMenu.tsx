@@ -19,7 +19,13 @@ function BurgerMenu() {
                                  className={({ isActive }) =>
                                      isActive ? "active-link" : "inactive-link"
                                  }>
-                            <li>HOME</li>
+                            <li>HOMEPAGE</li>
+                        </NavLink>
+                        <NavLink to={"/addCategory"}
+                                 className={({ isActive }) =>
+                                     isActive ? "active-link" : "inactive-link"
+                                 }>
+                            <li>ADD CATEGORY</li>
                         </NavLink>
                         <NavLink to={"/addFoodSpot"}
                                  className={({ isActive }) =>
@@ -31,7 +37,7 @@ function BurgerMenu() {
                                  className={({ isActive }) =>
                                      isActive ? "active-link" : "inactive-link"
                                  }>
-                            <li>MAP</li>
+                            <li>MAP OVERVIEW</li>
                         </NavLink>
                         <NavLink to={"/account"}
                                  className={({ isActive }) =>
