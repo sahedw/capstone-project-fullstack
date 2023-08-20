@@ -1,16 +1,20 @@
 package com.github.sahedw.backend.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class CategoryCSSDetails {
 
-    int leftPixel;
+    private int leftPixel;
 
-    int topPixel;
+    private int topPixel;
 
-    int imageWidth;
+    private int imageWidth;
 
-    String cloudinaryUrl;
+    private String cloudinaryUrl;
 
 }

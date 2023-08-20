@@ -1,13 +1,15 @@
 package com.github.sahedw.backend.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class ImageDetails {
 
-    CategoryCSSDetails categoryCard;
+    private CategoryCSSDetails categoryCard;
 
-    FoodSpotCSSDetails foodSpotCard;
+    private FoodSpotCSSDetails foodSpotCard;
 }

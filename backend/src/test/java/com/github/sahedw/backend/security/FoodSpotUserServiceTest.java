@@ -1,23 +1,24 @@
 package com.github.sahedw.backend.security;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.Uploader;
 import com.github.sahedw.backend.exceptions.UsernameAlreadyExistsException;
-import com.github.sahedw.backend.models.FoodSpot;
-import com.github.sahedw.backend.models.FoodSpotRepo;
-import com.github.sahedw.backend.models.IdService;
+import com.github.sahedw.backend.models.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.AbstractPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -28,16 +29,21 @@ class FoodSpotUserServiceTest {
 
     IdService idServiceMocked = mock(IdService.class);
 
-    FoodSpotUserService foodSpotUserServiceMocked = new FoodSpotUserService(foodSpotUserRepoMocked, idServiceMocked);
+    CloudinaryService cloudinaryService = mock(CloudinaryService.class);
+
+    FoodSpotUserService foodSpotUserServiceMocked = new FoodSpotUserService(foodSpotUserRepoMocked, idServiceMocked, cloudinaryService);
 
     SecurityContext securityContext = mock(SecurityContext.class);
+
+    Cloudinary cloudinary = new Cloudinary();
 
     @Mock
     Authentication authentication = mock(Authentication.class);
 
+    CloudinaryService cloudinaryServiceReal = new CloudinaryService(new Cloudinary());
 
     IdService idServiceReal = new IdService();
-    FoodSpotUserService foodSpotUserServiceReal = new FoodSpotUserService(foodSpotUserRepoMocked, idServiceReal);
+    FoodSpotUserService foodSpotUserServiceReal = new FoodSpotUserService(foodSpotUserRepoMocked, idServiceReal, cloudinaryServiceReal);
 
     PasswordEncoder encoder = mock(AbstractPasswordEncoder.class);
 
@@ -175,6 +181,78 @@ class FoodSpotUserServiceTest {
         SecurityContextHolder.setContext(securityContext);
 
         assertThrows(NoSuchElementException.class, () -> foodSpotUserServiceReal.getUserSeed());
+        verify(securityContext).getAuthentication();
+        verify(authentication).getName();
+    }
+
+    @Test
+    void expectAllCategoriesOfUser_whenGetCategoriesIsCalled() {
+        Category category = new Category("BURGER", new ImageDetails(new CategoryCSSDetails(0, 0, 0, "test"), new FoodSpotCSSDetails(0, "test")));
+        List<Category> expected = new ArrayList<>(List.of(category));
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), expected, "");
+
+        when(foodSpotUserRepoMocked.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
+        when(foodSpotUserRepoMocked.save(currentUser)).thenReturn(currentUser);
+        when(authentication.getName()).thenReturn("sahed");
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+
+        List<Category> actual = foodSpotUserServiceReal.getUserCategories();
+        verify(securityContext).getAuthentication();
+        verify(authentication).getName();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void expectAddedCategoriesToUser_whenAddCategoryIsCalled() throws IOException {
+
+        Category category1 = new Category("BURGER", new ImageDetails(new CategoryCSSDetails(0, 0, 0, "test1"), new FoodSpotCSSDetails(0, "test1.de")));
+        Category category2 = new Category("PIZZA", new ImageDetails(new CategoryCSSDetails(0, 0, 0, "test2"), new FoodSpotCSSDetails(0, "test2.de")));
+        List<Category> expected = new ArrayList<>();
+        expected.add(category1);
+        expected.add(category2);
+
+        List<Category> beforeUpdate = new ArrayList<>();
+        beforeUpdate.add(category1);
+
+
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), beforeUpdate, "");
+        FoodSpotUser updatedUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), expected, "");
+
+        MockMultipartFile file1 = new MockMultipartFile("bgImage", "test1".getBytes());
+        MockMultipartFile file2 = new MockMultipartFile("NormalImage", "test2".getBytes());
+
+        when(foodSpotUserRepoMocked.findByUsername("sahed")).thenReturn(Optional.of(currentUser));
+        when(foodSpotUserRepoMocked.save(currentUser)).thenReturn(currentUser);
+        when(authentication.getName()).thenReturn("sahed");
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        when(cloudinaryService.uploadImage(file1)).thenReturn("test1.de");
+        when(cloudinaryService.uploadImage(file2)).thenReturn("test2.de");
+
+        List<Category> actual = foodSpotUserServiceMocked.addUserCategories(category2, file1, file2);
+        verify(securityContext).getAuthentication();
+        verify(authentication).getName();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void expectNoSuchElementException_whenAddCategoryIsCalled() throws IOException {
+        FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), List.of(), "abcdefg");
+        Category category = new Category("BURGER", new ImageDetails(new CategoryCSSDetails(0, 0, 0, "test1"), new FoodSpotCSSDetails(0, "test1.de")));
+        MockMultipartFile file1 = new MockMultipartFile("bgImage", "test1".getBytes());
+        MockMultipartFile file2 = new MockMultipartFile("NormalImage", "test2".getBytes());
+
+        when(foodSpotUserRepoMocked.findByUsername("sahed")).thenReturn(Optional.empty());
+        when(foodSpotUserRepoMocked.save(currentUser)).thenReturn(currentUser);
+        when(authentication.getName()).thenReturn("sahed");
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        when(cloudinaryService.uploadImage(file1)).thenReturn("test1.de");
+        when(cloudinaryService.uploadImage(file2)).thenReturn("test2.de");
+
+        assertThrows(NoSuchElementException.class, () -> foodSpotUserServiceMocked.addUserCategories(category, file1, file2));
         verify(securityContext).getAuthentication();
         verify(authentication).getName();
     }
