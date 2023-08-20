@@ -1,4 +1,4 @@
-import {allCategories} from "../utils/allCategories";
+
 import {FormEvent, Fragment, useEffect, useState} from "react";
 import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId";
 import BackButton from "./BackButton";

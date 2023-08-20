@@ -75,6 +75,11 @@ public class FoodSpotUserController {
         return foodSpotUserService.addUserCategories(category, bgImage, normalImage);
     }
 
+    @DeleteMapping("/categories/{id}")
+    public List<Category> addCategories(@PathVariable String id) {
+        return foodSpotUserService.deleteCategory(id);
+    }
+
     @ExceptionHandler({UsernameAlreadyExistsException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorMessage handleUsernameAlreadyExistsExceptions(UsernameAlreadyExistsException exception) {

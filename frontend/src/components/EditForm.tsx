@@ -4,7 +4,6 @@ import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId";
 import {useNavigate} from "react-router-dom";
 import ChoosePriceLevels from "../icons/ChoosePriceLevels";
 import getPriceLevelEnum from "../utils/getPriceLevelEnum";
-import {allCategories} from "../utils/allCategories";
 import toast, {Toaster} from "react-hot-toast";
 import AutocompleteInput from "./AutocompleteInput";
 import {Category} from "../types/Category";

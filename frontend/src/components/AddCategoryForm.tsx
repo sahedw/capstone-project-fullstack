@@ -4,6 +4,8 @@ import axios from "axios";
 import {Category} from "../types/Category";
 import BurgerMenu from "./BurgerMenu";
 import BackButton from "./BackButton";
+import {Link} from "react-router-dom";
+import {CategoryWithoutId} from "../types/CategoryWithoutId.ts";
 
 
 type Props = {
@@ -114,7 +116,7 @@ function AddCategoryForm({categories, onCategories}: Props) {
             data.append("NormalImage", selectedNormalImage)
         }
 
-        const categoryWithDetails: Category = {
+        const categoryWithDetails: CategoryWithoutId = {
             name: categoryName?.toUpperCase(),
             imageCSSDetails: {
                 categoryCard: {
@@ -213,6 +215,7 @@ function AddCategoryForm({categories, onCategories}: Props) {
                                 <section className={"add-button-container"}>
                                     <button className={"add-button"}>Preview your category!</button>
                                 </section>
+                                <p>Want to delete a category? <Link to={"/deleteCategory"}>Click here.</Link></p>
                             </form>
                         </section>
                     </section>

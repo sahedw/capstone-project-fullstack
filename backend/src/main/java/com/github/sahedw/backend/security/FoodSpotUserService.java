@@ -28,6 +28,7 @@ public class FoodSpotUserService {
 
     private final CloudinaryService cloudinaryService;
 
+
     private static final String NO_USER_EXCEPTION = "No user logged in.";
 
     public String signUp(FoodSpotUserForSignUp dtoUser) {
@@ -112,6 +113,7 @@ public class FoodSpotUserService {
     }
 
     public List<Category> addUserCategories(Category category, MultipartFile bgImage, MultipartFile normalImage) throws IOException {
+        category.setId(idService.randomId());
 
         String urlBGImage = cloudinaryService.uploadImage(bgImage);
         String urlNormalImage = cloudinaryService.uploadImage(normalImage);
@@ -137,6 +139,27 @@ public class FoodSpotUserService {
             updatedUser.ownCategories().add(category);
             foodSpotUserRepo.save(updatedUser);
             return updatedUser.ownCategories();
+        } else {
+            throw new NoSuchElementException(NO_USER_EXCEPTION);
+        }
+    }
+
+    public List<Category> deleteCategory(String id) {
+        Optional<FoodSpotUser> toDeleteCategoryUser = foodSpotUserRepo.findByUsername(
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+                        .getName());
+        int indexOfDelete = -1;
+        if (toDeleteCategoryUser.isPresent()) {
+            for (Category category : toDeleteCategoryUser.get().ownCategories()) {
+                if (category.getId().equals(id)) {
+                    indexOfDelete = toDeleteCategoryUser.get().ownCategories().indexOf(category);
+                }
+            }
+            toDeleteCategoryUser.get().ownCategories().remove(indexOfDelete);
+            foodSpotUserRepo.save(toDeleteCategoryUser.get());
+            return toDeleteCategoryUser.get().ownCategories();
         } else {
             throw new NoSuchElementException(NO_USER_EXCEPTION);
         }

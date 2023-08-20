@@ -51,8 +51,10 @@ class FoodSpotUserControllerTest {
     @Autowired
     FoodSpotUserRepo foodSpotUserRepo;
 
-    @MockBean
+    @Autowired
     FoodSpotUserService foodSpotUserService;
+
+    FoodSpotUserService foodSpotUserServiceMocked = mock(FoodSpotUserService.class);
 
     @MockBean
     Cloudinary cloudinary;
@@ -77,6 +79,7 @@ class FoodSpotUserControllerTest {
 
     @Test
     @WithMockUser(username = "sahed")
+    @DirtiesContext
     void getUsername_whenLoggingIn() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/user/login")
                         .with(csrf()))
@@ -92,7 +95,7 @@ class FoodSpotUserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                    "username": "franz",
+                                    "username": "Testname",
                                     "password": "franz1234",
                                     "city": "Hamburg",
                                     "seed": "test"
@@ -101,7 +104,7 @@ class FoodSpotUserControllerTest {
                         .with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(
-                        "franz"));
+                        "Testname"));
     }
 
     @Test
@@ -271,8 +274,8 @@ class FoodSpotUserControllerTest {
     @WithMockUser(username = "sahed")
     @DirtiesContext
     void getCategories_whenGetCategoriesCalled() throws Exception {
-        Category category1 = new Category("BURGER", new ImageDetails(new CategoryCSSDetails(70, 15, 100, "test1BG.de"), new FoodSpotCSSDetails(100, "test1Normal.de")));
-        Category category2 = new Category("PIZZA", new ImageDetails(new CategoryCSSDetails(60, 25, 120, "test2BG.de"), new FoodSpotCSSDetails(110, "test2Normal.de")));
+        Category category1 = new Category("1", "BURGER", new ImageDetails(new CategoryCSSDetails(70, 15, 100, "test1BG.de"), new FoodSpotCSSDetails(100, "test1Normal.de")));
+        Category category2 = new Category("2", "PIZZA", new ImageDetails(new CategoryCSSDetails(60, 25, 120, "test2BG.de"), new FoodSpotCSSDetails(110, "test2Normal.de")));
         FoodSpotUser existingUser = new FoodSpotUser("123", "sahed", "franz1234", "Hamburg", List.of(), List.of(category1, category2),"abcde");
         foodSpotUserRepo.insert(existingUser);
 
@@ -319,14 +322,14 @@ class FoodSpotUserControllerTest {
     @WithMockUser(username = "sahed")
     @DirtiesContext
     void addCategory_whenAddCategoryIsCalled() throws Exception {
-        Category category1 = new Category("BURGER", new ImageDetails(new CategoryCSSDetails(70, 15, 100, "test1BG.de"), new FoodSpotCSSDetails(100, "test1Normal.de")));
-        Category category2 = new Category("PIZZA", new ImageDetails(new CategoryCSSDetails(60, 25, 120, "test2BG.de"), new FoodSpotCSSDetails(110, "test2Normal.de")));
+        Category category1 = new Category("1", "BURGER", new ImageDetails(new CategoryCSSDetails(70, 15, 100, "test1BG.de"), new FoodSpotCSSDetails(100, "test1Normal.de")));
+        Category category2 = new Category("2", "PIZZA", new ImageDetails(new CategoryCSSDetails(60, 25, 120, "test2BG.de"), new FoodSpotCSSDetails(110, "test2Normal.de")));
         List<Category> beforeUpdateList = new ArrayList<>();
         beforeUpdateList.add(category1);
         FoodSpotUser existingUser = new FoodSpotUser("123", "sahed", "franz1234", "Hamburg", List.of(), beforeUpdateList,"abcde");
         foodSpotUserRepo.insert(existingUser);
 
-        when(foodSpotUserService.addUserCategories(any(), any(), any())).thenReturn(List.of(category1, category2));
+        when(foodSpotUserServiceMocked.addUserCategories(any(), any(), any())).thenReturn(List.of(category1, category2));
         MockMultipartFile data = new MockMultipartFile("data",
                 null,
                 MediaType.APPLICATION_JSON_VALUE,
@@ -400,11 +403,11 @@ class FoodSpotUserControllerTest {
                                         "leftPixel": 60,
                                         "topPixel": 25,
                                         "imageWidth": 120,
-                                        "cloudinaryUrl": "test2BG.de"
+                                        "cloudinaryUrl": "test-url"
                                     },
                                     "foodSpotCard": {
                                         "imageWidth": 110,
-                                        "cloudinaryUrl": "test2Normal.de"
+                                        "cloudinaryUrl": "test-url"
                                     }
                                 }
                             }

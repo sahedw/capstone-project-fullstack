@@ -1,7 +1,6 @@
 import {ImageDetails} from "./ImageDetails";
 
-export type Category = {
-    id: string,
+export type CategoryWithoutId = {
     name: string,
     imageCSSDetails: ImageDetails
 }

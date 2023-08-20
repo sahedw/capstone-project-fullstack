@@ -187,7 +187,7 @@ class FoodSpotUserServiceTest {
 
     @Test
     void expectAllCategoriesOfUser_whenGetCategoriesIsCalled() {
-        Category category = new Category("BURGER", new ImageDetails(new CategoryCSSDetails(0, 0, 0, "test"), new FoodSpotCSSDetails(0, "test")));
+        Category category = new Category("1", "BURGER", new ImageDetails(new CategoryCSSDetails(0, 0, 0, "test"), new FoodSpotCSSDetails(0, "test")));
         List<Category> expected = new ArrayList<>(List.of(category));
         FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), expected, "");
 
@@ -207,8 +207,8 @@ class FoodSpotUserServiceTest {
     @Test
     void expectAddedCategoriesToUser_whenAddCategoryIsCalled() throws IOException {
 
-        Category category1 = new Category("BURGER", new ImageDetails(new CategoryCSSDetails(0, 0, 0, "test1"), new FoodSpotCSSDetails(0, "test1.de")));
-        Category category2 = new Category("PIZZA", new ImageDetails(new CategoryCSSDetails(0, 0, 0, "test2"), new FoodSpotCSSDetails(0, "test2.de")));
+        Category category1 = new Category("1", "BURGER", new ImageDetails(new CategoryCSSDetails(0, 0, 0, "test1"), new FoodSpotCSSDetails(0, "test1.de")));
+        Category category2 = new Category("2", "PIZZA", new ImageDetails(new CategoryCSSDetails(0, 0, 0, "test2"), new FoodSpotCSSDetails(0, "test2.de")));
         List<Category> expected = new ArrayList<>();
         expected.add(category1);
         expected.add(category2);
@@ -240,7 +240,7 @@ class FoodSpotUserServiceTest {
     @Test
     void expectNoSuchElementException_whenAddCategoryIsCalled() throws IOException {
         FoodSpotUser currentUser = new FoodSpotUser("123", "sahed", "sahed1", "Hamburg",new ArrayList<>(List.of()), List.of(), "abcdefg");
-        Category category = new Category("BURGER", new ImageDetails(new CategoryCSSDetails(0, 0, 0, "test1"), new FoodSpotCSSDetails(0, "test1.de")));
+        Category category = new Category("2", "BURGER", new ImageDetails(new CategoryCSSDetails(0, 0, 0, "test1"), new FoodSpotCSSDetails(0, "test1.de")));
         MockMultipartFile file1 = new MockMultipartFile("bgImage", "test1".getBytes());
         MockMultipartFile file2 = new MockMultipartFile("NormalImage", "test2".getBytes());
 

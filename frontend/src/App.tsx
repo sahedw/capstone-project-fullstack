@@ -18,6 +18,7 @@ import MapOverview from "./components/MapOverview";
 import AccountPage from "./components/AccountPage";
 import AddCategoryForm from "./components/AddCategoryForm";
 import {Category} from "./types/Category";
+import DeleteCategoryForm from "./components/DeleteCategoryForm.tsx";
 
 
 
@@ -164,6 +165,16 @@ function App() {
             });
     }
 
+    function handleDeleteCategories(id: string) {
+        axios.delete(`/api/user/categories/${id}`)
+            .then(() => {
+               handleGetCategories()
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
     function handleAddFoodSpot(newFoodSpot: FoodSpotWithoutId): void {
         axios.post("/api/foodSpot", newFoodSpot)
             .then(() => {
@@ -260,6 +271,9 @@ function App() {
                     </Route>
                     <Route path={"/addCategory"}
                            element={<AddCategoryForm onCategories={handleGetCategories} categories={categories}/>}>
+                    </Route>
+                    <Route path={"/deleteCategory"}
+                           element={<DeleteCategoryForm onDeleteCategories={handleDeleteCategories} categories={categories}/>}>
                     </Route>
                     {categories.map((category: Category) => {
                         const filteredByCurrentCategory: FoodSpot[] = foodSpots.filter((spot: FoodSpot) => spot.category == category.name)
