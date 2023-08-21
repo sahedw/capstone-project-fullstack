@@ -27,7 +27,7 @@ function SignUpPage({onRegistration}: Props) {
             const newUser = {
                 username: username,
                 city: city,
-                seed: "",
+                seed: "InitialSeed",
                 password: password
             }
             const registerToast = toast.loading('Registering...', {
