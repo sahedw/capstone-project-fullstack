@@ -60,13 +60,15 @@ function MapOverview({foodSpots}: Props) {
     foodSpots.forEach(foodSpot => allStreets.push(convertGermanSpecialCharacters(foodSpot.address, true)))
 
     useEffect(() => {
-        axios.post("/api/google/convert-address-multi", allStreets)
-            .then((response) => {
-                setPositions(response.data)
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
+        setTimeout(() => {
+            axios.post("/api/google/convert-address-multi", allStreets)
+                .then((response) => {
+                    setPositions(response.data)
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        }, 2000);
     }, [])
 
 
