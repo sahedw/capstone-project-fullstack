@@ -255,38 +255,38 @@ function AddCategoryForm({categories, onCategories}: Props) {
                                         handleLeftPositioning()
                                     }}
                                          className={"preview-button"}
-                                         src="../../public/arrow-left.png"
+                                         src="/arrow-left.png"
                                          alt="left"/>
                                     <img onClick={() => {
                                         handleRightPositioning()
                                     }}
                                          className={"preview-button"}
-                                         src="../../public/arrow-right.png"
+                                         src="/arrow-right.png"
                                          alt="right"/>
                                     <img onClick={() => {
                                         handleUpPositioning()
                                     }}
                                          className={"preview-button"}
-                                         src="../../public/arrow-up.png"
+                                         src="/arrow-up.png"
                                          alt="up"/>
 
                                     <img onClick={() => {
                                         handleDownPositioning()
                                     }}
                                          className={"preview-button"}
-                                         src="../../public/arrow-down.png"
+                                         src="/arrow-down.png"
                                          alt="down"/>
                                     <img onClick={() => {
                                         handleSmallerWidth("BG")
                                     }}
                                          className={"preview-button"}
-                                         src="../../public/smaller.png"
+                                         src="/smaller.png"
                                          alt="smaller"/>
                                     <img onClick={() => {
                                         handleBiggerWidth("BG")
                                     }}
                                          className={"preview-button"}
-                                         src="../../public/bigger.png"
+                                         src="/bigger.png"
                                          alt="bigger"/>
                                 </section>
                                 <input type="file" onChange={handleBGFileChange}/>
@@ -306,13 +306,13 @@ function AddCategoryForm({categories, onCategories}: Props) {
                                             handleSmallerWidth("Normal")
                                         }}
                                              className={"preview-button"}
-                                             src="../../public/smaller.png"
+                                             src="/smaller.png"
                                              alt="smaller"/>
                                         <img onClick={() => {
                                             handleBiggerWidth("Normal")
                                         }}
                                              className={"preview-button"}
-                                             src="../../public/bigger.png"
+                                             src="/bigger.png"
                                              alt="bigger"/>
                                     </section>
                                 </section>

@@ -35,6 +35,7 @@ function AddFoodSpotForm({onAdd, categories}: Props) {
 
 
     function handleAddFormSubmit(event: FormEvent<HTMLFormElement>) {
+        console.log(category)
         event.preventDefault()
         const newDtoFoodSpot: FoodSpotWithoutId = {
             name: name,
@@ -42,8 +43,9 @@ function AddFoodSpotForm({onAdd, categories}: Props) {
             category: category,
             instagramUsername: instagramUsername,
             priceLevel: getPriceLevelEnum(priceLevel.filter((level) => level).length)
-
         };
+        console.log(newDtoFoodSpot.category)
+
         const addFoodSpotToast = toast.loading('Add to collection...', {
             style: {
                 border: '2px solid #713200',
@@ -215,7 +217,7 @@ function handleShowPositionSuggetions() {
                                 <option value="default" disabled={true} hidden>Choose the category</option>
                                 {categories.map((category: Category) => {
                                     return (
-                                        <option value={`${category}`}
+                                        <option value={`${category.name}`}
                                                 key={category.name}>{category.name === "DOENER" ? "DÖNER" : category.name}</option>
                                     )
                                 })}
