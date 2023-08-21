@@ -12,6 +12,12 @@ Spots allows you to effortlessly save and manage your favorite places, starting 
 ### Detailed Information
 For each spot you add, Spots lets you record essential details to jog your memory. Capture the establishment's name, precise address, Instagram handle (if available), pricing level, and the specific category it belongs to. Found a new local coffee joint? Discovered a fantastic street food stall while abroad? Spots keeps your memories intact.
 
+### Insert Images and Design Custom Categories
+Add images to your spots to make your collection visually appealing. Additionally, design your custom categories with unique icons, allowing you to create a personalized and visually stunning experience within the app.
+
+### Category Management
+Easily manage your categories by deleting ones you no longer need. Customize your homepage to display only the categories that you use and find relevant, streamlining your browsing experience.
+
 ### Personalized Accounts
 By registering for an account, you unlock the full potential of Spots. Your saved spots are securely stored and accessible only to you. No more scrambling to remember that charming cafe's address or the exact location of that exquisite pizzeria. Your account ensures your curated collection is always at your fingertips.
 
@@ -46,7 +52,10 @@ Join us in curating a world full of memorable spots with Spots! We can't wait to
 - React
 - Maven
 - Vite
+- MongoDB
+- MongoDB Atlas
 - GCP (Google Cloud Platform)
+- Cloudinary
 - Lottiefiles
 - React-Hot-Toast
 - AWS
