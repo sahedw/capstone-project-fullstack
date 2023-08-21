@@ -109,25 +109,27 @@ function AddFoodSpotForm({onAdd, categories}: Props) {
                         latitude: latitude.toString(),
                         longitude: longitude.toString()
                     }
-                    axios.post('/api/google/convert-latlng', currentPosition)
-                        .then(response => {
-                            setCurrentAddressSuggestions(response.data);
-                            toast("Getting current position...", {
-                                duration: 1500,
-                                icon: '🕺🏻',
-                                style: {
-                                    border: '2px solid #713200',
-                                    padding: '10px',
-                                    color: 'black',
-                                    boxShadow: "8px 8px 0px -2px #000000",
-                                    backgroundColor: "#f3d935"
+                    setTimeout(() => {
+                        axios.post('/api/google/convert-latlng', currentPosition)
+                            .then(response => {
+                                setCurrentAddressSuggestions(response.data);
+                                toast("Getting current position...", {
+                                    duration: 1500,
+                                    icon: '🕺🏻',
+                                    style: {
+                                        border: '2px solid #713200',
+                                        padding: '10px',
+                                        color: 'black',
+                                        boxShadow: "8px 8px 0px -2px #000000",
+                                        backgroundColor: "#f3d935"
 
-                                }
+                                    }
+                                })
                             })
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
+                            .catch(error => {
+                                console.error(error);
+                            });
+                    }, 2000);
                 })
         }
     }, [])
