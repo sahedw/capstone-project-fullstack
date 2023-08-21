@@ -8,13 +8,15 @@ import MapView from "./MapView";
 import BurgerMenu from "./BurgerMenu";
 import toast, {Toaster} from "react-hot-toast";
 import {ReactComponent as NotFoundAnimation} from "../animations/NotFoundAnimation/notFoundAnimation.svg";
+import {Category} from "../types/Category.ts";
 
 type Props = {
-    foodSpots: FoodSpot[]
+    foodSpots: FoodSpot[],
+    categories: Category[]
 }
 
 
-function FoodSpotCard({foodSpots}: Props) {
+function FoodSpotCard({foodSpots, categories}: Props) {
     const [showMap, setShowMap] = useState(false)
     const location: Location = useLocation();
     const filteredFoodSpots: FoodSpot[] = foodSpots
@@ -72,7 +74,7 @@ function FoodSpotCard({foodSpots}: Props) {
                     {showMap ?
                         <MapView foodSpots={filteredFoodSpots}/>
                         :
-                        <ListView foodSpots={filteredFoodSpots}/>
+                        <ListView categories={categories} foodSpots={filteredFoodSpots}/>
                     }
                 </section>
             </section>
