@@ -1,13 +1,17 @@
 package com.github.sahedw.backend.security;
 
 import com.github.sahedw.backend.exceptions.UsernameAlreadyExistsException;
+import com.github.sahedw.backend.models.Category;
+import com.github.sahedw.backend.models.CloudinaryService;
 import com.github.sahedw.backend.models.IdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -22,6 +26,9 @@ public class FoodSpotUserService {
 
     private final PasswordEncoder encoder = Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
 
+    private final CloudinaryService cloudinaryService;
+
+
     private static final String NO_USER_EXCEPTION = "No user logged in.";
 
     public String signUp(FoodSpotUserForSignUp dtoUser) {
@@ -33,6 +40,7 @@ public class FoodSpotUserService {
                     dtoUser.username(),
                     hashedPassword,
                     dtoUser.city(),
+                    List.of(),
                     List.of(),
                     dtoUser.seed());
             foodSpotUserRepo.insert(newFoodSpotUser);
@@ -68,6 +76,7 @@ public class FoodSpotUserService {
                     toUpdateUser.get().password(),
                     toUpdateUser.get().city(),
                     toUpdateUser.get().ownFoodSpots(),
+                    toUpdateUser.get().ownCategories(),
                     dtoUser.seed()
             );
             foodSpotUserRepo.save(updatedUser);
@@ -85,6 +94,72 @@ public class FoodSpotUserService {
                         .getName());
         if (requiredUser.isPresent()) {
             return requiredUser.get().seed();
+        } else {
+            throw new NoSuchElementException(NO_USER_EXCEPTION);
+        }
+    }
+
+    public List<Category> getUserCategories() {
+        Optional<FoodSpotUser> requiredUser = foodSpotUserRepo.findByUsername(
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+                        .getName());
+        if (requiredUser.isPresent()) {
+            return requiredUser.get().ownCategories();
+        } else {
+            throw new NoSuchElementException(NO_USER_EXCEPTION);
+        }
+    }
+
+    public List<Category> addUserCategories(Category category, MultipartFile bgImage, MultipartFile normalImage) throws IOException {
+        category.setId(idService.randomId());
+
+        String urlBGImage = cloudinaryService.uploadImage(bgImage);
+        String urlNormalImage = cloudinaryService.uploadImage(normalImage);
+
+        category.getImageCSSDetails().getCategoryCard().setCloudinaryUrl(urlBGImage);
+        category.getImageCSSDetails().getFoodSpotCard().setCloudinaryUrl(urlNormalImage);
+
+        Optional<FoodSpotUser> toUpdateCategoryUser = foodSpotUserRepo.findByUsername(
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+                        .getName());
+        if (toUpdateCategoryUser.isPresent()) {
+            FoodSpotUser updatedUser = new FoodSpotUser(
+                    toUpdateCategoryUser.get().id(),
+                    toUpdateCategoryUser.get().username(),
+                    toUpdateCategoryUser.get().password(),
+                    toUpdateCategoryUser.get().city(),
+                    toUpdateCategoryUser.get().ownFoodSpots(),
+                    toUpdateCategoryUser.get().ownCategories(),
+                    toUpdateCategoryUser.get().seed()
+            );
+            updatedUser.ownCategories().add(category);
+            foodSpotUserRepo.save(updatedUser);
+            return updatedUser.ownCategories();
+        } else {
+            throw new NoSuchElementException(NO_USER_EXCEPTION);
+        }
+    }
+
+    public List<Category> deleteCategory(String id) {
+        Optional<FoodSpotUser> toDeleteCategoryUser = foodSpotUserRepo.findByUsername(
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+                        .getName());
+        int indexOfDelete = -1;
+        if (toDeleteCategoryUser.isPresent()) {
+            for (Category category : toDeleteCategoryUser.get().ownCategories()) {
+                if (category.getId().equals(id)) {
+                    indexOfDelete = toDeleteCategoryUser.get().ownCategories().indexOf(category);
+                }
+            }
+            toDeleteCategoryUser.get().ownCategories().remove(indexOfDelete);
+            foodSpotUserRepo.save(toDeleteCategoryUser.get());
+            return toDeleteCategoryUser.get().ownCategories();
         } else {
             throw new NoSuchElementException(NO_USER_EXCEPTION);
         }

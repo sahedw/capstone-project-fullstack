@@ -1,5 +1,6 @@
 package com.github.sahedw.backend.security;
 
+import com.github.sahedw.backend.models.Category;
 import com.github.sahedw.backend.models.FoodSpot;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -27,6 +28,9 @@ public record FoodSpotUser(
 
         @NotBlank
         List<FoodSpot> ownFoodSpots,
+
+        @NotBlank
+        List<Category> ownCategories,
 
         @NotBlank
         String seed

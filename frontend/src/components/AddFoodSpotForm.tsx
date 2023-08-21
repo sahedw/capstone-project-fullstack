@@ -1,4 +1,4 @@
-import {allCategories} from "../utils/allCategories";
+
 import {FormEvent, Fragment, useEffect, useState} from "react";
 import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId";
 import BackButton from "./BackButton";
@@ -14,13 +14,15 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import convertGermanSpecialCharacters from "../utils/convertGermanSpecialCharacters";
 import SweetAlert2Option from "./SweetAlert2Option";
+import {Category} from "../types/Category";
 
 
 type Props = {
     onAdd: (newFoodSpot: FoodSpotWithoutId) => void,
+    categories: Category[]
 }
 
-function AddForm({onAdd}: Props) {
+function AddFoodSpotForm({onAdd, categories}: Props) {
 
     const [name, setName] = useState<string>("")
     const [category, setCategory] = useState<string>("")
@@ -211,10 +213,10 @@ function handleShowPositionSuggetions() {
                                 className={"category-select"}
                                 required>
                                 <option value="default" disabled={true} hidden>Choose the category</option>
-                                {allCategories.map((category: string) => {
+                                {categories.map((category: Category) => {
                                     return (
                                         <option value={`${category}`}
-                                                key={category}>{category === "DOENER" ? "DÖNER" : category}</option>
+                                                key={category.name}>{category.name === "DOENER" ? "DÖNER" : category.name}</option>
                                     )
                                 })}
                             </select>
@@ -247,4 +249,4 @@ function handleShowPositionSuggetions() {
     );
 }
 
-export default AddForm;
+export default AddFoodSpotForm;

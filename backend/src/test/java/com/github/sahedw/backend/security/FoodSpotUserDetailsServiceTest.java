@@ -19,7 +19,7 @@ class FoodSpotUserDetailsServiceTest {
     @Test
     void loadUserByUsername() {
         String givenUserName = "sahed";
-        FoodSpotUser expectedUser = new FoodSpotUser("123", "sahed", "sahed1","Hamburg",List.of(), "");
+        FoodSpotUser expectedUser = new FoodSpotUser("123", "sahed", "sahed1","Hamburg",List.of(), List.of(),"");
         when(foodSpotUserRepo.findByUsername(givenUserName)).thenReturn(Optional.of(expectedUser));
         UserDetails actualUser = foodSpotUserDetailsService.loadUserByUsername(givenUserName);
         verify(foodSpotUserRepo).findByUsername(givenUserName);

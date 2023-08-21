@@ -1,17 +1,20 @@
-import {allCategories} from "../utils/allCategories";
-import Category from "./Category";
+import {Category} from "../types/Category";
 import {Link} from "react-router-dom";
 import {useEffect} from "react";
 import BurgerMenu from "./BurgerMenu";
 import {Fade, Slide} from "react-awesome-reveal";
+import CategoryCard from "./CategoryCard"
 
 
 type Props = {
     onSignedIn: () => void,
+    categories: Category[],
+    onGetCategories: () => void
 }
 
-function HomePage({onSignedIn}: Props) {
+function HomePage({onSignedIn, categories}: Props) {
     useEffect(onSignedIn, [])
+
     return (
         <section className={"homepage-container"}>
             <BurgerMenu/>
@@ -24,16 +27,18 @@ function HomePage({onSignedIn}: Props) {
                 </Fade>
             </section>
             <section className={"category-grid-container"}>
-                {allCategories.map((category: string) => {
+                {categories?.map((category: Category) => {
                     return (
-                        <Link className={"link"} to={`${category}`} key={category}>
-                            <Category category={category}/>
+                        <Link className={"link"} to={`${category.name}`} key={category.name}>
+                            <CategoryCard category={category}/>
                         </Link>
                     )
                 })}
-                <section className={"for-add-category"}>
-                    <img width={50} src="/add-category.png" alt=""/>
-                </section>
+                <Link className={"link"} to={"/addCategory"}>
+                    <section className={"for-add-category"}>
+                        <img width={50} src="/add-category.png" alt=""/>
+                    </section>
+                </Link>
             </section>
         </section>
     );

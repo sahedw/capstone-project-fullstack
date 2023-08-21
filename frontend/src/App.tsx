@@ -1,22 +1,24 @@
 import './App.css'
 import {Fragment, useEffect, useState} from "react";
-import {FoodSpot} from "./types/FoodSpot.ts";
+import {FoodSpot} from "./types/FoodSpot";
 import axios from "axios";
-import {allCategories} from "./utils/allCategories.ts";
 import {Route, Routes, useNavigate} from "react-router-dom";
-import HomePage from "./components/HomePage.tsx";
-import FoodSpotCard from "./components/FoodSpotCard.tsx";
-import AddForm from "./components/AddForm.tsx";
-import {FoodSpotWithoutId} from "./types/FoodSpotWithoutId.ts";
-import FoodSpotDetail from "./components/FoodSpotDetail.tsx";
-import ProtectedPaths from "./components/ProtectedPaths.tsx";
-import LoginPage from "./components/LoginPage.tsx";
-import SignUpPage from "./components/SignUpPage.tsx";
-import {FoodSpotUserWithoutId} from "./types/FoodSpotUserWithoutId.ts";
+import HomePage from "./components/HomePage";
+import FoodSpotCard from "./components/FoodSpotCard";
+import AddFoodSpotForm from "./components/AddFoodSpotForm";
+import {FoodSpotWithoutId} from "./types/FoodSpotWithoutId";
+import FoodSpotDetail from "./components/FoodSpotDetail";
+import ProtectedPaths from "./components/ProtectedPaths";
+import LoginPage from "./components/LoginPage";
+import SignUpPage from "./components/SignUpPage";
+import {FoodSpotUserWithoutId} from "./types/FoodSpotUserWithoutId";
 import toast from "react-hot-toast";
-import HeaderJsLibraryApi from "./components/HeaderJSLibraryAPI.tsx";
-import MapOverview from "./components/MapOverview.tsx";
-import AccountPage from "./components/AccountPage.tsx";
+import HeaderJsLibraryApi from "./components/HeaderJSLibraryAPI";
+import MapOverview from "./components/MapOverview";
+import AccountPage from "./components/AccountPage";
+import AddCategoryForm from "./components/AddCategoryForm";
+import {Category} from "./types/Category";
+import DeleteCategoryForm from "./components/DeleteCategoryForm.tsx";
 
 
 
@@ -24,13 +26,26 @@ function App() {
     const [foodSpots, setFoodSpots] = useState<FoodSpot[]>([]);
     const [apiKey, setApiKey] = useState<string>("");
     const [user, setUser] = useState<string>()
+    const [categories, setCategories] = useState<Category[]>([])
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (user !== undefined && user !== "anonymousUser")
+        handleGetCategories()
+    }, [user])
 
     function handleSignedIn() {
         axios.get("/api/user/account")
             .then(response => {
                 setUser(response.data)
+            })
+    }
+
+    function handleGetCategories() {
+        axios.get("/api/user/categories")
+            .then(response => {
+                setCategories(response.data)
             })
     }
 
@@ -115,7 +130,6 @@ function App() {
             })
     }
 
-
     useEffect(handleSignedIn, [user])
 
     useEffect(() => {
@@ -145,6 +159,16 @@ function App() {
         axios.get('/api/foodSpot')
             .then(response => {
                 setFoodSpots(response.data);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+    function handleDeleteCategories(id: string) {
+        axios.delete(`/api/user/categories/${id}`)
+            .then(() => {
+               handleGetCategories()
             })
             .catch(function (error) {
                 console.error(error);
@@ -240,15 +264,21 @@ function App() {
             <Routes>
                 <Route element={<ProtectedPaths user={user}/>}>
                     <Route path={"/"}
-                           element={<HomePage onSignedIn={handleSignedIn}/>}>
+                           element={<HomePage onGetCategories={handleGetCategories} onSignedIn={handleSignedIn} categories={categories}/>}>
                     </Route>
                     <Route path={"/addFoodSpot"}
-                           element={<AddForm onAdd={handleAddFoodSpot}/>}>
+                           element={<AddFoodSpotForm categories={categories} onAdd={handleAddFoodSpot}/>}>
                     </Route>
-                    {allCategories.map((category: string) => {
-                        const filteredByCurrentCategory: FoodSpot[] = foodSpots.filter((spot: FoodSpot) => spot.category == category)
-                        return (<Fragment key={category}>
-                                <Route path={`/${category}`}
+                    <Route path={"/addCategory"}
+                           element={<AddCategoryForm onCategories={handleGetCategories} categories={categories}/>}>
+                    </Route>
+                    <Route path={"/deleteCategory"}
+                           element={<DeleteCategoryForm onDeleteCategories={handleDeleteCategories} categories={categories}/>}>
+                    </Route>
+                    {categories.map((category: Category) => {
+                        const filteredByCurrentCategory: FoodSpot[] = foodSpots.filter((spot: FoodSpot) => spot.category == category.name)
+                        return (<Fragment key={category.name}>
+                                <Route path={`/${category.name}`}
                                        element={<FoodSpotCard foodSpots={foodSpots}/>}>
                                 </Route>
                                 {filteredByCurrentCategory.map((foodSpot: FoodSpot) => {
@@ -257,7 +287,8 @@ function App() {
                                                key={category + foodSpot.id}
                                                element={<FoodSpotDetail onDelete={handleDeleteFoodSpot}
                                                                         onUpdate={handleUpdateFoodSpot}
-                                                                        foodSpot={foodSpot}/>}>
+                                                                        foodSpot={foodSpot}
+                                                                        categories={categories}/>}>
                                         </Route>
                                     )
                                 })}

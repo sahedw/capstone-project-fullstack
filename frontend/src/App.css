@@ -70,6 +70,10 @@ body {
     margin: 20px;
 }
 
+.preview-mode {
+    margin: 0;
+}
+
 .card-image {
     float: left;
     width: 90px;
@@ -256,6 +260,23 @@ body {
     justify-content: center;
 }
 
+.form-add-category {
+    height: 80%;
+    gap: 5px;
+}
+
+.preview-buttons-container {
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+
+.preview-button {
+    width: 35px;
+}
+
+
+
 
 .input-instagram {
     width: 52%;
@@ -371,10 +392,12 @@ body {
     padding-top: 30px;
     position: relative;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     background-color: #f3d935;
     overflow-x: hidden;
     overflow-y: hidden;
+    padding-bottom: 30px;
 }
 
 .homepage-header-container {
@@ -570,7 +593,7 @@ body {
 }
 
 .map-overview {
-    height: 80%;
+    height: 75%;
 }
 
 .form-map-view {
@@ -757,6 +780,10 @@ body {
 
 .yellow-background {
     background-color: #f3d935;
+}
+
+.form-add-category-small {
+    justify-content: center;
 }
 
 .account-container {

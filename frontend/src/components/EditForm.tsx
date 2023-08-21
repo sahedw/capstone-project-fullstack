@@ -4,9 +4,9 @@ import {FoodSpotWithoutId} from "../types/FoodSpotWithoutId";
 import {useNavigate} from "react-router-dom";
 import ChoosePriceLevels from "../icons/ChoosePriceLevels";
 import getPriceLevelEnum from "../utils/getPriceLevelEnum";
-import {allCategories} from "../utils/allCategories";
 import toast, {Toaster} from "react-hot-toast";
 import AutocompleteInput from "./AutocompleteInput";
+import {Category} from "../types/Category";
 
 
 type EditMode = () => void;
@@ -16,9 +16,10 @@ type Props = {
     foodSpot: FoodSpot,
     onUpdate: (id: string, updatedFoodSpot: FoodSpotWithoutId, editMode: EditMode) => void,
     onDelete: (id: string) => void,
+    categories: Category[]
 }
 
-function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
+function EditForm({onEditMode, foodSpot, onUpdate, onDelete, categories}: Props) {
     const [name, setName] = useState<string>(foodSpot.name);
     const [address, setAddress] = useState<string>(foodSpot.address);
     const [category, setCategory] = useState<string>(foodSpot.category)
@@ -114,7 +115,7 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
                         </ul>
                     </section>
                     <section className={"form-section-container"}>
-                        <AutocompleteInput onSelectPlace={handleSelectPlace} shadowPixel={"12"}/>
+                        <AutocompleteInput onSelectPlace={handleSelectPlace} shadowPixel={"7"}/>
                     <ul className={"requirement-list-container"}>
                             <li className={address.trim().length === 0 ? "invalid" : "valid"}>Can't be blank</li>
                             <li className={address.length < 5 ? "invalid" : "valid"}>Must contain at least 5
@@ -131,10 +132,10 @@ function EditForm({onEditMode, foodSpot, onUpdate, onDelete}: Props) {
                             id="category"
                             defaultValue={"default"}
                             required>
-                            {allCategories.map((category: string) => {
+                            {categories.map((category: Category) => {
                                 return (
                                     <option value={`${category}`}
-                                            key={category}>{category === "DOENER" ? "DÖNER" : category}</option>
+                                            key={category.name}>{category.name === "DOENER" ? "DÖNER" : category.name}</option>
                                 )
                             })}
                         </select>
