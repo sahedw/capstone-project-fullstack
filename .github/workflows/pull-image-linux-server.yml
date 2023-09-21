@@ -1,0 +1,26 @@
+name: Deploy to Linux Server
+
+on:
+  push:
+    branches:
+      - main # Modify this to match your repository's default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to server
+        run: |
+          chmod +x ./coding/spots/deploy.sh
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USER_SERVER }}@${{ secrets.IP_SERVER }} './coding/spots/deploy.sh'
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
