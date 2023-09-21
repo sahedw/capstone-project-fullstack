@@ -14,13 +14,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup SSH agent
-        uses: softprops/action-ssh-agent@v0.3.1
+        uses: appleboy/ssh-action@master
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Deploy to server
-        run: |
-          chmod +x ./coding/spots/deploy.sh
-          ssh -o StrictHostKeyChecking=no ${{ secrets.USER_SERVER }}@${{ secrets.IP_SERVER }} './coding/spots/deploy.sh'
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.IP_SERVER }}
+          username: ${{ secrets.HOST_SERVER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
+          script: |
+            cd ./coding/spots
+            chmod +x deploy.sh
+            ./deploy.sh
