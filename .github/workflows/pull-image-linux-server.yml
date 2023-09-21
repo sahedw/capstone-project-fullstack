@@ -17,10 +17,11 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.IP_SERVER }}
-          username: ${{ secrets.USER_SERVER }}
-          password: ${{ secrets.SSH_PASSWORD }}
+          username: ${{ secrets.HOST_SERVER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # Use the private key for authentication
           port: 22
           script: |
+            # Your Docker-related deployment commands here
             cd ./coding/spots
             chmod +x deploy.sh
             ./deploy.sh
