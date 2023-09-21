@@ -12,6 +12,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      
+      - name: Debug Private Key
+        run: echo "$SSH_PRIVATE_KEY"
+
+      - name: Debug SSH Command
+        run: echo "ssh -o StrictHostKeyChecking=no ${{ secrets.USER_SERVER }}@${{ secrets.IP_SERVER }} './coding/spots/deploy.sh'"
 
       - name: Setup SSH agent
         uses: appleboy/ssh-action@master
@@ -25,3 +31,5 @@ jobs:
             cd ./coding/spots
             chmod +x deploy.sh
             ./deploy.sh
+
+
