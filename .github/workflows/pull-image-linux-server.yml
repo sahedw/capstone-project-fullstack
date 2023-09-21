@@ -13,8 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up SSH key
-        uses: webfactory/ssh-agent@v0.6.0
+      - name: Setup SSH agent
+        uses: softprops/action-ssh-agent@v0.3.1
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
